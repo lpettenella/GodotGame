@@ -1,0 +1,109 @@
+[gd_scene load_steps=9 format=3 uid="uid://cx76j7xync25v"]
+
+[ext_resource type="PackedScene" uid="uid://bc22fmtpjf4qe" path="res://scenes/player/Player.tscn" id="1_4yylu"]
+[ext_resource type="PackedScene" uid="uid://1ui5e1hv33c1" path="res://scenes/player/ScreenShake.tscn" id="2_rhgck"]
+[ext_resource type="TileSet" uid="uid://8wwsca0pvx0w" path="res://tiles/level1.tres" id="3_psmg5"]
+[ext_resource type="PackedScene" uid="uid://cpitis63huqmf" path="res://scenes/enemies/Enemy1.tscn" id="4_2sy1x"]
+
+[sub_resource type="GDScript" id="GDScript_vn46k"]
+script/source = "extends Node
+
+const TRANS = Tween.TRANS_SINE
+const EASE = Tween.EASE_IN_OUT
+
+var amplitude = 0
+var priority = 0
+
+@onready var camera: Camera2D = get_tree().current_scene.get_node(\"Player\").get_node(\"Camera2D\")
+@onready var tween: Tween = create_tween()
+
+func start(duration = 0.2, frequency = 15, amplitude = 16, priority = 0):
+	if (priority >= self.priority):
+		self.priority = priority
+		self.amplitude = amplitude
+
+#		$Duration.wait_time = duration
+#		$Frequency.wait_time = 1 / float(frequency)
+#		$Duration.start()
+#		$Frequency.start()
+		
+		_new_shake()
+
+func _new_shake():
+	var rand = Vector2()
+	rand.x = randf_range(-amplitude, amplitude)
+	rand.y = randf_range(-amplitude, amplitude)
+	print(\"Shake\")
+	var ttween = create_tween()
+	ttween.tween_property(self, \"offset\", Vector2(1200, 1200), 1)
+#	tween.interpolate_property(camera, \"offset\", camera.offset, rand, $Frequency.wait_time, TRANS, EASE)
+#	tween.start()
+
+func _reset():
+#	tween.interpolate_property(camera, \"offset\", camera.offset, Vector2(), $Frequency.wait_time, TRANS, EASE)
+#	tween.tween_property(self, \"offset\", Vector2(), $Frequency.wait_time)
+#	tween.start()
+	priority = 0
+
+func _on_Frequency_timeout():
+	_new_shake()
+
+func _on_Duration_timeout():
+#	_reset()
+#	$Frequency.stop()
+	return
+"
+
+[sub_resource type="Gradient" id="Gradient_qpwn7"]
+offsets = PackedFloat32Array(0, 0.834646, 1)
+colors = PackedColorArray(0.015625, 0.015625, 0.015625, 1, 0.461731, 0.47633, 0.695313, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ri6jl"]
+gradient = SubResource("Gradient_qpwn7")
+width = 2048
+
+[sub_resource type="Environment" id="Environment_77shc"]
+background_mode = 3
+ambient_light_color = Color(0.498039, 0.117647, 0.117647, 1)
+ambient_light_energy = 1.18
+glow_enabled = true
+glow_levels/1 = 1.0
+glow_levels/2 = 1.0
+glow_levels/3 = 0.0
+glow_levels/4 = 1.0
+glow_levels/5 = 0.0
+glow_intensity = 0.12
+glow_strength = 1.01
+glow_bloom = 0.29
+glow_blend_mode = 1
+glow_hdr_scale = 1.51
+glow_hdr_luminance_cap = 27.36
+adjustment_enabled = true
+adjustment_contrast = 1.1
+adjustment_color_correction = SubResource("GradientTexture2D_ri6jl")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_4yylu")]
+position = Vector2(-376, -178)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(0.4, 0.4)
+position_smoothing_enabled = true
+script = SubResource("GDScript_vn46k")
+
+[node name="ScreenShake" parent="Player/Camera2D" instance=ExtResource("2_rhgck")]
+
+[node name="TileMap" type="TileMap" parent="."]
+texture_filter = 1
+scale = Vector2(5, 5)
+tile_set = ExtResource("3_psmg5")
+cell_quadrant_size = 32
+format = 2
+layer_0/tile_data = PackedInt32Array(65532, 1, 0, 65533, 65537, 0, 65534, 65537, 0, 65535, 65537, 0, 0, 65537, 0, 1, 65537, 0, 2, 65537, 0, 3, 65537, 0, 4, 65537, 0, 5, 131073, 0, 65541, 131073, 1, 131068, 1, 1, 196604, 1, 2, 131077, 131073, 2, 131076, 65537, 2, 131075, 65537, 2, 131074, 65537, 2, 131073, 65537, 2, 131072, 65537, 2, 196607, 65537, 2, 196606, 65537, 2, 196605, 65537, 2, 131069, 65537, 1, 131070, 65537, 1, 131071, 65537, 1, 65536, 65537, 1, 65537, 65537, 1, 65538, 65537, 1, 65539, 65537, 1, 65540, 65537, 1, -196611, 786433, 0, -262140, 393217, 5, -2, 262145, 0, -1, 262145, 0, -65536, 262145, 0, -65535, 262145, 0, -65534, 262145, 0, -65533, 262145, 0, -65532, 262145, 0, -3, 262145, 0, -4, 196609, 0, -65531, 327681, 0, -65527, 196609, 0, 9, 1, 0, 65545, 1, 1, 131081, 1, 2, -65526, 262145, 0, 10, 65537, 0, 65546, 65537, 1, 131082, 65537, 2, -65525, 262145, 0, 11, 65537, 0, 65547, 65537, 1, 131083, 65537, 2, -65524, 327681, 0, 12, 131073, 0, 65548, 131073, 1, 131084, 131073, 2, -196598, 393217, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_77shc")
+
+[node name="Enemy1" parent="." instance=ExtResource("4_2sy1x")]
+position = Vector2(627, -210)

@@ -179,7 +179,8 @@ func handle_hitted():
 	
 func knockback():
 	velocity.x = KNOCKBACK_SPEED * my_random_number * hitted_from
-	velocity.y = -GRAVITY * 3
+	if !fly:
+		velocity.y = -GRAVITY * 3
 	set_velocity(velocity)
 	set_up_direction(UP)
 	move_and_slide()

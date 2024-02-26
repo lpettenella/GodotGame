@@ -1,0 +1,79 @@
+[gd_scene load_steps=12 format=3 uid="uid://3jtuih4ecc2g"]
+
+[ext_resource type="Texture2D" uid="uid://dnpl2o361a1my" path="res://sprite-sheet/dash_fx.png" id="1_cn0sx"]
+[ext_resource type="Script" path="res://script/player/DashFx.gd" id="1_jqkxi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5jh27"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8854u"]
+atlas = ExtResource("1_cn0sx")
+region = Rect2(0, 0, 160, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qtexo"]
+atlas = ExtResource("1_cn0sx")
+region = Rect2(160, 0, 160, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_prvdn"]
+atlas = ExtResource("1_cn0sx")
+region = Rect2(320, 0, 160, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ckik"]
+atlas = ExtResource("1_cn0sx")
+region = Rect2(480, 0, 160, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_84mrh"]
+atlas = ExtResource("1_cn0sx")
+region = Rect2(640, 0, 160, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vn3jf"]
+atlas = ExtResource("1_cn0sx")
+region = Rect2(800, 0, 160, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ho1nd"]
+atlas = ExtResource("1_cn0sx")
+region = Rect2(960, 0, 160, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5vjwe"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8854u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qtexo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_prvdn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ckik")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_84mrh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vn3jf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ho1nd")
+}],
+"loop": false,
+"name": &"main",
+"speed": 14.0
+}]
+
+[node name="DashFx" type="StaticBody2D"]
+script = ExtResource("1_jqkxi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_5jh27")
+disabled = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_5vjwe")
+animation = &"main"
+autoplay = "main"
+frame = 1
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

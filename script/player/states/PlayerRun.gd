@@ -2,9 +2,21 @@ extends PlayerState
 class_name PlayerRun
 
 func enter(_msg := {}):
-	player.get_node("AnimatedSprite2D").play("run")
+	animated_sprite.play("run")
 	
 func physics_update(_delta: float):
+	if player.just_hitted:
+		Transitioned.emit(self, "hit")
+		return
+		
+	if Input.is_action_just_pressed("dash"):
+		Transitioned.emit(self, "dash")
+		return
+		
+	if Input.is_action_just_pressed("eat") and player.eat_conditions():
+		Transitioned.emit(self, "eat")
+		return
+		
 	if not player.is_on_floor():
 		Transitioned.emit(self, "air")
 		if player.is_on_wall_check():

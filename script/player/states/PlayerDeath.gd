@@ -1,21 +1,24 @@
 extends PlayerState
 class_name PlayerDeath
 
+var death_timer : Timer
+
 func enter(_msg := {}):
-	player.get_node("AnimatedSprite2D").play("idle")
+	animated_sprite.play("death")
+	player.velocity.x = 100 * (player.facing * -1)
+	player.velocity.y = 0
+	
+	death_timer = player.get_node("DeathTime")
+	death_timer.start()
+	
+	player.frame_freeze(0.1, 0.6)
+	player.disable_atk_collision()
 	
 func physics_update(_delta: float):
-	if not player.is_on_floor():
-		Transitioned.emit(self, "air")
-		
-	player.velocity.x = lerp(player.velocity.x, 0.0, 0.3)
-	player.move_and_slide()
+	if not animated_sprite.is_playing():
+		get_tree().reload_current_scene()
+
+	player.velocity.y += player.GRAVITY
 	
-	if Input.is_action_pressed("right") or Input.is_action_pressed("left"):
-		Transitioned.emit(self, "run")
-	elif Input.is_action_pressed("jump"):
-		Transitioned.emit(self, "air", {do_jump = true})
-	elif Input.is_action_just_pressed("attack"):
-		player.combo_count = (player.combo_count + 1) % 3
-		Transitioned.emit(self, player.melee_map[player.combo_count])
+	player.move_and_slide()
 

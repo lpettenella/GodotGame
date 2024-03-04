@@ -1,5 +1,6 @@
-Node2D
 Timer
+Sprite2D
+Node2D
 CollisionShape2D
 Area2D
 StaticBody2D
@@ -9,6 +10,5 @@ RemoteTransform2D
 Camera2D
 TileMap
 CharacterBody2D
-Sprite2D
 ParallaxLayer
 ParallaxBackground

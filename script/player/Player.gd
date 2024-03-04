@@ -3,7 +3,11 @@ class_name Player
 
 @export var max_health = 7
 @export var bullet : PackedScene
-@export var dash_fx: PackedScene
+@export var dash_fx : PackedScene
+@export var ghost : PackedScene
+
+@onready var health = max_health
+signal health_changed
 
 const GRAVITY = 100
 const SPEED = 600
@@ -14,19 +18,23 @@ const JUMP_TIMER_MAX = 0.2
 const SLIDE_ON_WALL_TIME = 0.5
 const STAY_ON_WALL_TIME = 1.0
 const CLIMB_TIME = 1.0
-const SPEED_IMPULSE = 50
+const SPEED_IMPULSE = 60
 
 const melee_map = ["attack1", "attack2", "attack3"]
 var combo_count = -1
 var queued_attack = false
-
-@onready var health = max_health
-signal health_changed
+var can_eat = false
 
 var attacked = false
 var jumped = false
 var jump_timer = 0.0
-var facing = true
+var facing = 1
+var just_hitted = false
+var damage_from = 1
+
+#meat
+var meat_body = []
+var actual_meat : CharacterBody2D
 	
 func _physics_process(delta):
 	if velocity.y > FALL_LIMIT:
@@ -40,17 +48,36 @@ func get_input_direction():
 		
 	if direction != 0:	
 		flip_player(direction)
-	
+		
 	return direction
+	
+func get_input_vector():
+	var direction = Vector2.ZERO
+	direction.x = Input.get_action_strength("right") - Input.get_action_strength("left")
+	direction.y = Input.get_action_strength("down") - Input.get_action_strength("up")
+	
+	if direction.x != 0:
+		flip_player(direction.x)
+
+	return direction.normalized()
+	
+func add_ghost():
+	var ghost = ghost.instantiate()
+	ghost.set_property(position, $AnimatedSprite2D.scale)
+	get_tree().current_scene.add_child(ghost)
 	
 func is_on_wall_check():
 	return $WallChecker.is_colliding() and !is_on_floor()
+	
+func is_on_wall_head():
+	return $WallCheckerHead.is_colliding()
 	
 func flip_player(direction):
 	$AnimatedSprite2D.set_flip_h(direction != 1)
 	$AttackArea.scale.x = direction
 	$AirAttackArea.scale.x = direction
 	$WallChecker.rotation_degrees = 90 * -direction
+	$WallCheckerHead.rotation_degrees = 90 * -direction
 	facing = direction
 	
 func handle_jump(_delta):
@@ -70,19 +97,79 @@ func handle_horizontal_movement(coefficient = 1):
 		velocity.x += SPEED_IMPULSE * facing
 		if abs(velocity.x) >= abs(SPEED * coefficient):
 			velocity.x = SPEED * facing
+			
+func damage_conditions():
+	return just_hitted and ($InvicibilityFrames.time_left > 0 or $RollInvFrames.time_left > 0)
 		
-func get_damage(damage):
-	pass
+func eat_conditions():
+	return is_on_floor() and can_eat and health != max_health
+
+func get_damage(direction):
+	if $InvicibilityFrames.time_left > 0 or $RollInvFrames.time_left > 0:
+		return
+	damage_from = direction
+	just_hitted = true
 	
-func _on_animated_sprite_2d_animation_finished():
-	match($AnimatedSprite2D.animation):
-		"prefall": 
-			$AnimatedSprite2D.play("fall")
-		"attack1", "attack2", "attack3":
-			attacked = true
-			$AttackComboDelay.start()
-		"jumpattack": 
-			attacked = true
-		
+func gain_health(qty):
+	if health == max_health: return
+	health += qty
+	emit_signal("health_changed", health)
+	
+func disable_atk_collision(value = "both"):
+	match(value):
+		"both":
+			$AttackArea/CollisionShape2D.disabled = true
+			$AirAttackArea/CollisionShape2D.disabled = true
+		"floor":
+			$AttackArea/CollisionShape2D.disabled = true
+		"air":
+			$AirAttackArea/CollisionShape2D.disabled = true
+	
+func frame_freeze(time_scale, duration):
+	Engine.time_scale = time_scale
+	await get_tree().create_timer(duration * time_scale).timeout
+	Engine.time_scale = 1.0
+	
+func handle_knockback(amount = 100):
+	$KnockbackTime.start()
+	velocity.x = amount * (facing * -1)
+	
+# timers
 func _on_AttackComboDelay_timeout():
 	combo_count = -1
+	
+func _on_DamageTime_timeout():
+	just_hitted = false
+	
+func _on_InvicibilityFrames_timeout():
+	modulate.a = 1
+	
+func _on_DeathTime_timeout():
+	velocity.x = lerp(velocity.x, 0.0, facing * 0.2 * -1)
+	
+func _on_ghost_time_timeout():
+	add_ghost()
+	
+# areas
+func _on_AttackArea_body_entered(body: CharacterBody2D):
+	if body.has_method("handle_hit") and !$AttackArea/CollisionShape2D.disabled:
+		handle_knockback()
+		body.handle_hit(facing)
+		$Camera2D/ScreenShake.start()
+		
+func _on_AirAttackArea_body_entered(body):
+	if body.has_method("handle_hit") and !$AirAttackArea/CollisionShape2D.disabled:
+		handle_knockback()
+		body.handle_hit(facing)
+		$Camera2D/ScreenShake.start()
+		
+func _on_FeetArea_body_entered(body):
+	is_on_floor()
+	if body.has_method("get_eaten"):
+		can_eat = true
+		meat_body.append(body)
+
+func _on_FeetArea_body_exited(body):
+	if body.has_method("get_eaten"):
+		meat_body.erase(body)
+		if meat_body.is_empty(): can_eat = false

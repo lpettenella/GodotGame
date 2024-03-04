@@ -5,6 +5,18 @@ func enter(_msg := {}):
 	animated_sprite.play("idle")
 	
 func physics_update(_delta: float):
+	if player.just_hitted:
+		Transitioned.emit(self, "hit")
+		return
+		
+	if Input.is_action_just_pressed("dash"):
+		Transitioned.emit(self, "dash")
+		return
+		
+	if Input.is_action_just_pressed("eat") and player.eat_conditions():
+		Transitioned.emit(self, "eat")
+		return
+	
 	if not player.is_on_floor():
 		Transitioned.emit(self, "air")
 		if player.is_on_wall_check():

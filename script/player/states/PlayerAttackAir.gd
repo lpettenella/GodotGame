@@ -5,13 +5,19 @@ var attack_air_area : CollisionShape2D
 var on_air = false
 
 func enter(_msg := {}):
-	player.get_node("AnimatedSprite2D").play("jumpattack")
+	animated_sprite.play("jumpattack")
 	player.attacked = false
 	
 func physics_update(_delta: float):
+	if player.just_hitted:
+		air_attack_area.disabled = true
+		Transitioned.emit(self, "hit")
+		return
+		
 	air_attack_area.disabled = false
 	
-	if player.attacked:
+	if not animated_sprite.is_playing():
+		air_attack_area.disabled = true
 		if not player.is_on_floor():
 			Transitioned.emit(self, "air")
 		else:

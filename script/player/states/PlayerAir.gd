@@ -11,9 +11,21 @@ func enter(msg := {}):
 	animated_sprite.play("jump")
 	if msg.has("do_jump_wall"):
 		from_wall = true
+	if msg.has("do_jump"):
+		jump = true
 		
 func physics_update(_delta: float):
-	player.handle_jump(_delta)
+	if player.just_hitted:
+		player.jumped = true
+		Transitioned.emit(self, "hit")
+		return
+		
+	if Input.is_action_just_pressed("dash"):
+		Transitioned.emit(self, "dash")
+		return
+		
+	if jump or from_wall:
+		player.handle_jump(_delta)
 	
 	if player.is_on_floor():
 		player.jump_timer = 0.0
@@ -32,13 +44,16 @@ func physics_update(_delta: float):
 		Transitioned.emit(self, "airattack")
 		return
 			
-	if player.velocity.y > 0 and animated_sprite.animation != "fall":
+	if player.velocity.y > 0 and not animated_sprite.animation in ["fall", "prefall"]:
 		animated_sprite.play("prefall")
+	if animated_sprite.animation == "prefall" and not animated_sprite.is_playing():
+		animated_sprite.play("fall")
 		
 	if from_wall:
 		wall_impulse_timer += _delta
 		if wall_impulse_timer < WALL_IMPULSE_TIME:
-			player.velocity.x = player.SPEED * player.facing * 1.5
+		#if Input.is_action_pressed("jump"):
+			player.velocity.x = player.SPEED * 1.5 * player.facing
 		else:
 			player.handle_horizontal_movement(1.5)
 	else:
@@ -48,5 +63,7 @@ func physics_update(_delta: float):
 	player.move_and_slide()
 	
 func exit():
+	jump = false
 	from_wall = false
 	wall_impulse_timer = 0.0
+

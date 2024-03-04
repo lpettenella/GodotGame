@@ -8,7 +8,19 @@ func enter(_msg := {}):
 		animated_sprite.play("wall")
 	
 func physics_update(_delta: float):
+	if player.just_hitted:
+		Transitioned.emit(self, "hit")
+		return
+		
 	handle_animation()
+	
+	if player.is_on_wall_check() and not player.is_on_wall_head():
+		player.position.y += -125
+		player.position.x += -69 * -player.facing 
+		player.velocity.x = 0
+		player.velocity.y = 0
+		Transitioned.emit(self, "idle")
+		return
 	
 	if player.is_on_floor():
 		Transitioned.emit(self, "idle")

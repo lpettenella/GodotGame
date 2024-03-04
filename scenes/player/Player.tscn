@@ -1,7 +1,8 @@
-[gd_scene load_steps=131 format=3 uid="uid://bc22fmtpjf4qe"]
+[gd_scene load_steps=129 format=3 uid="uid://bc22fmtpjf4qe"]
 
 [ext_resource type="Texture2D" uid="uid://cot4tsdrr7ih4" path="res://sprite-sheet/character-animation-Sheet.png" id="1"]
 [ext_resource type="Script" path="res://script/player/Player.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://pqp4p82f6ih2" path="res://scenes/player/Ghost.tscn" id="2_8vumg"]
 [ext_resource type="Script" path="res://script/state/StateMachine.gd" id="5_5in8h"]
 [ext_resource type="Script" path="res://script/player/states/PlayerAir.gd" id="6_1dmso"]
 [ext_resource type="Script" path="res://script/player/states/PlayerIdle.gd" id="6_2qiak"]
@@ -9,6 +10,10 @@
 [ext_resource type="Script" path="res://script/player/states/PlayerRun.gd" id="7_x85k4"]
 [ext_resource type="Script" path="res://script/player/states/PlayerAttackAir.gd" id="8_pgedr"]
 [ext_resource type="Script" path="res://script/player/states/PlayerWall.gd" id="9_qroq3"]
+[ext_resource type="Script" path="res://script/player/states/PlayerHit.gd" id="10_qcjo7"]
+[ext_resource type="Script" path="res://script/player/states/PlayerDeath.gd" id="11_iyvp3"]
+[ext_resource type="Script" path="res://script/player/states/PlayerEat.gd" id="11_pye0a"]
+[ext_resource type="Script" path="res://script/player/states/PlayerDash.gd" id="13_i4p2e"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nu6yr"]
 atlas = ExtResource("1")
@@ -146,10 +151,6 @@ region = Rect2(320, 864, 160, 96)
 atlas = ExtResource("1")
 region = Rect2(480, 864, 160, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wmwvh"]
-atlas = ExtResource("1")
-region = Rect2(0, 288, 160, 96)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_aulv7"]
 atlas = ExtResource("1")
 region = Rect2(160, 288, 160, 96)
@@ -158,33 +159,9 @@ region = Rect2(160, 288, 160, 96)
 atlas = ExtResource("1")
 region = Rect2(320, 288, 160, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_768nn"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_wmwvh"]
 atlas = ExtResource("1")
-region = Rect2(480, 288, 160, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_n1sfy"]
-atlas = ExtResource("1")
-region = Rect2(640, 288, 160, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fhr8o"]
-atlas = ExtResource("1")
-region = Rect2(800, 288, 160, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p5bos"]
-atlas = ExtResource("1")
-region = Rect2(960, 288, 160, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5ifo1"]
-atlas = ExtResource("1")
-region = Rect2(1120, 288, 160, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wbe4s"]
-atlas = ExtResource("1")
-region = Rect2(1280, 288, 160, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_828vy"]
-atlas = ExtResource("1")
-region = Rect2(1440, 288, 160, 96)
+region = Rect2(0, 288, 160, 96)
 
 [sub_resource type="AtlasTexture" id="70"]
 atlas = ExtResource("1")
@@ -606,34 +583,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wmwvh")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_aulv7")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_rrh1n")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_768nn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_n1sfy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fhr8o")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_p5bos")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5ifo1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wbe4s")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_828vy")
+"texture": SubResource("AtlasTexture_wmwvh")
 }],
 "loop": false,
 "name": &"dash",
@@ -966,11 +922,13 @@ size = Vector2(37.6741, 11)
 modulate = Color(1.5, 1.5, 1.5, 1)
 collision_layer = 2
 script = ExtResource("2")
+max_health = 2
+ghost = ExtResource("2_8vumg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(5, 5)
 sprite_frames = SubResource("21")
-animation = &"wall"
+animation = &"dash"
 
 [node name="WallChecker" type="RayCast2D" parent="."]
 rotation = -1.5708
@@ -1029,7 +987,7 @@ wait_time = 0.7
 one_shot = true
 
 [node name="DashTime" type="Timer" parent="."]
-wait_time = 0.15
+wait_time = 0.2
 one_shot = true
 
 [node name="AttackComboDelay" type="Timer" parent="."]
@@ -1061,6 +1019,13 @@ wait_time = 0.2
 wait_time = 0.4
 one_shot = true
 
+[node name="JumpTime" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="GhostTime" type="Timer" parent="."]
+wait_time = 0.05
+
 [node name="StateMachine" type="Node2D" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("5_5in8h")
 initial_state = NodePath("Idle")
@@ -1089,9 +1054,17 @@ script = ExtResource("8_pgedr")
 [node name="Wall" type="Node2D" parent="StateMachine"]
 script = ExtResource("9_qroq3")
 
-[node name="JumpTime" type="Timer" parent="."]
-wait_time = 0.2
-one_shot = true
+[node name="Hit" type="Node2D" parent="StateMachine"]
+script = ExtResource("10_qcjo7")
+
+[node name="Eat" type="Node2D" parent="StateMachine"]
+script = ExtResource("11_pye0a")
+
+[node name="Death" type="Node2D" parent="StateMachine"]
+script = ExtResource("11_iyvp3")
+
+[node name="Dash" type="Node2D" parent="StateMachine"]
+script = ExtResource("13_i4p2e")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_AttackArea_body_entered"]
@@ -1107,3 +1080,4 @@ one_shot = true
 [connection signal="timeout" from="InvicibilityFrames" to="." method="_on_InvicibilityFrames_timeout"]
 [connection signal="timeout" from="DeathTime" to="." method="_on_DeathTime_timeout"]
 [connection signal="timeout" from="ShootDelay" to="." method="_on_ShootDelay_timeout"]
+[connection signal="timeout" from="GhostTime" to="." method="_on_ghost_time_timeout"]

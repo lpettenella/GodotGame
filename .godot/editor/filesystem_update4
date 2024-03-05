@@ -25,3 +25,4 @@ res://script/player/states/PlayerEat.gd
 res://script/player/states/PlayerDash.gd
 res://script/player/Ghost.gd
 res://scenes/player/Ghost.tscn
+res://scenes/particles/DashParticles.tscn

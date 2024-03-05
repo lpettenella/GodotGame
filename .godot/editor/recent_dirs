@@ -1,3 +1,4 @@
+res://scenes/particles
 res://script/player
 res://script/player/states
 res://script/state
@@ -12,5 +13,4 @@ res://scenes/player
 res://tiles
 res://script/enemies
 res://script/gui
-res://scenes/particles
 res://materials

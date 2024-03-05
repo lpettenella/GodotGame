@@ -3,7 +3,7 @@ class_name Player
 
 @export var max_health = 7
 @export var bullet : PackedScene
-@export var dash_fx : PackedScene
+#@export var dash_fx : PackedScene
 @export var ghost : PackedScene
 
 @onready var health = max_health
@@ -63,7 +63,7 @@ func get_input_vector():
 	
 func add_ghost():
 	var ghost = ghost.instantiate()
-	ghost.set_property(position, $AnimatedSprite2D.scale)
+	ghost.set_property(position, $AnimatedSprite2D.scale, facing)
 	get_tree().current_scene.add_child(ghost)
 	
 func is_on_wall_check():

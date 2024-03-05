@@ -1,7 +1,8 @@
-[gd_scene load_steps=129 format=3 uid="uid://bc22fmtpjf4qe"]
+[gd_scene load_steps=130 format=3 uid="uid://bc22fmtpjf4qe"]
 
 [ext_resource type="Texture2D" uid="uid://cot4tsdrr7ih4" path="res://sprite-sheet/character-animation-Sheet.png" id="1"]
 [ext_resource type="Script" path="res://script/player/Player.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://bicfy28m044pr" path="res://scenes/particles/DashParticles.tscn" id="2_05tkj"]
 [ext_resource type="PackedScene" uid="uid://pqp4p82f6ih2" path="res://scenes/player/Ghost.tscn" id="2_8vumg"]
 [ext_resource type="Script" path="res://script/state/StateMachine.gd" id="5_5in8h"]
 [ext_resource type="Script" path="res://script/player/states/PlayerAir.gd" id="6_1dmso"]
@@ -990,6 +991,9 @@ one_shot = true
 wait_time = 0.2
 one_shot = true
 
+[node name="GhostTime" type="Timer" parent="."]
+wait_time = 0.1
+
 [node name="AttackComboDelay" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
@@ -1022,9 +1026,6 @@ one_shot = true
 [node name="JumpTime" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
-
-[node name="GhostTime" type="Timer" parent="."]
-wait_time = 0.05
 
 [node name="StateMachine" type="Node2D" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("5_5in8h")
@@ -1066,6 +1067,9 @@ script = ExtResource("11_iyvp3")
 [node name="Dash" type="Node2D" parent="StateMachine"]
 script = ExtResource("13_i4p2e")
 
+[node name="GPUParticles2D" parent="." instance=ExtResource("2_05tkj")]
+amount = 40
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_AttackArea_body_entered"]
 [connection signal="body_entered" from="AirAttackArea" to="." method="_on_AirAttackArea_body_entered"]
@@ -1073,6 +1077,7 @@ script = ExtResource("13_i4p2e")
 [connection signal="body_exited" from="FeetArea" to="." method="_on_FeetArea_body_exited"]
 [connection signal="timeout" from="DashDelay" to="." method="_on_dash_delay_timeout"]
 [connection signal="timeout" from="DashTime" to="." method="_on_dash_time_timeout"]
+[connection signal="timeout" from="GhostTime" to="." method="_on_ghost_time_timeout"]
 [connection signal="timeout" from="AttackComboDelay" to="." method="_on_AttackComboDelay_timeout"]
 [connection signal="timeout" from="AttackImpulse" to="." method="_on_AttackImpulse_timeout"]
 [connection signal="timeout" from="KnockbackTime" to="." method="_on_KnockbackTime_timeout"]
@@ -1080,4 +1085,3 @@ script = ExtResource("13_i4p2e")
 [connection signal="timeout" from="InvicibilityFrames" to="." method="_on_InvicibilityFrames_timeout"]
 [connection signal="timeout" from="DeathTime" to="." method="_on_DeathTime_timeout"]
 [connection signal="timeout" from="ShootDelay" to="." method="_on_ShootDelay_timeout"]
-[connection signal="timeout" from="GhostTime" to="." method="_on_ghost_time_timeout"]

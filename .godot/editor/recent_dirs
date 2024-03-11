@@ -1,9 +1,8 @@
-res://scenes/particles
+res://script
 res://script/player
 res://script/player/states
 res://script/state
 res://sprite-sheet
-res://script
 res://scenes/levels
 C:/Users/Luca/Desktop
 C:/Users/Luca/Documents/GodotMigration2/GodotExport
@@ -13,4 +12,5 @@ res://scenes/player
 res://tiles
 res://script/enemies
 res://script/gui
+res://scenes/particles
 res://materials

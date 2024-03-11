@@ -22,6 +22,9 @@ func enter(_msg := {}):
 	
 	dash_fx = player.get_node("GPUParticles2D")
 	dash_fx.emitting = true
+	
+	player.dash_count += 1
+	player.modulate = Color(1, 0, 1)
 
 func physics_update(_delta: float):
 	if dash_time.time_left == 0:
@@ -41,3 +44,12 @@ func exit():
 	ghost_time.stop()
 	player.velocity.y = lerp(player.velocity.y, 0.0, 0.5)
 	dash_fx.emitting = false
+	
+	if player.dash_count == player.max_dash:
+		player.dash_count = 0
+		player.dash_timeout = true
+		player.dashed = true
+		player.get_node("DashDelay").start()
+		
+	print(player.dash_count)
+	player.modulate = Color(1, 1, 1)

@@ -4,5 +4,6 @@
 [ext_resource type="Script" path="res://script/player/Ghost.gd" id="2_ir5v7"]
 
 [node name="Ghost" type="Sprite2D"]
+modulate = Color(1, 0, 1, 1)
 texture = ExtResource("1_84be3")
 script = ExtResource("2_ir5v7")

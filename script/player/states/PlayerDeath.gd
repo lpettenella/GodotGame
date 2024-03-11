@@ -5,7 +5,7 @@ var death_timer : Timer
 
 func enter(_msg := {}):
 	animated_sprite.play("death")
-	player.velocity.x = 100 * (player.facing * -1)
+	player.velocity.x = 100 * player.damage_from
 	player.velocity.y = 0
 	
 	death_timer = player.get_node("DeathTime")

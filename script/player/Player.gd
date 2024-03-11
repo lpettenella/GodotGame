@@ -18,7 +18,7 @@ const JUMP_TIMER_MAX = 0.2
 const SLIDE_ON_WALL_TIME = 0.5
 const STAY_ON_WALL_TIME = 1.0
 const CLIMB_TIME = 1.0
-const SPEED_IMPULSE = 60
+const SPEED_IMPULSE = 70
 
 const melee_map = ["attack1", "attack2", "attack3"]
 var combo_count = -1
@@ -26,13 +26,19 @@ var queued_attack = false
 var can_eat = false
 
 var attacked = false
+var dashed = false
 var jumped = false
 var jump_timer = 0.0
 var facing = 1
 var just_hitted = false
 var damage_from = 1
 
-#meat
+# dash
+var dash_count = 0
+var max_dash = 2
+var dash_timeout = false
+
+# meat
 var meat_body = []
 var actual_meat : CharacterBody2D
 	
@@ -48,6 +54,9 @@ func get_input_direction():
 		
 	if direction != 0:	
 		flip_player(direction)
+		
+	if is_on_floor():
+		dashed = false
 		
 	return direction
 	
@@ -84,6 +93,7 @@ func handle_jump(_delta):
 	if Input.is_action_pressed("jump") and !jumped:
 		jump_timer += _delta
 		if jump_timer > JUMP_TIMER_MAX:
+			jumped = true
 			return
 		velocity.y = -JUMP_IMPULSE
 		
@@ -102,7 +112,20 @@ func damage_conditions():
 	return just_hitted and ($InvicibilityFrames.time_left > 0 or $RollInvFrames.time_left > 0)
 		
 func eat_conditions():
-	return is_on_floor() and can_eat and health != max_health
+	return (
+		Input.is_action_just_pressed("eat") and 
+		is_on_floor() and 
+		can_eat and 
+		health != max_health
+	)
+	
+func dash_conditions():
+	return (
+		Input.is_action_just_pressed("dash") and
+		dash_count != max_dash and 
+		not dash_timeout and 
+		not dashed
+	)
 
 func get_damage(direction):
 	if $InvicibilityFrames.time_left > 0 or $RollInvFrames.time_left > 0:
@@ -145,11 +168,14 @@ func _on_InvicibilityFrames_timeout():
 	modulate.a = 1
 	
 func _on_DeathTime_timeout():
-	velocity.x = lerp(velocity.x, 0.0, facing * 0.2 * -1)
+	velocity.x = lerp(velocity.x, 0.0, 0.2)
 	
 func _on_ghost_time_timeout():
 	add_ghost()
 	
+func _on_dash_delay_timeout():
+	dash_timeout = false
+
 # areas
 func _on_AttackArea_body_entered(body: CharacterBody2D):
 	if body.has_method("handle_hit") and !$AttackArea/CollisionShape2D.disabled:
@@ -173,3 +199,4 @@ func _on_FeetArea_body_exited(body):
 	if body.has_method("get_eaten"):
 		meat_body.erase(body)
 		if meat_body.is_empty(): can_eat = false
+

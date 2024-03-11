@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bicfy28m044pr"]
+[gd_scene load_steps=4 format=3 uid="uid://cutsil7c3dtmn"]
 
 [sub_resource type="Gradient" id="Gradient_82u7t"]
 colors = PackedColorArray(0.819608, 0.176471, 0.74902, 1, 1, 1, 1, 0)
@@ -9,8 +9,8 @@ gradient = SubResource("Gradient_82u7t")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_02a1r"]
 particle_flag_disable_z = true
 direction = Vector3(0, 0, 0)
-initial_velocity_min = 10.0
-initial_velocity_max = 50.0
+initial_velocity_min = 30.0
+initial_velocity_max = 100.0
 gravity = Vector3(0, 0, 0)
 scale_min = 7.0
 scale_max = 8.0
@@ -20,5 +20,5 @@ color_ramp = SubResource("GradientTexture1D_b3hm6")
 [node name="GPUParticles2D" type="GPUParticles2D"]
 scale = Vector2(5, 5)
 emitting = false
-amount = 20
+amount = 40
 process_material = SubResource("ParticleProcessMaterial_02a1r")

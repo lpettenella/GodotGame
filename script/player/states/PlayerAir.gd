@@ -1,4 +1,4 @@
-extends PlayerState
+extends PlayerState 
 class_name PlayerAir
 
 const WALL_IMPULSE_TIME = 0.15
@@ -15,33 +15,33 @@ func enter(msg := {}):
 		jump = true
 		
 func physics_update(_delta: float):
+	if jump or from_wall:
+		player.handle_jump(_delta)
+		
+	if player.jumped == true: jump = false
+		
 	if player.just_hitted:
 		player.jumped = true
 		Transitioned.emit(self, "hit")
 		return
 		
-	if Input.is_action_just_pressed("dash"):
+	if player.dash_conditions():
 		Transitioned.emit(self, "dash")
-		return
-		
-	if jump or from_wall:
-		player.handle_jump(_delta)
-	
-	if player.is_on_floor():
-		player.jump_timer = 0.0
-		player.jumped = false
-		if is_equal_approx(player.velocity.x, 0.0):
-			Transitioned.emit(self, "idle")
-		else:
-			Transitioned.emit(self, "run")
 		return
 		
 	if player.is_on_wall_check():
 		Transitioned.emit(self, "wall")
 		return
 		
-	if Input.is_action_just_pressed("attack"):
+	if InputBuffer.is_action_press_buffered("attack"):
 		Transitioned.emit(self, "airattack")
+		return
+		
+	if player.is_on_floor() and not jump:
+		if is_equal_approx(player.velocity.x, 0.0):
+			Transitioned.emit(self, "idle")
+		else:
+			Transitioned.emit(self, "run")
 		return
 			
 	if player.velocity.y > 0 and not animated_sprite.animation in ["fall", "prefall"]:

@@ -15,6 +15,10 @@ run/main_scene="res://scenes/levels/level1.tscn"
 config/features=PackedStringArray("4.2")
 boot_splash/bg_color=Color(0.156863, 0.682353, 0.737255, 1)
 
+[autoload]
+
+InputBuffer="*res://script/InputBuffer.gd"
+
 [display]
 
 window/size/viewport_width=700

@@ -4,6 +4,7 @@ class_name PlayerDash
 var dash_vector = Vector2(1,1).normalized()
 var dash_time : Timer
 var ghost_time : Timer
+var rollinv_time : Timer
 var dash_fx 
 
 func enter(_msg := {}):
@@ -11,6 +12,9 @@ func enter(_msg := {}):
 	dash_vector = player.get_input_vector()
 	if dash_vector == Vector2(0, 0).normalized():
 		dash_vector = Vector2(player.facing, 0).normalized()
+		
+	rollinv_time = player.get_node("RollInvFrames")
+	rollinv_time.start()
 		
 	dash_time = player.get_node("DashTime")
 	dash_time.start()
@@ -45,11 +49,11 @@ func exit():
 	player.velocity.y = lerp(player.velocity.y, 0.0, 0.5)
 	dash_fx.emitting = false
 	
+	player.get_node("DashDelay").start()
+	
 	if player.dash_count == player.max_dash:
 		player.dash_count = 0
 		player.dash_timeout = true
 		player.dashed = true
-		player.get_node("DashDelay").start()
 		
-	print(player.dash_count)
 	player.modulate = Color(1, 1, 1)

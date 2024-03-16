@@ -43,6 +43,7 @@ var meat_body = []
 var actual_meat : CharacterBody2D
 	
 func _physics_process(delta):
+	print(dash_count)
 	if velocity.y > FALL_LIMIT:
 		velocity.y = FALL_LIMIT
 
@@ -121,7 +122,7 @@ func eat_conditions():
 	
 func dash_conditions():
 	return (
-		Input.is_action_just_pressed("dash") and
+		InputBuffer.is_action_press_buffered("dash") and
 		dash_count != max_dash and 
 		not dash_timeout and 
 		not dashed
@@ -175,6 +176,8 @@ func _on_ghost_time_timeout():
 	
 func _on_dash_delay_timeout():
 	dash_timeout = false
+	if dash_count > 0 and is_on_floor():
+		dash_count -= 1
 
 # areas
 func _on_AttackArea_body_entered(body: CharacterBody2D):

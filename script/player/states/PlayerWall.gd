@@ -14,6 +14,10 @@ func physics_update(_delta: float):
 		
 	handle_animation()
 	
+	if player.dash_conditions():
+		Transitioned.emit(self, "dash")
+		return
+	
 	if player.is_on_wall_check() and not player.is_on_wall_head():
 		player.position.y += -125
 		player.position.x += -69 * -player.facing 

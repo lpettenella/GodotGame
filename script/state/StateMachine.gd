@@ -27,7 +27,7 @@ func _physics_process(delta):
 		current_state.physics_update(delta)
 
 func on_child_transition(state, new_state_name, msg: Dictionary = {}):
-	print(state, " to ", new_state_name)
+	#print(state, " to ", new_state_name)
 	var new_state = states.get(new_state_name.to_lower())
 	if !new_state: 
 		return

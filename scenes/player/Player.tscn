@@ -986,6 +986,7 @@ shape = SubResource("97")
 [node name="DashDelay" type="Timer" parent="."]
 wait_time = 0.7
 one_shot = true
+autostart = true
 
 [node name="DashTime" type="Timer" parent="."]
 wait_time = 0.2
@@ -1020,7 +1021,7 @@ wait_time = 0.1
 wait_time = 0.2
 
 [node name="RollInvFrames" type="Timer" parent="."]
-wait_time = 0.4
+wait_time = 0.2
 one_shot = true
 
 [node name="JumpTime" type="Timer" parent="."]

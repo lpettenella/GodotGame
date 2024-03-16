@@ -33,6 +33,10 @@ window/handheld/orientation=6
 
 movie_writer/movie_file="C:/Users/Luca/Desktop/movies.avi"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/SimpleTODO/plugin.cfg")
+
 [global]
 
 salvataggio=false

@@ -22,7 +22,7 @@ func physics_update(_delta: float):
 	if not player.is_on_floor():
 		Transitioned.emit(self, "air")
 		if player.is_on_wall_check():
-			Transitioned.emit(self, "wall")		
+			Transitioned.emit(self, "wall")
 	elif Input.is_action_just_pressed("attack"):
 		player.combo_count = (player.combo_count + 1) % 3
 		Transitioned.emit(self, player.melee_map[player.combo_count])

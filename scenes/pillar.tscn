@@ -262,10 +262,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jrw53"]
-size = Vector2(100, 365)
+size = Vector2(77, 358)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8pml1"]
-size = Vector2(100, 245)
+size = Vector2(77, 241)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nc2ra"]
 size = Vector2(22, 608)
@@ -279,11 +279,11 @@ sprite_frames = SubResource("SpriteFrames_gmrph")
 animation = &"phase1"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-19, -137.5)
+position = Vector2(-17.5, -141)
 shape = SubResource("RectangleShape2D_jrw53")
 
 [node name="BottomCS" type="CollisionShape2D" parent="."]
-position = Vector2(-19, 168.5)
+position = Vector2(-16.5, 158.5)
 shape = SubResource("RectangleShape2D_8pml1")
 
 [node name="Enter" type="Area2D" parent="."]

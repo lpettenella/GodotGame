@@ -6,8 +6,10 @@ extends CharacterBody2D
 @export var drop_rate : int
 @export var health : int
 @export var fly: bool = false
-@export var melee: bool = false
-@export var range: bool = false
+@export var is_melee: bool = false
+@export var is_range: bool = false
+@export var frame_attack_hit = 3
+@export var frame_handle_hit = 6
 
 const GRAVITY = 70
 const SPEED = 250
@@ -53,6 +55,7 @@ func _ready():
 	shape_chase_radius = $ChaseArea/CollisionShape2D.shape.radius
 
 func _physics_process(delta):
+	print(player_in_range)
 	$AnimatedSprite2D.play(state)
 	$AttackArea.scale.x = direction
 	$SearchArea.scale.x = direction
@@ -78,13 +81,6 @@ func _physics_process(delta):
 		dir_changed = false
 
 	handle_states(delta)
-
-#func _physics_process(delta):
-#	$AnimatedSprite2D.play(state)
-#	if fly: 
-#		print(state)
-#	if $AttackDelay.time_left == 0:
-#		state = "attack"
 	
 func _on_AnimatedSprite_animation_finished():
 	match($AnimatedSprite2D.animation):
@@ -159,14 +155,14 @@ func chase_player():
 			velocity.y = position.direction_to(player_body.position).y * SPEED
 
 func attack_condition():
-	if melee:
+	if is_melee:
 		return (
 			player_in_range and 
 			!$AttackDelay.time_left > 0 and 
 			!$StunTime.time_left > 0 and
 			(is_on_floor() or fly)
 		)
-	if range:
+	if is_range:
 		return (
 			player_body != null and
 			!$AttackDelay.time_left > 0 and 
@@ -186,10 +182,10 @@ func knockback():
 	move_and_slide()
 	
 func handle_attack():
-	if melee:
-		if player_could_be_hit and $AnimatedSprite2D.frame >= 3:
+	if is_melee:
+		if player_could_be_hit and $AnimatedSprite2D.frame >= frame_attack_hit:
 			player_body.get_damage(direction)
-	if range:
+	if is_range:
 #		velocity.x = lerp(velocity.x, 0.0, 0.3)
 		shoot()
 		
@@ -202,11 +198,10 @@ func shoot():
 	instanced_bullet.velocity = player_body.position - instanced_bullet.position
 	get_tree().current_scene.add_child(instanced_bullet)
 	shooted = true
-		
 
 func handle_hit(from):
 	if state == "death": return
-	if state == "attack" and $AnimatedSprite2D.frame < 6 and melee: return
+	if state == "attack" and $AnimatedSprite2D.frame < frame_handle_hit and is_melee: return
 	health -= 1
 	my_random_number = randi() % 4 + 1
 	if health <= 0:

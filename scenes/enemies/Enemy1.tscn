@@ -261,12 +261,11 @@ hitParticle = ExtResource("3")
 meat = ExtResource("4")
 drop_rate = 1
 health = 7
-melee = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(5, 5)
 sprite_frames = SubResource("104")
-animation = &"idle"
+animation = &"attack"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 41)

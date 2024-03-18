@@ -108,7 +108,6 @@ script = SubResource("GDScript_vn46k")
 [node name="ScreenShake" parent="Player/Camera2D" instance=ExtResource("8")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-visible = false
 follow_viewport_scale = 3.0
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -160,7 +159,6 @@ offset = Vector2(0, 50)
 
 [node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
 layer = 1
-visible = false
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground2"]
 position = Vector2(1840, 548)

@@ -3,8 +3,8 @@ class_name Player
 
 @export var max_health = 7
 @export var bullet : PackedScene
-#@export var dash_fx : PackedScene
 @export var ghost : PackedScene
+@export var screenShake : Node
 
 @onready var health = max_health
 signal health_changed
@@ -43,7 +43,6 @@ var meat_body = []
 var actual_meat : CharacterBody2D
 	
 func _physics_process(delta):
-	print(dash_count)
 	if velocity.y > FALL_LIMIT:
 		velocity.y = FALL_LIMIT
 
@@ -184,13 +183,13 @@ func _on_AttackArea_body_entered(body: CharacterBody2D):
 	if body.has_method("handle_hit") and !$AttackArea/CollisionShape2D.disabled:
 		handle_knockback()
 		body.handle_hit(facing)
-		$Camera2D/ScreenShake.start()
+		screenShake.start()
 		
 func _on_AirAttackArea_body_entered(body):
 	if body.has_method("handle_hit") and !$AirAttackArea/CollisionShape2D.disabled:
 		handle_knockback()
 		body.handle_hit(facing)
-		$Camera2D/ScreenShake.start()
+		screenShake.start()
 		
 func _on_FeetArea_body_entered(body):
 	is_on_floor()

@@ -320,7 +320,6 @@ bullet = ExtResource("4_w0yy0")
 drop_rate = 1
 health = 3
 fly = true
-range = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(-5, 5)

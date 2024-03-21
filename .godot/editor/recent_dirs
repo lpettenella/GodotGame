@@ -1,9 +1,11 @@
+res://script/player/states
+res://script/gui
+res://assets/lablevel
 res://sprite-sheet
 res://script/enemies
 res://addons/SimpleTODO
 res://script
 res://script/player
-res://script/player/states
 res://script/state
 res://scenes/levels
 C:/Users/Luca/Desktop
@@ -12,6 +14,5 @@ C:/Users/Luca/Documents/GodotMigration2
 res://scenes/enemies
 res://scenes/player
 res://tiles
-res://script/gui
 res://scenes/particles
 res://materials

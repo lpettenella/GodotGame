@@ -32,6 +32,7 @@ var jump_timer = 0.0
 var facing = 1
 var just_hitted = false
 var damage_from = 1
+var freezed = false
 
 # dash
 var dash_count = 0
@@ -126,6 +127,9 @@ func dash_conditions():
 		not dash_timeout and 
 		not dashed
 	)
+		  
+func freeze_conditions():
+	return freezed
 
 func get_damage(direction):
 	if $InvicibilityFrames.time_left > 0 or $RollInvFrames.time_left > 0:

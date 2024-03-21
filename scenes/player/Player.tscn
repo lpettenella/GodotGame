@@ -1,4 +1,4 @@
-[gd_scene load_steps=130 format=3 uid="uid://bc22fmtpjf4qe"]
+[gd_scene load_steps=131 format=3 uid="uid://bc22fmtpjf4qe"]
 
 [ext_resource type="Texture2D" uid="uid://cot4tsdrr7ih4" path="res://sprite-sheet/character-animation-Sheet.png" id="1"]
 [ext_resource type="Script" path="res://script/player/Player.gd" id="2"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://script/player/states/PlayerDeath.gd" id="11_iyvp3"]
 [ext_resource type="Script" path="res://script/player/states/PlayerEat.gd" id="11_pye0a"]
 [ext_resource type="Script" path="res://script/player/states/PlayerDash.gd" id="13_i4p2e"]
+[ext_resource type="Script" path="res://script/player/states/PlayerFreeze.gd" id="15_q2dax"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nu6yr"]
 atlas = ExtResource("1")
@@ -1068,6 +1069,9 @@ script = ExtResource("11_iyvp3")
 
 [node name="Dash" type="Node2D" parent="StateMachine"]
 script = ExtResource("13_i4p2e")
+
+[node name="Freeze" type="Node2D" parent="StateMachine"]
+script = ExtResource("15_q2dax")
 
 [node name="GPUParticles2D" parent="." instance=ExtResource("2_05tkj")]
 

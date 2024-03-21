@@ -55,7 +55,6 @@ func _ready():
 	shape_chase_radius = $ChaseArea/CollisionShape2D.shape.radius
 
 func _physics_process(delta):
-	print(player_in_range)
 	$AnimatedSprite2D.play(state)
 	$AttackArea.scale.x = direction
 	$SearchArea.scale.x = direction

@@ -259,7 +259,6 @@ collision_layer = 4
 script = ExtResource("2")
 hitParticle = ExtResource("3")
 meat = ExtResource("4")
-drop_rate = 1
 health = 7
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

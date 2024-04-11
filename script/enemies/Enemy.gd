@@ -3,13 +3,14 @@ extends CharacterBody2D
 @export var hitParticle : PackedScene
 @export var meat : PackedScene
 @export var bullet: PackedScene
-@export var drop_rate : int
-@export var health : int
+@export var drop_rate : int = 1
+@export var health : int = 10
 @export var fly: bool = false
-@export var is_melee: bool = false
+@export var is_melee: bool = true
 @export var is_range: bool = false
 @export var frame_attack_hit = 3
 @export var frame_handle_hit = 6
+@export var can_born = false
 
 const GRAVITY = 70
 const SPEED = 250
@@ -49,6 +50,8 @@ var player_body = null
 var dir_changed = false
 
 func _ready():
+	if can_born:
+		state = "born"
 	raycast_pos = $RayCast2D.position.x
 	waggle_delay_timer = randf_range(0, WAGGLE_DELAY_TIME)
 	randomize()
@@ -89,8 +92,12 @@ func _on_AnimatedSprite_animation_finished():
 			shooted = false
 		"death":
 			after_death()
+		"born":
+			state = "idle"
 
 func handle_states(delta):
+	if state == "born":
+		return
 	if state == "death":
 		handle_death()
 		return
@@ -242,16 +249,6 @@ func drop_meat():
 	
 func _on_stun_time_timeout():
 	state = "run"
-		
-#func _on_AnimatedSprite_animation_finished():
-#	match($AnimatedSprite2D.animation):
-#		"attack":
-#			state = "run"
-#			$AttackDelay.start()
-##			shooted = false
-#			print("s'è finitoo", state)
-#		"death":
-#			after_death()
 			
 func _on_SearchArea_body_entered(body):
 	if body.name == "Player":

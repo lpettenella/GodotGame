@@ -17,10 +17,12 @@ func wait(seconds: float) -> void:
 func _on_area_2d_body_entered(body):
 	if body.name == "Player":
 		player.freezed = true
-		await wait(3)
+		await wait(1)
 		$AnimatedSprite2D.play("action")
 		
 func _on_animated_sprite_2d_animation_finished():
 	if $AnimatedSprite2D.animation == "action":
 		player.freezed = false
+		player.can_dash = true
+		player.max_dash += 1
 		$Area2D/CollisionShape2D.disabled = true

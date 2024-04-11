@@ -9,5 +9,6 @@ func physics_update(_delta: float):
 		Transitioned.emit(self, "idle")
 		
 	player.velocity.x = 0
+	player.velocity.y += player.GRAVITY
 	player.move_and_slide()
 	

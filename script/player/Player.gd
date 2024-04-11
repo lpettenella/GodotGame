@@ -5,6 +5,7 @@ class_name Player
 @export var bullet : PackedScene
 @export var ghost : PackedScene
 @export var screenShake : Node
+@export var jump_fx : PackedScene
 
 @onready var health = max_health
 signal health_changed
@@ -27,16 +28,20 @@ var can_eat = false
 
 var attacked = false
 var dashed = false
+@export var can_dash = false
 var jumped = false
 var jump_timer = 0.0
 var facing = 1
 var just_hitted = false
 var damage_from = 1
 var freezed = false
+var can_interact_with = false
+var interactable_obj = null
+@export var last_checkpoint : Area2D
 
 # dash
 var dash_count = 0
-var max_dash = 2
+@export var max_dash = 0
 var dash_timeout = false
 
 # meat
@@ -46,9 +51,22 @@ var actual_meat : CharacterBody2D
 func _physics_process(delta):
 	if velocity.y > FALL_LIMIT:
 		velocity.y = FALL_LIMIT
+		
+	if can_interact_with and Input.is_action_just_pressed("interact"):
+		interactable_obj.do_interact()
 
 func _ready():
-	pass
+	$TerrainCheckpointDetector.Obstacle.connect(on_obstacle)
+	$TerrainCheckpointDetector.Checkpoint.connect(on_checkpoint)
+	
+func on_obstacle():
+	get_damage(facing * -1)
+	await get_tree().create_timer($DamageTime.wait_time).timeout
+	if health > 0:
+		position = last_checkpoint.position
+	
+func on_checkpoint(_checkpoint: Area2D):
+	last_checkpoint = _checkpoint
 	
 func get_input_direction(): 
 	var direction = Input.get_action_strength("right") - Input.get_action_strength("left")
@@ -82,9 +100,16 @@ func is_on_wall_check():
 func is_on_wall_head():
 	return $WallCheckerHead.is_colliding()
 	
+func is_touching_ceiling():
+	return $CeilingChecker.is_colliding()
+	
+func is_touching_ceiling_long():
+	return $CeilingCheckerLong.is_colliding()
+	
 func flip_player(direction):
 	$AnimatedSprite2D.set_flip_h(direction != 1)
 	$AttackArea.scale.x = direction
+	$InteractionArea.scale.x = direction
 	$AirAttackArea.scale.x = direction
 	$WallChecker.rotation_degrees = 90 * -direction
 	$WallCheckerHead.rotation_degrees = 90 * -direction
@@ -125,7 +150,8 @@ func dash_conditions():
 		InputBuffer.is_action_press_buffered("dash") and
 		dash_count != max_dash and 
 		not dash_timeout and 
-		not dashed
+		not dashed and 
+		can_dash
 	)
 		  
 func freeze_conditions():
@@ -183,7 +209,7 @@ func _on_dash_delay_timeout():
 		dash_count -= 1
 
 # areas
-func _on_AttackArea_body_entered(body: CharacterBody2D):
+func _on_AttackArea_body_entered(body):
 	if body.has_method("handle_hit") and !$AttackArea/CollisionShape2D.disabled:
 		handle_knockback()
 		body.handle_hit(facing)
@@ -206,3 +232,14 @@ func _on_FeetArea_body_exited(body):
 		meat_body.erase(body)
 		if meat_body.is_empty(): can_eat = false
 
+func _on_interaction_area_body_entered(body):
+	if body is Interactable:
+		can_interact_with = true
+		body.do_highlight()
+		interactable_obj = body
+
+func _on_interaction_area_body_exited(body):
+	if body is Interactable:
+		can_interact_with = false
+		body.undo_highlight()
+		interactable_obj = null

@@ -19,12 +19,23 @@ func physics_update(_delta: float):
 		return
 	
 	if player.is_on_wall_check() and not player.is_on_wall_head():
-		player.position.y += -125
-		player.position.x += -69 * -player.facing 
-		player.velocity.x = 0
-		player.velocity.y = 0
-		Transitioned.emit(self, "idle")
-		return
+		if player.is_touching_ceiling_long():
+			player.velocity.x = 0
+			player.velocity.y = 0
+			collision_shape.shape.size.y = 79.5
+			collision_shape.position.y = 39.75
+			#player.position.y += -125
+			#player.position.x += -69 * -player.facing 
+			player.position.y += -48
+			player.position.x += -48 * -player.facing
+			Transitioned.emit(self, "crouchidle")
+		#else: 
+			##player.position.y += -125
+			##player.position.x += -69 * -player.facing 
+			#player.position.y += -48
+			#player.position.x += -48 * -player.facing
+			#Transitioned.emit(self, "idle")
+			return
 	
 	if player.is_on_floor():
 		Transitioned.emit(self, "idle")

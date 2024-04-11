@@ -26,6 +26,8 @@ func physics_update(_delta: float):
 		
 	if Input.is_action_pressed("right") or Input.is_action_pressed("left"):
 		Transitioned.emit(self, "run")
+	elif Input.is_action_just_pressed("down"):
+		Transitioned.emit(self, "crouchidle")
 	elif InputBuffer.is_action_press_buffered("jump"):
 		Transitioned.emit(self, "air", {do_jump = true})
 	elif Input.is_action_just_pressed("attack"):

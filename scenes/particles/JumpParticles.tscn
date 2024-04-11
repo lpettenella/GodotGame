@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://gl0x6rhu2cfm"]
+
+[sub_resource type="CurveTexture" id="CurveTexture_8nafj"]
+
+[sub_resource type="Gradient" id="Gradient_q2yvu"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8dhvn"]
+gradient = SubResource("Gradient_q2yvu")
+
+[sub_resource type="Curve" id="Curve_2qyav"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.253933, 0.637363), -1.71839, -1.71839, 0, 0, Vector2(1, 0.307692), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_g4nvk"]
+curve = SubResource("Curve_2qyav")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nx0qk"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(0.1, 5, 1)
+angle_curve = SubResource("CurveTexture_8nafj")
+initial_velocity_min = 30.0
+initial_velocity_max = 80.0
+gravity = Vector3(0, 98, 0)
+scale_min = 8.0
+scale_max = 12.0
+scale_curve = SubResource("CurveTexture_g4nvk")
+color_ramp = SubResource("GradientTexture1D_8dhvn")
+
+[node name="JumpParticles" type="GPUParticles2D"]
+rotation = 4.71239
+scale = Vector2(5, 5)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_nx0qk")
+lifetime = 0.6
+one_shot = true
+explosiveness = 0.9
+randomness = 0.5

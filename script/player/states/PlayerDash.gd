@@ -47,6 +47,7 @@ func physics_update(_delta: float):
 func exit():
 	ghost_time.stop()
 	player.velocity.y = lerp(player.velocity.y, 0.0, 0.5)
+	player.velocity.x = lerp(player.velocity.x, 0.0, 0.5)
 	dash_fx.emitting = false
 	
 	player.get_node("DashDelay").start()

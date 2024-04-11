@@ -1,9 +1,10 @@
-[gd_scene load_steps=131 format=3 uid="uid://bc22fmtpjf4qe"]
+[gd_scene load_steps=143 format=3 uid="uid://bc22fmtpjf4qe"]
 
 [ext_resource type="Texture2D" uid="uid://cot4tsdrr7ih4" path="res://sprite-sheet/character-animation-Sheet.png" id="1"]
 [ext_resource type="Script" path="res://script/player/Player.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://cutsil7c3dtmn" path="res://scenes/particles/DashParticles.tscn" id="2_05tkj"]
 [ext_resource type="PackedScene" uid="uid://pqp4p82f6ih2" path="res://scenes/player/Ghost.tscn" id="2_8vumg"]
+[ext_resource type="Script" path="res://script/player/TerrainCheckpointDetector.gd" id="4_whg42"]
 [ext_resource type="Script" path="res://script/state/StateMachine.gd" id="5_5in8h"]
 [ext_resource type="Script" path="res://script/player/states/PlayerAir.gd" id="6_1dmso"]
 [ext_resource type="Script" path="res://script/player/states/PlayerIdle.gd" id="6_2qiak"]
@@ -16,6 +17,9 @@
 [ext_resource type="Script" path="res://script/player/states/PlayerEat.gd" id="11_pye0a"]
 [ext_resource type="Script" path="res://script/player/states/PlayerDash.gd" id="13_i4p2e"]
 [ext_resource type="Script" path="res://script/player/states/PlayerFreeze.gd" id="15_q2dax"]
+[ext_resource type="Script" path="res://script/player/states/PlayerCrouchIdle.gd" id="17_2dux1"]
+[ext_resource type="Script" path="res://script/player/states/PlayerCrouchRun.gd" id="18_6unvl"]
+[ext_resource type="PackedScene" uid="uid://gl0x6rhu2cfm" path="res://scenes/particles/JumpParticles.tscn" id="20_t2pii"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nu6yr"]
 atlas = ExtResource("1")
@@ -136,6 +140,30 @@ region = Rect2(960, 1248, 160, 96)
 [sub_resource type="AtlasTexture" id="AtlasTexture_lbr1k"]
 atlas = ExtResource("1")
 region = Rect2(1120, 1248, 160, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ees8r"]
+atlas = ExtResource("1")
+region = Rect2(0, 1824, 160, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f8ret"]
+atlas = ExtResource("1")
+region = Rect2(160, 1824, 160, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lb3tb"]
+atlas = ExtResource("1")
+region = Rect2(0, 1920, 160, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n2c2u"]
+atlas = ExtResource("1")
+region = Rect2(160, 1920, 160, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hs1a6"]
+atlas = ExtResource("1")
+region = Rect2(320, 1920, 160, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_28xoh"]
+atlas = ExtResource("1")
+region = Rect2(480, 1920, 160, 96)
 
 [sub_resource type="AtlasTexture" id="66"]
 atlas = ExtResource("1")
@@ -568,6 +596,34 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_ees8r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f8ret")
+}],
+"loop": true,
+"name": &"crouch-idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lb3tb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2c2u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hs1a6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_28xoh")
+}],
+"loop": true,
+"name": &"crouch-run",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("66")
 }, {
 "duration": 1.0,
@@ -916,9 +972,15 @@ size = Vector2(138, 95)
 size = Vector2(177, 163)
 
 [sub_resource type="RectangleShape2D" id="88"]
-size = Vector2(37.6741, 11)
+size = Vector2(37.674, 6.25)
 
 [sub_resource type="RectangleShape2D" id="97"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1vsws"]
+size = Vector2(91, 125)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8eea4"]
+size = Vector2(70, 126)
 
 [node name="Player" type="CharacterBody2D"]
 modulate = Color(1.5, 1.5, 1.5, 1)
@@ -926,19 +988,26 @@ collision_layer = 2
 script = ExtResource("2")
 max_health = 2
 ghost = ExtResource("2_8vumg")
+jump_fx = ExtResource("20_t2pii")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(5, 5)
 sprite_frames = SubResource("21")
-animation = &"dash"
-frame_progress = 0.461684
+animation = &"idle"
+
+[node name="CeilingCheckerLong" type="RayCast2D" parent="."]
+target_position = Vector2(0, -110)
+
+[node name="CeilingChecker" type="RayCast2D" parent="."]
+target_position = Vector2(0, -55)
 
 [node name="WallChecker" type="RayCast2D" parent="."]
+position = Vector2(0, 17)
 rotation = -1.5708
 target_position = Vector2(-1.79217e-06, 41)
 
 [node name="WallCheckerHead" type="RayCast2D" parent="."]
-position = Vector2(0, -17)
+position = Vector2(0, -45)
 rotation = -1.5708
 target_position = Vector2(-1.90735e-06, 41)
 
@@ -968,12 +1037,13 @@ shape = SubResource("65")
 disabled = true
 
 [node name="FeetArea" type="Area2D" parent="."]
+position = Vector2(0, 80)
 collision_layer = 2
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FeetArea"]
 modulate = Color(0.356863, 0.152941, 0.752941, 1)
-position = Vector2(-2, 74.5)
+position = Vector2(0, -3)
 shape = SubResource("88")
 
 [node name="ShootArea" type="Area2D" parent="."]
@@ -984,6 +1054,25 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ShootArea"]
 position = Vector2(42, 16)
 shape = SubResource("97")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(35.5, 16.5)
+shape = SubResource("RectangleShape2D_1vsws")
+debug_color = Color(0.984314, 0.443137, 0.552941, 0.0980392)
+
+[node name="TerrainCheckpointDetector" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 17
+script = ExtResource("4_whg42")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TerrainCheckpointDetector"]
+position = Vector2(0, 17)
+shape = SubResource("RectangleShape2D_8eea4")
+debug_color = Color(0.615686, 0.509804, 0.482353, 0.419608)
 
 [node name="DashDelay" type="Timer" parent="."]
 wait_time = 0.7
@@ -1073,6 +1162,12 @@ script = ExtResource("13_i4p2e")
 [node name="Freeze" type="Node2D" parent="StateMachine"]
 script = ExtResource("15_q2dax")
 
+[node name="CrouchIdle" type="Node2D" parent="StateMachine"]
+script = ExtResource("17_2dux1")
+
+[node name="CrouchRun" type="Node2D" parent="StateMachine"]
+script = ExtResource("18_6unvl")
+
 [node name="GPUParticles2D" parent="." instance=ExtResource("2_05tkj")]
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
@@ -1080,6 +1175,10 @@ script = ExtResource("15_q2dax")
 [connection signal="body_entered" from="AirAttackArea" to="." method="_on_AirAttackArea_body_entered"]
 [connection signal="body_entered" from="FeetArea" to="." method="_on_FeetArea_body_entered"]
 [connection signal="body_exited" from="FeetArea" to="." method="_on_FeetArea_body_exited"]
+[connection signal="body_entered" from="InteractionArea" to="." method="_on_interaction_area_body_entered"]
+[connection signal="body_exited" from="InteractionArea" to="." method="_on_interaction_area_body_exited"]
+[connection signal="area_entered" from="TerrainCheckpointDetector" to="TerrainCheckpointDetector" method="_on_area_entered"]
+[connection signal="body_shape_entered" from="TerrainCheckpointDetector" to="TerrainCheckpointDetector" method="_on_body_shape_entered"]
 [connection signal="timeout" from="DashDelay" to="." method="_on_dash_delay_timeout"]
 [connection signal="timeout" from="DashTime" to="." method="_on_dash_time_timeout"]
 [connection signal="timeout" from="GhostTime" to="." method="_on_ghost_time_timeout"]

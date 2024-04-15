@@ -2,10 +2,11 @@ extends CharacterBody2D
 class_name Player
 
 @export var max_health = 7
+@export var screenShake : Node
 @export var bullet : PackedScene
 @export var ghost : PackedScene
-@export var screenShake : Node
 @export var jump_fx : PackedScene
+@export var wall_fx : PackedScene
 
 @onready var health = max_health
 signal health_changed
@@ -39,6 +40,8 @@ var can_interact_with = false
 var interactable_obj = null
 @export var last_checkpoint : Area2D
 
+var wall_area_position_x
+
 # dash
 var dash_count = 0
 @export var max_dash = 0
@@ -58,6 +61,7 @@ func _physics_process(delta):
 func _ready():
 	$TerrainCheckpointDetector.Obstacle.connect(on_obstacle)
 	$TerrainCheckpointDetector.Checkpoint.connect(on_checkpoint)
+	wall_area_position_x = $WallArea.position.x
 	
 func on_obstacle():
 	get_damage(facing * -1)
@@ -111,6 +115,7 @@ func flip_player(direction):
 	$AttackArea.scale.x = direction
 	$InteractionArea.scale.x = direction
 	$AirAttackArea.scale.x = direction
+	$WallArea.position.x = wall_area_position_x * direction
 	$WallChecker.rotation_degrees = 90 * -direction
 	$WallCheckerHead.rotation_degrees = 90 * -direction
 	facing = direction

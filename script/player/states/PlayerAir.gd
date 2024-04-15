@@ -11,15 +11,9 @@ var jump_fx
 
 func emit_particles():
 	var particles = player.jump_fx.instantiate()
-	#particles.position.x = global_position.x + (-direction * 10)
-	#particles.position.y = global_position.y
-	#particles.scale.x = -direction
 	particles.position = player.get_node("FeetArea").global_position
-	print(player.get_node("FeetArea").position)
 	particles.emitting = true
 	get_tree().current_scene.add_child(particles)
-	print("emitting jump particles")
-	return
 
 func enter(msg := {}):
 	animated_sprite.play("jump")

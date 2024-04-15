@@ -21,3 +21,4 @@ res://script/player/states/PlayerAir.gd
 res://script/player/Player.gd
 res://scenes/particles/DashParticles.tscn
 res://script/player/states/PlayerDash.gd
+res://scenes/particles/WallClimbParticles.tscn

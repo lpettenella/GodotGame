@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://cg555v7dexny3"]
+[gd_scene load_steps=51 format=3 uid="uid://cg555v7dexny3"]
 
 [ext_resource type="Script" path="res://script/player/Miniboss.gd" id="1_loom4"]
 [ext_resource type="Texture2D" uid="uid://kc7ttnv705f5" path="res://sprite-sheet/miniboss.png" id="1_v4xd5"]
@@ -45,6 +45,50 @@ region = Rect2(1664, 576, 208, 144)
 [sub_resource type="AtlasTexture" id="AtlasTexture_jt0mj"]
 atlas = ExtResource("1_v4xd5")
 region = Rect2(1872, 576, 208, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nupxh"]
+atlas = ExtResource("1_v4xd5")
+region = Rect2(208, 864, 208, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hxs6t"]
+atlas = ExtResource("1_v4xd5")
+region = Rect2(416, 864, 208, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ompw1"]
+atlas = ExtResource("1_v4xd5")
+region = Rect2(624, 864, 208, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6txlo"]
+atlas = ExtResource("1_v4xd5")
+region = Rect2(832, 864, 208, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_15xd5"]
+atlas = ExtResource("1_v4xd5")
+region = Rect2(1040, 864, 208, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oiqxh"]
+atlas = ExtResource("1_v4xd5")
+region = Rect2(1248, 864, 208, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4qj46"]
+atlas = ExtResource("1_v4xd5")
+region = Rect2(1456, 864, 208, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_03rvy"]
+atlas = ExtResource("1_v4xd5")
+region = Rect2(1664, 864, 208, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o4471"]
+atlas = ExtResource("1_v4xd5")
+region = Rect2(1872, 864, 208, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_44q7l"]
+atlas = ExtResource("1_v4xd5")
+region = Rect2(2080, 864, 208, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qad65"]
+atlas = ExtResource("1_v4xd5")
+region = Rect2(2288, 864, 208, 144)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qp6et"]
 atlas = ExtResource("1_v4xd5")
@@ -172,6 +216,44 @@ animations = [{
 "speed": 14.0
 }, {
 "frames": [{
+"duration": 1.2,
+"texture": SubResource("AtlasTexture_nupxh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hxs6t")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_ompw1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6txlo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_15xd5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oiqxh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4qj46")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_03rvy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o4471")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_44q7l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qad65")
+}],
+"loop": true,
+"name": &"death",
+"speed": 11.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qp6et")
 }, {
@@ -269,7 +351,7 @@ radius = 163.166
 
 [node name="Miniboss" type="CharacterBody2D"]
 z_index = -1
-collision_layer = 5
+collision_layer = 4
 script = ExtResource("1_loom4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -279,9 +361,11 @@ shape = SubResource("RectangleShape2D_sodaf")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_57drj")
-animation = &"attack"
+animation = &"death"
+frame_progress = 0.269953
 
 [node name="AttackArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 4
 collision_mask = 2
 
@@ -291,6 +375,7 @@ position = Vector2(-259.5, 43)
 shape = SubResource("RectangleShape2D_sqmhr")
 
 [node name="NearArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 4
 collision_mask = 2
 
@@ -300,6 +385,7 @@ scale = Vector2(53.5542, -46.7112)
 shape = SubResource("CircleShape2D_7c870")
 
 [node name="AttackAreaUp" type="Area2D" parent="."]
+visible = false
 collision_layer = 4
 collision_mask = 2
 

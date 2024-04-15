@@ -996,7 +996,7 @@ wall_fx = ExtResource("4_vr6lc")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(5, 5)
 sprite_frames = SubResource("21")
-animation = &"wall"
+animation = &"idle"
 
 [node name="CeilingCheckerLong" type="RayCast2D" parent="."]
 target_position = Vector2(0, -110)

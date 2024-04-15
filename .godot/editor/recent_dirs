@@ -1,7 +1,7 @@
-res://scenes/particles
-res://script/player/states
 res://sprite-sheet
 res://script
+res://scenes/particles
+res://script/player/states
 res://scenes/enemies
 res://scenes/gui
 res://script/player

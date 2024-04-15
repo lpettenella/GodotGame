@@ -1,6 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://gl0x6rhu2cfm"]
+[gd_scene load_steps=8 format=3 uid="uid://gl0x6rhu2cfm"]
+
+[sub_resource type="Curve" id="Curve_ok4yg"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_8nafj"]
+curve = SubResource("Curve_ok4yg")
 
 [sub_resource type="Gradient" id="Gradient_q2yvu"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)

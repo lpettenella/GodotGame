@@ -95,11 +95,9 @@ func handle_hit(from):
 #	if state == "attack" and $AnimatedSprite2D.frame < 6 and melee: return
 #	health -= 1
 #	my_random_number = randi() % 4 + 1
-#	if health <= 0:
-#		emit_particle()
-#		$KnockbackTime.start()
-#		state = "death"
-#		return
+	if health <= 0:
+		state = "death"
+		return
 #	state = "hit"
 #	hitted_from = from
 #	$KnockbackTime.start()

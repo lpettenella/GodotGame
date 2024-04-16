@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1713213389
+::res://::1713303091
 default_env.tres::Environment::-1::1698749680::0::1::::<><>::
 export_presets.cfg::TextFile::-1::1702902747::0::1::::<><>::
 TODO.cfg::TextFile::-1::1710590985::0::1::::<><>::
@@ -51,29 +51,29 @@ background .png::CompressedTexture2D::1473740955206327932::1680039345::169874970
 background01.png::CompressedTexture2D::246270206492394514::1702032168::1702032168::1::::<><>::
 background02.png::CompressedTexture2D::8971575896327760680::1702032172::1702032172::1::::<><>::
 background.png::CompressedTexture2D::7490847010270490318::1702032165::1702032165::1::::<><>::
-::res://gui/::1713213701
-default_env.tres::Environment::4046306485169315139::1713213701::0::1::::<><>::
+::res://gui/::1713303072
+default_env.tres::Environment::4046306485169315139::1713303072::0::1::::<><>::
 ::res://materials/::1700247116
 HitParticles.tres::ParticleProcessMaterial::1570202625603135759::1699043866::0::1::::<><>::
 ::res://scenes/::1713207785
-::res://scenes/enemies/::1713213701
+::res://scenes/enemies/::1713218573
 Border.gd::GDScript::-1::1699109886::0::1::::<>Area2D<>::
 Enemy1.tscn::PackedScene::5843357947794558765::1713213699::0::1::::<><>::uid://bn60kllp6oywc::::res://sprite-sheet/enemy.png<>res://script/enemies/Enemy.gd<>uid://bf4ubatiredib::::res://scenes/particles/HitParticles.tscn<>uid://cdga3r26ndxlq::::res://scenes/gui/Meat.tscn
 Enemy2.tscn::PackedScene::6089875177084392428::1713207785::0::1::::<><>::res://script/enemies/Enemy.gd<>uid://bf4ubatiredib::::res://scenes/particles/HitParticles.tscn<>uid://bc3fe56vvn40y::::res://sprite-sheet/enemy2.png<>uid://cdga3r26ndxlq::::res://scenes/gui/Meat.tscn
 Enemy.tscn::PackedScene::-1::1698749680::0::1::::<><>::res://sprite-sheet/Enemy Sprite2D-Sheet.png<>res://script/enemies/Enemy.gd
 EnemyBullet.tscn::PackedScene::7830186236061733167::1701898683::0::1::::<><>::res://script/enemies/EnemyBullet.gd<>uid://b11132cnmanmb::::res://sprite-sheet/enemy-bullet.png
 FlyEnemy.tscn::PackedScene::5170275314098310001::1711050100::0::1::::<><>::uid://b4rs0qkyv8lcy::::res://sprite-sheet/flyenemy.png<>res://script/enemies/Enemy.gd<>uid://bf4ubatiredib::::res://scenes/particles/HitParticles.tscn<>uid://djtaa166gll2v::::res://scenes/enemies/EnemyBullet.tscn<>uid://cdga3r26ndxlq::::res://scenes/gui/Meat.tscn
-miniboss.tscn::PackedScene::5257781998002996312::1713213701::0::1::::<><>::res://script/player/Miniboss.gd<>uid://kc7ttnv705f5::::res://sprite-sheet/miniboss.png
+miniboss.tscn::PackedScene::5257781998002996312::1713218573::0::1::::<><>::res://script/player/Miniboss.gd<>uid://kc7ttnv705f5::::res://sprite-sheet/miniboss.png
 ::res://scenes/gui/::1713213700
 CharIconGUI.tscn::PackedScene::91464723946832885::1700323810::0::1::::<><>::uid://c16g0iaq2yfm6::::res://assets/gui/charicon.png
 GUI.tscn::PackedScene::5529008949022526985::1713213700::0::1::::<><>::uid://bkkn7x2lptr6::::res://scenes/gui/CharIconGUI.tscn<>res://script/gui/HealthBar.gd
 HeartGUI.tscn::PackedScene::8769330123471520197::1713213700::0::1::::<><>::uid://ciw616jwqx2rq::::res://assets/gui/life.png<>res://script/gui/HeartGUI.gd
 Meat.tscn::PackedScene::4995845103086682090::1707589036::0::1::::<><>::uid://duorj3bptqjvn::::res://assets/gui/meat.png<>res://script/gui/Meat.gd
 PaperItem.tscn::PackedScene::7109575347612736490::1713207785::0::1::::<><>::res://script/PaperItem.gd<>uid://ckud2ve6mwqnp::::res://assets/lablevel/paper-item-1-sheet.png
-::res://scenes/levels/::1713213701
+::res://scenes/levels/::1713303072
 level1.tscn::PackedScene::2664557212869932309::1713213700::0::1::::<><>::uid://bc22fmtpjf4qe::::res://scenes/player/Player.tscn<>uid://cbnkbqunen1lo::::res://assets/level1/background/background02.png<>uid://u85ke0c1nxts::::res://assets/level1/background/background .png<>uid://ii88a6txe7ss::::res://assets/level1/background/background01.png<>uid://b6ifbc3phqdcv::::res://assets/level1/background/background03.png<>uid://1ui5e1hv33c1::::res://scenes/player/ScreenShake.tscn<>uid://84pwl2wf5v38::::res://assets/level1/frontground.png<>res://script/ParallaxLayer.gd<>res://script/Global.gd<>uid://ck1j77332pbc0::::res://scenes/gui/GUI.tscn<>uid://cpitis63huqmf::::res://scenes/enemies/Enemy1.tscn<>uid://8wwsca0pvx0w::::res://tiles/level1.tres<>uid://cfwrxc737j8iv::::res://scenes/enemies/FlyEnemy.tscn
+leveltest.tscn::PackedScene::8935179163980259281::1713303072::0::1::::<><>::uid://bc22fmtpjf4qe::::res://scenes/player/Player.tscn<>res://script/Global.gd<>uid://1ui5e1hv33c1::::res://scenes/player/ScreenShake.tscn<>uid://8wwsca0pvx0w::::res://tiles/level1.tres<>uid://cg555v7dexny3::::res://scenes/enemies/miniboss.tscn<>uid://ck1j77332pbc0::::res://scenes/gui/GUI.tscn
 level_2.tscn::PackedScene::4021549443885013440::1708804501::0::1::::<><>::uid://deyvfke34iuos::::res://assets/level2/background/background.png<>uid://drkbfw6ua8wc::::res://assets/level2/background/background01.png<>uid://d025srffmomdc::::res://assets/level2/background/background02.png<>uid://8wwsca0pvx0w::::res://tiles/level1.tres<>uid://bc22fmtpjf4qe::::res://scenes/player/Player.tscn<>uid://1ui5e1hv33c1::::res://scenes/player/ScreenShake.tscn<>uid://cg555v7dexny3::::res://scenes/enemies/miniboss.tscn
-leveltest.tscn::PackedScene::8935179163980259281::1713213701::0::1::::<><>::uid://bc22fmtpjf4qe::::res://scenes/player/Player.tscn<>res://script/Global.gd<>uid://1ui5e1hv33c1::::res://scenes/player/ScreenShake.tscn<>uid://8wwsca0pvx0w::::res://tiles/level1.tres<>uid://cg555v7dexny3::::res://scenes/enemies/miniboss.tscn<>uid://ck1j77332pbc0::::res://scenes/gui/GUI.tscn
 ::res://scenes/levels/lablevel/::1713213700
 button.tscn::PackedScene::5409112097491502960::1713207785::0::1::::<><>::res://script/gui/Button.gd<>uid://b53n21rt0saai::::res://assets/lablevel/button.png
 capsule.tscn::PackedScene::235266354308627399::1713207785::0::1::::<><>::res://script/Capsule.gd<>uid://b5p5pbddf52ir::::res://assets/lablevel/capsule.png<>uid://cs08mbykpxblk::::res://scenes/enemies/Enemy2.tscn
@@ -116,12 +116,12 @@ HealthBar.gd::GDScript::-1::1699057000::0::1::::<>HBoxContainer<>::
 HeartGUI.gd::GDScript::-1::1698749680::0::1::::<>Panel<>::
 Interactable.gd::GDScript::-1::1713207785::0::1::::Interactable<>StaticBody2D<>::
 Meat.gd::GDScript::-1::1698750170::0::1::::<>CharacterBody2D<>::
-::res://script/player/::1713207785
+::res://script/player/::1713302968
 Bullet.gd::GDScript::-1::1699300883::0::1::::<>CharacterBody2D<>::
 DashFx.gd::GDScript::-1::1702225318::0::1::::<>StaticBody2D<>::
 Ghost.gd::GDScript::-1::1709680043::0::1::::<>Sprite2D<>::
 Line2D.gd::GDScript::-1::1698749680::0::1::::<>Line2D<>::
-Miniboss.gd::GDScript::-1::1702836715::0::1::::<>CharacterBody2D<>::
+Miniboss.gd::GDScript::-1::1713302968::0::1::::<>CharacterBody2D<>::
 Player.gd::GDScript::-1::1713207785::0::1::::Player<>CharacterBody2D<>::
 PlayerToChange.gd::GDScript::-1::1708860848::0::1::::<>CharacterBody2D<>::
 POld2.gd::GDScript::-1::1698749680::0::1::::<>CharacterBody2D<>::
@@ -146,7 +146,7 @@ PlayerWall.gd::GDScript::-1::1713207785::0::1::::PlayerWall<>PlayerState<>::
 ::res://script/state/::1710590985
 State.gd::GDScript::-1::1708802270::0::1::::State<>Node<>::
 StateMachine.gd::GDScript::-1::1710590985::0::1::::<>Node<>::
-::res://sprite-sheet/::1713207785
+::res://sprite-sheet/::1713214190
 bullet-sheet.png::CompressedTexture2D::3616892800797531438::1697834003::1698749700::1::::<><>::
 capsule.png::CompressedTexture2D::1240393185258288391::1713207785::1713207785::1::::<><>::
 character-animation-Sheet.png::CompressedTexture2D::5796504029371314715::1713207785::1710689883::1::::<><>::

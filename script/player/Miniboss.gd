@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @export var player: CharacterBody2D
 @export var health: int = 10
+@export var point_for_dive : Node2D
 
 const GRAVITY = 70
 const SPEED = 600
@@ -42,6 +43,9 @@ func _physics_process(delta):
 	move_and_slide()
 	
 func handle_states(delta):
+	if state == "death":
+		velocity.x = position.direction_to(point_for_dive.position).x * SPEED
+		return
 	if state != "attack":
 		if position.x > player.position.x : direction = 1
 		else: direction = -1

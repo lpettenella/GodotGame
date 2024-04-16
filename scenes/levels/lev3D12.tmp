@@ -101,10 +101,8 @@ script = SubResource("GDScript_vn46k")
 
 [node name="ScreenShake" parent="Player/Camera2D" instance=ExtResource("2_rhgck")]
 
-[node name="Miniboss" parent="." node_paths=PackedStringArray("player", "point_for_dive") instance=ExtResource("5_5cve0")]
+[node name="Miniboss" parent="." instance=ExtResource("5_5cve0")]
 position = Vector2(1092, -209)
-player = NodePath("../Player")
-point_for_dive = NodePath("../Marker2D")
 
 [node name="TileMap" type="TileMap" parent="."]
 texture_filter = 1

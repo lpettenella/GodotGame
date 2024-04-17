@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://cg555v7dexny3"]
+[gd_scene load_steps=56 format=3 uid="uid://cg555v7dexny3"]
 
 [ext_resource type="Script" path="res://script/player/Miniboss.gd" id="1_loom4"]
 [ext_resource type="Texture2D" uid="uid://kc7ttnv705f5" path="res://sprite-sheet/miniboss.png" id="1_v4xd5"]
@@ -178,6 +178,22 @@ region = Rect2(208, 432, 208, 144)
 atlas = ExtResource("1_v4xd5")
 region = Rect2(416, 432, 208, 144)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_vc6mb"]
+atlas = ExtResource("1_v4xd5")
+region = Rect2(0, 288, 208, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lwjco"]
+atlas = ExtResource("1_v4xd5")
+region = Rect2(208, 288, 208, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pdla8"]
+atlas = ExtResource("1_v4xd5")
+region = Rect2(416, 288, 208, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j87ee"]
+atlas = ExtResource("1_v4xd5")
+region = Rect2(624, 288, 208, 144)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_57drj"]
 animations = [{
 "frames": [{
@@ -249,7 +265,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qad65")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 11.0
 }, {
@@ -338,7 +354,27 @@ animations = [{
 "loop": false,
 "name": &"up",
 "speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vc6mb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lwjco")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pdla8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j87ee")
+}],
+"loop": true,
+"name": &"wait_for_player",
+"speed": 10.0
 }]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3isj0"]
+size = Vector2(380, 301)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sqmhr"]
 size = Vector2(253, 312)
@@ -355,6 +391,7 @@ collision_layer = 4
 script = ExtResource("1_loom4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(8, 42)
 shape = SubResource("RectangleShape2D_sodaf")
 
@@ -362,7 +399,15 @@ shape = SubResource("RectangleShape2D_sodaf")
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_57drj")
 animation = &"death"
-frame_progress = 0.269953
+frame = 2
+
+[node name="CatchArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CatchArea"]
+position = Vector2(0, 53.5)
+shape = SubResource("RectangleShape2D_3isj0")
 
 [node name="AttackArea" type="Area2D" parent="."]
 visible = false
@@ -403,6 +448,7 @@ wait_time = 0.1
 one_shot = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="CatchArea" to="." method="_on_catch_area_body_entered"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]
 [connection signal="body_exited" from="AttackArea" to="." method="_on_attack_area_body_exited"]
 [connection signal="body_entered" from="NearArea" to="." method="_on_near_area_body_entered"]

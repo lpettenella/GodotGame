@@ -14,6 +14,7 @@ var state = "idle"
 var player_in_range = false
 var player_in_range_up = false
 var player_is_near = false
+var can_catch_player = false
 var follow_timer = 0.0
 var follow_delay_timer = 0.0
 var is_follow_time = true
@@ -36,7 +37,8 @@ func _physics_process(delta):
 	else: 
 		$AnimatedSprite2D.set_flip_h(false)
 	
-	$AnimatedSprite2D.play(state)
+	if state != $AnimatedSprite2D.animation:
+		$AnimatedSprite2D.play(state)
 	
 	handle_states(delta)
 	
@@ -44,11 +46,19 @@ func _physics_process(delta):
 	
 func handle_states(delta):
 	if state == "death":
-		velocity.x = position.direction_to(point_for_dive.position).x * SPEED
 		return
 	if state != "attack":
 		if position.x > player.position.x : direction = 1
 		else: direction = -1
+	if state == "wait_for_player":
+		#velocity.x = position.direction_to(point_for_dive.position).x * SPEED		
+		position.x = point_for_dive.position.x
+		if can_catch_player:
+			player.freezed = true
+			if player.is_on_floor(): 
+				state = "death"
+				z_index = 1
+		return
 	if state == "down": return
 	if is_follow_time:
 		if follow_timer >= FOLLOW_TIME:
@@ -100,7 +110,7 @@ func handle_hit(from):
 #	health -= 1
 #	my_random_number = randi() % 4 + 1
 	if health <= 0:
-		state = "death"
+		state = "wait_for_player"
 		return
 #	state = "hit"
 #	hitted_from = from
@@ -138,3 +148,7 @@ func _on_attack_area_up_body_entered(body):
 func _on_attack_area_up_body_exited(body):
 	if body.name == "Player":
 		player_in_range_up = false
+
+func _on_catch_area_body_entered(body):
+	if body.name == "Player" and state == "wait_for_player":
+		can_catch_player = true

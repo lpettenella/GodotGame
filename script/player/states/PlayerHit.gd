@@ -1,7 +1,10 @@
 extends PlayerState
 class_name PlayerHit
 
+@onready var get_hit = get_parent().get_node("GetHit")
+
 func enter(_msg := {}):
+	get_hit.play()
 	player.get_node("DamageTime").start()
 	player.get_node("KnockbackTime").start()
 	player.get_node("InvicibilityFrames").start()
@@ -16,7 +19,7 @@ func enter(_msg := {}):
 	#player.velocity.x = 0
 	
 	#knockback
-	player.velocity.x = 300 * player.damage_from
+	player.velocity.x = player.HITTED_SPEED * player.damage_from
 	
 	#change colour
 	player.modulate.a = 0.5

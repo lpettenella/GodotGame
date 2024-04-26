@@ -12,6 +12,7 @@ func _process(delta):
 func open():
 	is_open = true 
 	$AnimatedSprite2D.play("open")
+	$Open.play()
 	
 func close(): 
 	is_open = false

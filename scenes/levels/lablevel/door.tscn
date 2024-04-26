@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://d2e4xw42wg36t"]
+[gd_scene load_steps=9 format=3 uid="uid://d2e4xw42wg36t"]
 
 [ext_resource type="Texture2D" uid="uid://b8n768w4xr13l" path="res://assets/lablevel/door_sprite_sheet.png" id="1_4y8hx"]
 [ext_resource type="Script" path="res://script/Door.gd" id="1_wxkns"]
+[ext_resource type="AudioStream" uid="uid://d0kbu3kf3jyuc" path="res://audio/qubodup-DoorClose06.mp3" id="3_uvhx5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_emi5m"]
 atlas = ExtResource("1_4y8hx")
@@ -38,17 +39,18 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0ctr0"]
-size = Vector2(28, 239)
+size = Vector2(6, 48)
 
 [node name="Door" type="StaticBody2D"]
 z_index = -1
 script = ExtResource("1_wxkns")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_1utrb")
 animation = &"closed"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_0ctr0")
+
+[node name="Open" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_uvhx5")

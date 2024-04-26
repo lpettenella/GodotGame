@@ -1,12 +1,22 @@
 extends PlayerState
 class_name PlayerRun
 
+var foot_step_timer = 0
+const FOOT_STEP_DELAY = 0.35
+
+@onready var foot_step = get_parent().get_node("FootStep")
+
 func enter(_msg := {}):
+	foot_step_timer = 0
 	player.jump_timer = 0.0
 	player.jumped = false
 	animated_sprite.play("run")
+	foot_step.play()
 	
 func physics_update(_delta: float):
+	
+	handle_sound_effects(_delta)
+	
 	if player.just_hitted:
 		Transitioned.emit(self, "hit")
 		return
@@ -38,4 +48,12 @@ func physics_update(_delta: float):
 	player.velocity.y += player.GRAVITY
 	player.move_and_slide()
 	
+func handle_sound_effects(_delta):
+	if foot_step_timer >= FOOT_STEP_DELAY and not foot_step.playing:
+		foot_step_timer = 0
+		foot_step.play()
+	else:
+		foot_step_timer += _delta
 	
+func exit():
+	foot_step.playing = false

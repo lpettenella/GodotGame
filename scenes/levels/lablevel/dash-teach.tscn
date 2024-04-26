@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://pbe5uun1i21k"]
+
+[ext_resource type="Texture2D" uid="uid://lcra4bgclf53" path="res://assets/lablevel/dash-teach-1.png" id="1_qtvyd"]
+[ext_resource type="Script" path="res://script/TeachMsg.gd" id="1_y8ikp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bdqqv"]
+radius = 134.004
+
+[node name="DashTeach" type="Node2D"]
+script = ExtResource("1_y8ikp")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_qtvyd")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_bdqqv")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

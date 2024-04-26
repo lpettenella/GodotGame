@@ -1,10 +1,12 @@
-[gd_scene load_steps=34 format=3 uid="uid://b2vvgu5nlc6km"]
+[gd_scene load_steps=36 format=3 uid="uid://b2vvgu5nlc6km"]
 
 [ext_resource type="Texture2D" uid="uid://ckelf1juop1gh" path="res://assets/lablevel/sphere-sprite-sheet.png" id="1_g8pjb"]
 [ext_resource type="Script" path="res://script/gui/DashSphere.gd" id="1_u6enk"]
+[ext_resource type="AudioStream" uid="uid://bdms7pxuqomnp" path="res://audio/80_Power_up_01.wav" id="3_ylf2y"]
+[ext_resource type="Texture2D" uid="uid://bv22248uxiwv2" path="res://assets/lablevel/dash-acquired.png" id="4_dxlvi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ni7m5"]
-size = Vector2(61, 90)
+size = Vector2(2, 94)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kotut"]
 atlas = ExtResource("1_g8pjb")
@@ -202,44 +204,70 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o2occ"]
-size = Vector2(24, 338)
+size = Vector2(2, 93.75)
 
-[sub_resource type="Gradient" id="Gradient_s0rkd"]
-offsets = PackedFloat32Array(0, 0.719557)
+[sub_resource type="Gradient" id="Gradient_8vmxi"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_03eub"]
-gradient = SubResource("Gradient_s0rkd")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_h4vw4"]
+gradient = SubResource("Gradient_8vmxi")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.1)
 
 [node name="DashSphere" type="StaticBody2D"]
 script = ExtResource("1_u6enk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 35)
+position = Vector2(-36, -31)
 shape = SubResource("RectangleShape2D_ni7m5")
-disabled = true
+debug_color = Color(0.870588, 0.313726, 0.411765, 0.419608)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_ugqse")
-animation = &"idle"
-
-[node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(-200, 2)
+animation = &"action"
+frame = 12
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-188, -89)
+position = Vector2(-37, -31.125)
 shape = SubResource("RectangleShape2D_o2occ")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-scale = Vector2(9.89593, 9.89593)
 color = Color(0.831373, 0.270588, 0.709804, 1)
-texture = SubResource("GradientTexture2D_03eub")
+texture = SubResource("GradientTexture2D_h4vw4")
+
+[node name="PowerUp" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_ylf2y")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.800649, 0.295421, 0.653241, 0.4)
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("4_dxlvi")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -7,7 +7,10 @@ var ghost_time : Timer
 var rollinv_time : Timer
 var dash_fx 
 
+@onready var dash_sound = get_parent().get_node("DashSound")
+
 func enter(_msg := {}):
+	dash_sound.play()
 	animated_sprite.play("dash")
 	dash_vector = player.get_input_vector()
 	if dash_vector == Vector2(0, 0).normalized():

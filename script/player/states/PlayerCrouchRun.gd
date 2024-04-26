@@ -5,8 +5,8 @@ var to_crouch = false
 
 func enter(_msg := {}):
 	animated_sprite.play("crouch-run")
-	collision_shape.shape.size.y = 79.5
-	collision_shape.position.y = 39.75
+	collision_shape.disabled = true
+	crouch_collision.disabled = false
 	
 func physics_update(_delta: float):
 	if player.just_hitted:
@@ -41,14 +41,13 @@ func physics_update(_delta: float):
 		to_crouch = true
 		Transitioned.emit(self, "crouchidle")
 	else: 
-		player.velocity.x = 300 * player.facing
+		player.velocity.x = player.SPEED / 2 * player.facing
 		
 	player.velocity.y += player.GRAVITY
 	player.move_and_slide()
 	
 func exit():
-	#if not to_crouch:	
-	collision_shape.shape.size.y = 125
-	collision_shape.position.y = 17
+	collision_shape.disabled = false
+	crouch_collision.disabled = true
 	
 	

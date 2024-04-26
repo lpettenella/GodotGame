@@ -10,7 +10,6 @@ var state = "deactive"
 
 func _ready():
 	state = "active" if active else "deactive"
-	$Area2D/CollisionShape2D.disabled = false if active else true
 
 func _process(delta):
 	if state != $AnimatedSprite2D.animation:
@@ -19,16 +18,16 @@ func _process(delta):
 func do_active():
 	active = true
 	state = "active"
-	$Area2D/CollisionShape2D.disabled = false
+	#$Area2D/CollisionShape2D.disabled = false
 	#$PointLight2D.enabled = true
 	
 func do_deactive():
 	active = false
 	state = "deactive"
-	$Area2D/CollisionShape2D.disabled = true
 	$PointLight2D.enabled = false
 		
 func do_interact():
+	print("interacted")
 	if not active: return
 	Pressed.emit(button_number)
 	flash_btn()

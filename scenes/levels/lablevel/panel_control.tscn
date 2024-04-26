@@ -1,35 +1,39 @@
-[gd_scene load_steps=5 format=3 uid="uid://cwne23egawjwl"]
+[gd_scene load_steps=6 format=3 uid="uid://cwne23egawjwl"]
 
 [ext_resource type="Script" path="res://script/PanelControl.gd" id="1_3x3nf"]
 [ext_resource type="Texture2D" uid="uid://c7p4ro40h73rp" path="res://assets/lablevel/pannel-control.png" id="1_a57a3"]
 [ext_resource type="PackedScene" uid="uid://cjchjytsxdbv1" path="res://scenes/levels/lablevel/button.tscn" id="2_uh5oo"]
+[ext_resource type="AudioStream" uid="uid://dsrm8yj2n080w" path="res://audio/033_Denied_03.wav" id="4_l81cj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2ltkp"]
-size = Vector2(319, 108)
+size = Vector2(64, 22)
 
 [node name="PanelControl" type="StaticBody2D"]
+z_index = -1
 script = ExtResource("1_3x3nf")
 password = [2, 3, 1]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 25)
+position = Vector2(0, 5)
 shape = SubResource("RectangleShape2D_2ltkp")
 disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(5, 5)
 texture = ExtResource("1_a57a3")
 
 [node name="Buttons" type="Node2D" parent="."]
 
 [node name="Button" parent="Buttons" instance=ExtResource("2_uh5oo")]
-position = Vector2(-120, 30)
+position = Vector2(-24, 6)
 button_number = 1
 
 [node name="Button2" parent="Buttons" instance=ExtResource("2_uh5oo")]
-position = Vector2(0, 30)
+position = Vector2(0, 6)
 button_number = 2
 
 [node name="Button3" parent="Buttons" instance=ExtResource("2_uh5oo")]
-position = Vector2(120, 30)
+position = Vector2(24, 6)
 button_number = 3
+
+[node name="Denied" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_l81cj")

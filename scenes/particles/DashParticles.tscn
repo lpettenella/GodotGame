@@ -12,13 +12,11 @@ direction = Vector3(0, 0, 0)
 initial_velocity_min = 30.0
 initial_velocity_max = 100.0
 gravity = Vector3(0, 0, 0)
-scale_min = 7.0
-scale_max = 8.0
+scale_max = 2.0
 color = Color(1, 0.647059, 0.827451, 1)
 color_ramp = SubResource("GradientTexture1D_b3hm6")
 
 [node name="GPUParticles2D" type="GPUParticles2D"]
-scale = Vector2(5, 5)
 emitting = false
 amount = 40
 process_material = SubResource("ParticleProcessMaterial_02a1r")

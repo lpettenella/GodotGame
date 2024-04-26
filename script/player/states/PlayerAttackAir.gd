@@ -3,8 +3,10 @@ class_name PlayerAttackAir
 
 var attack_air_area : CollisionShape2D
 var on_air = false
+@onready var attack_sound = get_parent().get_node("Attack")
 
 func enter(_msg := {}):
+	attack_sound.play()
 	animated_sprite.play("jumpattack")
 	player.attacked = false
 	

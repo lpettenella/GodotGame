@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var health_bar = $GUI/PlayerBar/HealthBar
-@onready var player = $Player
+@onready var player = $World/Player
 
 func _ready():
 	Engine.time_scale = 1.0

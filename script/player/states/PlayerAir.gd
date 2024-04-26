@@ -18,8 +18,10 @@ func emit_particles():
 func enter(msg := {}):
 	animated_sprite.play("jump")
 	if msg.has("do_jump_wall"):
+		$Jump.play()
 		from_wall = true
 	if msg.has("do_jump"):
+		$Jump.play()
 		emit_particles()
 		jump = true
 		

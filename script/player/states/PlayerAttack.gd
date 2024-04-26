@@ -3,14 +3,16 @@ class_name PlayerAttack
 
 var on_air = false
 var actual_combo
+@onready var attack_sound = get_parent().get_node("Attack")
 
 func enter(_msg := {}):
+	attack_sound.play()
 	actual_combo = player.melee_map[player.combo_count]
 	animated_sprite.play(actual_combo)
 	player.attacked = false
 	player.queued_attack = false
 	if player.get_input_direction() != 0:
-		player.velocity.x = 500 * player.get_input_direction()
+		player.velocity.x = player.SPEED * player.get_input_direction()
 	
 func physics_update(_delta: float):
 	if player.just_hitted:

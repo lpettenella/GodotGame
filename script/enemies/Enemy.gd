@@ -12,15 +12,15 @@ extends CharacterBody2D
 @export var frame_handle_hit = 6
 @export var can_born = false
 
-const GRAVITY = 70
-const SPEED = 250
-const KNOCKBACK_SPEED = 200
+const GRAVITY = 14
+const SPEED = 50
+const KNOCKBACK_SPEED = 40
 const WAGGLE_DELAY_TIME = 2.0
 const WAGGLE_TIME = 2.0
 const UP = Vector2.UP
 
 var direction = -1
-var state = "idle"
+@export var state = "idle"
 var rng = RandomNumberGenerator.new()
 var my_random_number = 0
 
@@ -52,6 +52,7 @@ var dir_changed = false
 func _ready():
 	if can_born:
 		state = "born"
+	$RayCast2D.force_raycast_update()
 	raycast_pos = $RayCast2D.position.x
 	waggle_delay_timer = randf_range(0, WAGGLE_DELAY_TIME)
 	randomize()
@@ -67,7 +68,6 @@ func _physics_process(delta):
 	else:
 		$RayCast2D.position.x = -raycast_pos 
 
-	get_children()
 	if !fly:
 		velocity.y += GRAVITY
 
@@ -117,10 +117,10 @@ func handle_states(delta):
 		
 	move_and_slide()
 	
-func waggle(delta): 
+func waggle(delta): 	
 	if its_waggle_time:
 		state = "run"
-		velocity.x = direction * 60
+		velocity.x = direction * 20
 		waggle_timer += delta
 		if waggle_timer >= WAGGLE_TIME:
 			its_waggle_time = false

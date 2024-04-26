@@ -6,6 +6,11 @@ var gravity_fx
 var offset_fx
 var particles
 
+var foot_step_timer = 0
+const FOOT_STEP_DELAY = 0.085
+
+@onready var foot_step = get_parent().get_node("FootStep")
+
 func emit_particles():
 	particles.position = player.get_node("WallArea").global_position
 	particles.process_material.gravity.x = gravity_fx * player.facing 
@@ -14,6 +19,8 @@ func emit_particles():
 	get_tree().current_scene.add_child(particles)
 
 func enter(_msg := {}):
+	foot_step_timer = 0
+	foot_step.play()
 	particles = player.wall_fx.instantiate()
 	gravity_fx = particles.process_material.gravity.x
 	offset_fx = particles.process_material.emission_shape_offset.y
@@ -25,7 +32,7 @@ func enter(_msg := {}):
 	
 func physics_update(_delta: float):
 	emit_particles()
-	handle_animation()
+	handle_animation(_delta)
 	
 	if player.just_hitted:
 		Transitioned.emit(self, "hit")
@@ -39,13 +46,17 @@ func physics_update(_delta: float):
 		if player.is_touching_ceiling_long():
 			player.velocity.x = 0
 			player.velocity.y = 0
-			collision_shape.shape.size.y = 79.5
-			collision_shape.position.y = 39.75
-			#player.position.y += -125
-			#player.position.x += -69 * -player.facing 
-			player.position.y += -48
-			player.position.x += -48 * -player.facing
-			Transitioned.emit(self, "crouchidle")
+
+			collision_shape.disabled = true
+			crouch_collision.disabled = false
+			
+			print(player.get_node("WallChecker").global_position.y)
+
+			var wall_checker_pos = player.get_node("WallChecker").global_position.y
+			#high engineering >.>
+			player.position.y += -16 - (int(wall_checker_pos) % 16)
+			player.position.x += -16 * -player.facing
+			Transitioned.emit(self, "crouchidle",  {from_wall_climb = true})
 		#else: 
 			##player.position.y += -125
 			##player.position.x += -69 * -player.facing 
@@ -60,7 +71,10 @@ func physics_update(_delta: float):
 		Transitioned.emit(self, "air")
 				
 	if Input.is_action_just_pressed("jump"):
-		player.jumped = false
+		if Input.is_action_pressed("down"):
+			player.jumped = true	
+		else:
+			player.jumped = false
 		player.jump_timer = 0.0
 		player.position.x -= 10 * player.facing
 		player.flip_player(player.facing * -1)
@@ -72,17 +86,30 @@ func physics_update(_delta: float):
 	player.move_and_slide()
 	
 func exit():
+	foot_step.playing = false
 	particles.emitting = false
+	$Slide.playing = false
 	
-func handle_animation():
+func handle_animation(_delta):
 	if player.velocity.y >= 0:
+		if not $Slide.playing:
+			$Slide.play()
 		if animated_sprite.animation != "wall":
 			animated_sprite.play("wall")
 		player.velocity.y = player.GRAVITY * 2
 		particles.process_material.emission_shape_offset.y = -10
 	elif player.velocity.y < 0:
+		$Slide.playing = false
+		handle_sound_effects(_delta)
 		if animated_sprite.animation != "prewall":
 			animated_sprite.play("prewall")
 		player.velocity.y += player.GRAVITY
 		particles.process_material.emission_shape_offset.y = 10
+		
+func handle_sound_effects(_delta):
+	if foot_step_timer >= FOOT_STEP_DELAY:
+		foot_step_timer = 0
+		foot_step.play()
+	else:
+		foot_step_timer += _delta
 

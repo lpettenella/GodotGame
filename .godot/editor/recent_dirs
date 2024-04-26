@@ -1,13 +1,13 @@
-res://sprite-sheet
 res://script
+res://sprite-sheet
+res://script/gui
+res://assets/lablevel
+res://scenes/levels/lablevel
 res://scenes/particles
 res://script/player/states
 res://scenes/enemies
 res://scenes/gui
 res://script/player
-res://assets/lablevel
-res://scenes/levels/lablevel
-res://script/gui
 res://script/enemies
 res://addons/SimpleTODO
 res://script/state

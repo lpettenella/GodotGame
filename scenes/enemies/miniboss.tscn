@@ -1,10 +1,10 @@
-[gd_scene load_steps=56 format=3 uid="uid://cg555v7dexny3"]
+[gd_scene load_steps=57 format=3 uid="uid://cg555v7dexny3"]
 
 [ext_resource type="Script" path="res://script/player/Miniboss.gd" id="1_loom4"]
 [ext_resource type="Texture2D" uid="uid://kc7ttnv705f5" path="res://sprite-sheet/miniboss.png" id="1_v4xd5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sodaf"]
-size = Vector2(412, 316)
+size = Vector2(66, 53)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d0grp"]
 atlas = ExtResource("1_v4xd5")
@@ -129,6 +129,10 @@ region = Rect2(1664, 144, 208, 144)
 [sub_resource type="AtlasTexture" id="AtlasTexture_tc0a6"]
 atlas = ExtResource("1_v4xd5")
 region = Rect2(1872, 144, 208, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wo48a"]
+atlas = ExtResource("1_v4xd5")
+region = Rect2(416, 144, 208, 144)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_trhrk"]
 atlas = ExtResource("1_v4xd5")
@@ -264,9 +268,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qad65")
+}, {
+"duration": 1.0,
+"texture": null
 }],
 "loop": false,
-"name": &"death",
+"name": &"catch",
 "speed": 11.0
 }, {
 "frames": [{
@@ -303,6 +310,14 @@ animations = [{
 "loop": false,
 "name": &"down",
 "speed": 13.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wo48a")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -374,16 +389,16 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3isj0"]
-size = Vector2(380, 301)
+size = Vector2(98, 54)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sqmhr"]
-size = Vector2(253, 312)
+size = Vector2(52, 53)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7c870"]
-radius = 7.77021
+radius = 1.54983
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dhyag"]
-radius = 163.166
+radius = 32.0
 
 [node name="Miniboss" type="CharacterBody2D"]
 z_index = -1
@@ -392,21 +407,19 @@ script = ExtResource("1_loom4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2(8, 42)
+position = Vector2(2, 14.5)
 shape = SubResource("RectangleShape2D_sodaf")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_57drj")
-animation = &"death"
-frame = 2
+animation = &"catch"
 
 [node name="CatchArea" type="Area2D" parent="."]
 collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CatchArea"]
-position = Vector2(0, 53.5)
+position = Vector2(0, 14)
 shape = SubResource("RectangleShape2D_3isj0")
 
 [node name="AttackArea" type="Area2D" parent="."]
@@ -416,13 +429,13 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
 modulate = Color(0.847059, 0.184314, 0.878431, 1)
-position = Vector2(-259.5, 43)
+position = Vector2(-49, 14.5)
 shape = SubResource("RectangleShape2D_sqmhr")
 
 [node name="NearArea" type="Area2D" parent="."]
 visible = false
 collision_layer = 4
-collision_mask = 2
+collision_mask = 18
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NearArea"]
 modulate = Color(0, 0, 0.0117647, 1)
@@ -436,7 +449,7 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackAreaUp"]
 modulate = Color(0.588235, 0.698039, 0, 1)
-position = Vector2(10, 43.5)
+position = Vector2(2, 9)
 shape = SubResource("CircleShape2D_dhyag")
 
 [node name="AttackDelay" type="Timer" parent="."]
@@ -451,6 +464,7 @@ one_shot = true
 [connection signal="body_entered" from="CatchArea" to="." method="_on_catch_area_body_entered"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]
 [connection signal="body_exited" from="AttackArea" to="." method="_on_attack_area_body_exited"]
+[connection signal="area_entered" from="NearArea" to="." method="_on_near_area_area_entered"]
 [connection signal="body_entered" from="NearArea" to="." method="_on_near_area_body_entered"]
 [connection signal="body_exited" from="NearArea" to="." method="_on_near_area_body_exited"]
 [connection signal="body_entered" from="AttackAreaUp" to="." method="_on_attack_area_up_body_entered"]

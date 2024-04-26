@@ -12,12 +12,12 @@ lifetime_randomness = 0.5
 particle_flag_disable_z = true
 direction = Vector3(0, 0, 0)
 spread = 70.0
-initial_velocity_min = 325.59
-initial_velocity_max = 550.44
+initial_velocity_min = 65.12
+initial_velocity_max = 110.09
 gravity = Vector3(0, 0, 0)
 radial_accel_max = 66.97
-scale_min = 20.0
-scale_max = 20.0
+scale_min = 3.0
+scale_max = 4.0
 scale_curve = SubResource("CurveTexture_hrxgu")
 color = Color(0.882353, 0.368627, 0.341176, 1)
 

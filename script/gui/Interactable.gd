@@ -1,5 +1,7 @@
 extends StaticBody2D
 class_name Interactable
+
+signal Interact 
 	
 func do_interact():
 	pass

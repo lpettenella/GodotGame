@@ -11,16 +11,18 @@ class_name Player
 @onready var health = max_health
 signal health_changed
 
-const GRAVITY = 100
-const SPEED = 600
+const GRAVITY = 20
+const SPEED = 120
 const UP = Vector2.UP
-const FALL_LIMIT = 1500
-const JUMP_IMPULSE = 1100
+const FALL_LIMIT = 300
+const JUMP_IMPULSE = 220
 const JUMP_TIMER_MAX = 0.2
 const SLIDE_ON_WALL_TIME = 0.5
 const STAY_ON_WALL_TIME = 1.0
 const CLIMB_TIME = 1.0
-const SPEED_IMPULSE = 70
+const SPEED_IMPULSE = 16
+const KNOCK_BACK_SPEED = 20
+const HITTED_SPEED = 60
 
 const melee_map = ["attack1", "attack2", "attack3"]
 var combo_count = -1
@@ -56,6 +58,8 @@ func _physics_process(delta):
 		velocity.y = FALL_LIMIT
 		
 	if can_interact_with and Input.is_action_just_pressed("interact"):
+		if interactable_obj is ButtonPanel or interactable_obj is LeverSphere:
+			$Click.play()
 		interactable_obj.do_interact()
 
 func _ready():
@@ -105,6 +109,7 @@ func is_on_wall_head():
 	return $WallCheckerHead.is_colliding()
 	
 func is_touching_ceiling():
+	print($CeilingChecker.is_colliding())
 	return $CeilingChecker.is_colliding()
 	
 func is_touching_ceiling_long():
@@ -188,7 +193,7 @@ func frame_freeze(time_scale, duration):
 	await get_tree().create_timer(duration * time_scale).timeout
 	Engine.time_scale = 1.0
 	
-func handle_knockback(amount = 100):
+func handle_knockback(amount = KNOCK_BACK_SPEED):
 	$KnockbackTime.start()
 	velocity.x = amount * (facing * -1)
 	
@@ -216,6 +221,7 @@ func _on_dash_delay_timeout():
 # areas
 func _on_AttackArea_body_entered(body):
 	if body.has_method("handle_hit") and !$AttackArea/CollisionShape2D.disabled:
+		$Hit.play()
 		handle_knockback()
 		body.handle_hit(facing)
 		screenShake.start()
@@ -239,12 +245,14 @@ func _on_FeetArea_body_exited(body):
 
 func _on_interaction_area_body_entered(body):
 	if body is Interactable:
+		print(body.name, " entered")
 		can_interact_with = true
 		body.do_highlight()
 		interactable_obj = body
 
 func _on_interaction_area_body_exited(body):
 	if body is Interactable:
+		print(body.name, " exited")
 		can_interact_with = false
 		body.undo_highlight()
 		interactable_obj = null

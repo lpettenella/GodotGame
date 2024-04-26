@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cjchjytsxdbv1"]
+[gd_scene load_steps=21 format=3 uid="uid://cjchjytsxdbv1"]
 
 [ext_resource type="Script" path="res://script/gui/Button.gd" id="1_8a66c"]
 [ext_resource type="Texture2D" uid="uid://b53n21rt0saai" path="res://assets/lablevel/button.png" id="1_trgeo"]
@@ -120,8 +120,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_655jq"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wpawi"]
+size = Vector2(4, 4)
 
 [sub_resource type="Gradient" id="Gradient_myrpk"]
 offsets = PackedFloat32Array(0, 0.586716)
@@ -129,6 +128,8 @@ colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_drsc8"]
 gradient = SubResource("Gradient_myrpk")
+width = 16
+height = 16
 fill = 2
 fill_from = Vector2(0.5, 0.5)
 
@@ -137,25 +138,13 @@ collision_layer = 8
 script = ExtResource("1_8a66c")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_ccxft")
 animation = &"highlight"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_655jq")
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 8
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_wpawi")
-
 [node name="PointLight2D" type="PointLight2D" parent="."]
-scale = Vector2(1.73438, 1.73438)
 enabled = false
 color = Color(0.862745, 0.12549, 0.117647, 1)
 texture = SubResource("GradientTexture2D_drsc8")
-
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

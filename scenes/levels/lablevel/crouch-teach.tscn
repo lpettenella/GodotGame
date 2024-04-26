@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://domb877lpfff"]
+
+[ext_resource type="Texture2D" uid="uid://ckvgte8qyrx3q" path="res://assets/lablevel/crouch-teach-1.png" id="1_qnbo3"]
+[ext_resource type="Script" path="res://script/TeachMsg.gd" id="1_sk3uv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bjpmr"]
+size = Vector2(228, 73.75)
+
+[node name="CrouchTeach" type="Node2D"]
+script = ExtResource("1_sk3uv")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_qnbo3")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_bjpmr")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

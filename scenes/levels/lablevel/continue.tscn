@@ -1,0 +1,62 @@
+[gd_scene load_steps=10 format=3 uid="uid://bv8toguwt1uxy"]
+
+[ext_resource type="Texture2D" uid="uid://cb3e6xss5gdvq" path="res://assets/lablevel/continue/continue1.png" id="1_mjmef"]
+[ext_resource type="Script" path="res://script/TeachMsg.gd" id="1_tklr4"]
+[ext_resource type="Texture2D" uid="uid://cotmgj61aa2yp" path="res://assets/lablevel/continue/continue2.png" id="2_oy1r2"]
+[ext_resource type="Texture2D" uid="uid://cxyse5dvnan1t" path="res://assets/lablevel/continue/continue3.png" id="3_lsqvd"]
+[ext_resource type="Texture2D" uid="uid://drixncrfhe3wu" path="res://assets/lablevel/continue/continue4.png" id="4_mtgry"]
+[ext_resource type="Texture2D" uid="uid://dct0gcm6sv863" path="res://assets/lablevel/continue/continue5.png" id="5_ycdo7"]
+[ext_resource type="Texture2D" uid="uid://ddwr4xwdj6lrl" path="res://assets/lablevel/continue/continue6.png" id="6_25bir"]
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_in2rx"]
+frames = 6
+pause = true
+one_shot = true
+frame_0/texture = ExtResource("1_mjmef")
+frame_0/duration = 6.0
+frame_1/texture = ExtResource("2_oy1r2")
+frame_1/duration = 0.3
+frame_2/texture = ExtResource("3_lsqvd")
+frame_2/duration = 0.3
+frame_3/texture = ExtResource("4_mtgry")
+frame_3/duration = 0.3
+frame_4/texture = ExtResource("5_ycdo7")
+frame_4/duration = 0.3
+frame_5/texture = ExtResource("6_25bir")
+frame_5/duration = 0.3
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ac2e"]
+size = Vector2(87, 59)
+
+[node name="Continue" type="Node2D"]
+script = ExtResource("1_tklr4")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AnimatedTexture_in2rx")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_6ac2e")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

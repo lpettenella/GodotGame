@@ -22,7 +22,12 @@ func _on_area_2d_body_entered(body):
 		
 func _on_animated_sprite_2d_animation_finished():
 	if $AnimatedSprite2D.animation == "action":
+		$PowerUp.play()
 		player.freezed = false
 		player.can_dash = true
 		player.max_dash += 1
 		$Area2D/CollisionShape2D.disabled = true
+		$CollisionShape2D.disabled = true
+		$CanvasLayer/Control.visible = true
+		await wait(3)
+		$CanvasLayer/Control.visible = false

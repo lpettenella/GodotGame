@@ -82,10 +82,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="8"]
-size = Vector2(75, 50)
+size = Vector2(15, 10)
 
 [sub_resource type="RectangleShape2D" id="9"]
-size = Vector2(10, 47.8289)
+size = Vector2(2, 10)
 
 [node name="Meat" type="CharacterBody2D"]
 modulate = Color(1, 1, 1, 0.266667)
@@ -95,13 +95,11 @@ script = ExtResource("2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(-2, -15)
-scale = Vector2(5, 5)
 sprite_frames = SubResource("7")
 frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 0)
+position = Vector2(0.5, 3)
 shape = SubResource("8")
 
 [node name="Center" type="Area2D" parent="."]
@@ -109,5 +107,5 @@ collision_layer = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Center"]
 modulate = Color(0.337255, 0, 1, 1)
-position = Vector2(0, 0.914446)
+position = Vector2(0, 3)
 shape = SubResource("9")

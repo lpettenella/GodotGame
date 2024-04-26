@@ -262,42 +262,43 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jrw53"]
-size = Vector2(77, 358)
+size = Vector2(15, 71.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8pml1"]
-size = Vector2(77, 241)
+size = Vector2(15, 49.0938)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nc2ra"]
-size = Vector2(22, 608)
+size = Vector2(9.09524, 142.25)
 
 [node name="Pillar" type="StaticBody2D"]
 script = ExtResource("1_v3btm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(7, 7)
+scale = Vector2(1.4, 1.4)
 sprite_frames = SubResource("SpriteFrames_gmrph")
 animation = &"phase1"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-17.5, -141)
+position = Vector2(-3.5, -28.75)
 shape = SubResource("RectangleShape2D_jrw53")
 
 [node name="BottomCS" type="CollisionShape2D" parent="."]
-position = Vector2(-16.5, 158.5)
+position = Vector2(-3.5, 31.4531)
 shape = SubResource("RectangleShape2D_8pml1")
 
 [node name="Enter" type="Area2D" parent="."]
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enter"]
-position = Vector2(-392, -7)
+position = Vector2(-100, -15)
+scale = Vector2(0.840001, 1)
 shape = SubResource("RectangleShape2D_nc2ra")
 
 [node name="Exit" type="Area2D" parent="."]
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exit"]
-position = Vector2(400, -5)
+position = Vector2(100, -15)
 shape = SubResource("RectangleShape2D_nc2ra")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

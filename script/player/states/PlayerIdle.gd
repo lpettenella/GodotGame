@@ -35,4 +35,5 @@ func physics_update(_delta: float):
 		Transitioned.emit(self, player.melee_map[player.combo_count])
 
 	player.velocity.x = lerp(player.velocity.x, 0.0, 0.3)
+	player.velocity.y += player.GRAVITY
 	player.move_and_slide()

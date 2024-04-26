@@ -20,8 +20,9 @@ func _process(delta):
 		
 	if $AnimatedSprite2D.animation == "brake" and $AnimatedSprite2D.frame == 6 and mob_instance == null:
 		mob_instance = mob.instantiate()
+		mob_instance.can_born = true
 		mob_instance.position.x = global_position.x
-		mob_instance.position.y = global_position.y
+		mob_instance.position.y = global_position.y - 1
 		get_tree().current_scene.add_child(mob_instance)
 	
 func handle_hit(from): 

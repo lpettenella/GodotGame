@@ -1,6 +1,7 @@
 extends StaticBody2D
 
 @export var password = [1, 2, 3]
+@export var active_btn = []
 
 var inserted_pwd : Array = []
 var buttons : Array = []
@@ -8,9 +9,11 @@ var door : Door
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var index = 0
+	var index = 1
 	for child in $Buttons.get_children():
 		if child is ButtonPanel:
+			if index in active_btn:
+				child.do_active()
 			child.Pressed.connect(on_pressed)
 			buttons.append(child)
 			index += 1
@@ -34,6 +37,7 @@ func check_pwd():
 		door.open()
 	else:
 		print("wrong password")
+		$Denied.play()
 		inserted_pwd = []
 		for button in buttons:
 			button.undo_press_button()

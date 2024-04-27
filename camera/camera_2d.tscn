@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://br622gdceid5"]
+
+[ext_resource type="PackedScene" uid="uid://1ui5e1hv33c1" path="res://camera/screen_shake.tscn" id="1_jgs3w"]
+
+[node name="Camera2D" type="Camera2D"]
+position = Vector2(2895.1, 857.968)
+limit_left = 57
+limit_top = -333
+limit_right = 3300
+limit_bottom = 923
+position_smoothing_enabled = true
+position_smoothing_speed = 4.0
+editor_draw_limits = true
+
+[node name="ScreenShake" parent="." instance=ExtResource("1_jgs3w")]

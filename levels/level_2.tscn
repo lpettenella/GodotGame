@@ -1,0 +1,143 @@
+[gd_scene load_steps=12 format=3 uid="uid://bxkcljsqk3swm"]
+
+[ext_resource type="Texture2D" uid="uid://deyvfke34iuos" path="res://levels/level2/background/background.png" id="1_4pgaw"]
+[ext_resource type="Texture2D" uid="uid://drkbfw6ua8wc" path="res://levels/level2/background/background01.png" id="2_ssfnb"]
+[ext_resource type="Texture2D" uid="uid://d025srffmomdc" path="res://levels/level2/background/background02.png" id="3_wul0r"]
+[ext_resource type="TileSet" uid="uid://8wwsca0pvx0w" path="res://levels/level1/level1.tres" id="4_jpofh"]
+[ext_resource type="PackedScene" uid="uid://bc22fmtpjf4qe" path="res://player/scenes/player.tscn" id="5_vint8"]
+[ext_resource type="PackedScene" uid="uid://1ui5e1hv33c1" path="res://camera/screen_shake.tscn" id="6_kkqnu"]
+[ext_resource type="PackedScene" uid="uid://cg555v7dexny3" path="res://enemies/boss/miniboss.tscn" id="7_exyda"]
+
+
+[sub_resource type="GDScript" id="GDScript_spejq"]
+script/source = "extends Node
+
+const TRANS = Tween.TRANS_SINE
+const EASE = Tween.EASE_IN_OUT
+
+var amplitude = 0
+var priority = 0
+
+@onready var camera: Camera2D = get_tree().current_scene.get_node(\"Player\").get_node(\"Camera2D\")
+@onready var tween: Tween = create_tween()
+
+func start(duration = 0.2, frequency = 15, amplitude = 16, priority = 0):
+	if (priority >= self.priority):
+		self.priority = priority
+		self.amplitude = amplitude
+
+#		$Duration.wait_time = duration
+#		$Frequency.wait_time = 1 / float(frequency)
+#		$Duration.start()
+#		$Frequency.start()
+		
+		_new_shake()
+
+func _new_shake():
+	var rand = Vector2()
+	rand.x = randf_range(-amplitude, amplitude)
+	rand.y = randf_range(-amplitude, amplitude)
+	print(\"Shake\")
+	var ttween = create_tween()
+	ttween.tween_property(self, \"offset\", Vector2(1200, 1200), 1)
+#	tween.interpolate_property(camera, \"offset\", camera.offset, rand, $Frequency.wait_time, TRANS, EASE)
+#	tween.start()
+
+func _reset():
+#	tween.interpolate_property(camera, \"offset\", camera.offset, Vector2(), $Frequency.wait_time, TRANS, EASE)
+#	tween.tween_property(self, \"offset\", Vector2(), $Frequency.wait_time)
+#	tween.start()
+	priority = 0
+
+func _on_Frequency_timeout():
+	_new_shake()
+
+func _on_Duration_timeout():
+#	_reset()
+#	$Frequency.stop()
+	return
+"
+
+[sub_resource type="Gradient" id="Gradient_5g8x6"]
+offsets = PackedFloat32Array(0, 0.834646, 1)
+colors = PackedColorArray(0.015625, 0.015625, 0.015625, 1, 0.461731, 0.47633, 0.695313, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fdv66"]
+gradient = SubResource("Gradient_5g8x6")
+width = 2048
+
+[sub_resource type="Environment" id="Environment_78dw6"]
+background_mode = 3
+ambient_light_color = Color(0.498039, 0.117647, 0.117647, 1)
+ambient_light_energy = 1.18
+tonemap_white = 1.09
+glow_enabled = true
+glow_levels/1 = 1.0
+glow_levels/2 = 1.0
+glow_levels/3 = 0.0
+glow_levels/4 = 1.0
+glow_levels/5 = 0.0
+glow_intensity = 0.12
+glow_strength = 1.01
+glow_bloom = 0.29
+glow_blend_mode = 1
+glow_hdr_scale = 1.51
+glow_hdr_luminance_cap = 27.36
+adjustment_enabled = true
+adjustment_contrast = 1.1
+adjustment_color_correction = SubResource("GradientTexture2D_fdv66")
+
+[node name="level2" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("5_vint8")]
+position = Vector2(381, 788)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(0.4, 0.4)
+position_smoothing_enabled = true
+script = SubResource("GDScript_spejq")
+
+[node name="ScreenShake" parent="Player/Camera2D" instance=ExtResource("6_kkqnu")]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+position = Vector2(1451, 816)
+motion_scale = Vector2(0, 0)
+motion_mirroring = Vector2(4800, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+scale = Vector2(5, 5)
+texture = ExtResource("1_4pgaw")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+position = Vector2(1451, 816)
+motion_scale = Vector2(0.1, 0)
+motion_mirroring = Vector2(4800, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+scale = Vector2(5, 5)
+texture = ExtResource("2_ssfnb")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+position = Vector2(1451, 822)
+motion_scale = Vector2(0.2, 0.067)
+motion_mirroring = Vector2(4800, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+position = Vector2(0, -289)
+scale = Vector2(5, 5)
+texture = ExtResource("3_wul0r")
+
+[node name="TileMap" type="TileMap" parent="."]
+scale = Vector2(5, 5)
+tile_set = ExtResource("4_jpofh")
+format = 2
+layer_0/tile_data = PackedInt32Array(851938, 65537, 0, 851939, 65537, 0, 851940, 65537, 0, 851941, 65537, 0, 851942, 65537, 0, 851943, 65537, 0, 851944, 65537, 0, 851945, 65537, 0, 851946, 65537, 0, 851947, 65537, 0, 851948, 65537, 0, 851949, 65537, 0, 851950, 65537, 0, 851951, 65537, 0, 851952, 65537, 0, 851953, 65537, 0, 851954, 65537, 0, 851955, 65537, 0, 851956, 65537, 0, 851957, 65537, 0, 851958, 65537, 0, 851959, 65537, 0, 851960, 65537, 0, 851961, 65537, 0, 851962, 65537, 0, 851963, 65537, 0, 851964, 65537, 0, 851965, 65537, 0, 851966, 65537, 0, 851967, 65537, 0, 786432, 65537, 0, 786433, 65537, 0, 786434, 65537, 0, 786436, 65537, 0, 786437, 65537, 0, 786438, 65537, 0, 786439, 65537, 0, 786440, 65537, 0, 786441, 65537, 0, 786442, 65537, 0, 786443, 65537, 0, 786444, 65537, 0, 786445, 65537, 0, 786446, 65537, 0, 786447, 65537, 0, 786448, 65537, 0, 786449, 65537, 0, 786450, 65537, 0, 786451, 65537, 0, 786452, 65537, 0, 786453, 65537, 0, 786454, 65537, 0, 786455, 65537, 0, 786456, 65537, 0, 786457, 65537, 0, 786458, 65537, 0, 786459, 65537, 0, 786460, 65537, 0, 786461, 65537, 0, 851936, 65537, 0, 786463, 65537, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_78dw6")
+
+[node name="Miniboss" parent="." node_paths=PackedStringArray("player") instance=ExtResource("7_exyda")]
+position = Vector2(1352, 727)
+player = NodePath("../Player")

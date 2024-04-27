@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkkn7x2lptr6"]
+
+[ext_resource type="Texture2D" uid="uid://c16g0iaq2yfm6" path="res://gui/healthbar/assets/charicon.png" id="1"]
+
+[node name="CharIconGUI" type="Panel"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(30, 30)
+offset_right = 30.0
+offset_bottom = 30.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1")
+centered = false

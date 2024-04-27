@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://d2e4xw42wg36t"]
+
+[ext_resource type="Texture2D" uid="uid://b8n768w4xr13l" path="res://levels/lab_levels/door/lab-door_sprite-sheet.png" id="1_4y8hx"]
+[ext_resource type="Script" path="res://common/door/door.gd" id="1_wxkns"]
+[ext_resource type="AudioStream" uid="uid://d0kbu3kf3jyuc" path="res://audio/qubodup-DoorClose06.mp3" id="3_uvhx5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_emi5m"]
+atlas = ExtResource("1_4y8hx")
+region = Rect2(0, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8yx8m"]
+atlas = ExtResource("1_4y8hx")
+region = Rect2(0, 80, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mbm85"]
+atlas = ExtResource("1_4y8hx")
+region = Rect2(80, 80, 80, 80)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1utrb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_emi5m")
+}],
+"loop": true,
+"name": &"closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8yx8m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mbm85")
+}],
+"loop": true,
+"name": &"open",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0ctr0"]
+size = Vector2(6, 48)
+
+[node name="Door" type="StaticBody2D"]
+z_index = -1
+script = ExtResource("1_wxkns")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_1utrb")
+animation = &"closed"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_0ctr0")
+
+[node name="Open" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_uvhx5")

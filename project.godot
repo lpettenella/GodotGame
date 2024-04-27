@@ -11,19 +11,19 @@ config_version=5
 [application]
 
 config/name="Bird"
-run/main_scene="res://scenes/levels/level1.tscn"
+run/main_scene="res://levels/level1/level1.tscn"
 config/features=PackedStringArray("4.2")
 boot_splash/bg_color=Color(0.156863, 0.682353, 0.737255, 1)
 
 [autoload]
 
-InputBuffer="*res://script/InputBuffer.gd"
+InputBuffer="*res://common/input_buffer.gd"
 
 [display]
 
 window/size/viewport_width=480
 window/size/viewport_height=270
-window/size/mode=4
+window/size/mode=3
 window/size/window_width_override=760
 window/size/window_height_override=540
 window/stretch/mode="canvas_items"

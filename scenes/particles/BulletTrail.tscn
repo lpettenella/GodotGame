@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c5upmw7hbonuq"]
-
-[ext_resource type="Script" path="res://scenes/particles/BulletTrail.gd" id="1"]
-
-[node name="Line2D" type="Line2D"]
-script = ExtResource("1")

@@ -1,0 +1,43 @@
+class_name AttackComponent
+extends Area2D
+
+signal attack
+
+@export var attack_delay_time = 0.0
+@export var from_frame = 0
+@export var hit_box : CollisionShape2D
+@export var animated_sprite : AnimatedSprite2D
+
+var attack_timer = 0.0
+var is_delay_running = false
+var in_trigger_area = false
+var is_attacking = false
+	
+func _process(delta):
+	if is_delay_running:
+		attack_timer += delta
+			
+	if attack_timer >= attack_delay_time:
+		attack_timer = 0.0
+		is_delay_running = false
+		
+	if not is_attacking and in_trigger_area and not is_delay_running:
+		is_attacking = true
+		attack.emit()
+		
+func handle_attack():
+	if animated_sprite.frame >= from_frame:
+		hit_box.disabled = false
+		
+func stop_attack():
+	is_attacking = false
+	is_delay_running = true
+	hit_box.disabled = true
+
+func _on_body_entered(body):
+	if body.name == "Player":
+		in_trigger_area = true
+
+func _on_body_exited(body):
+	if body.name == "Player":
+		in_trigger_area = false

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dsyyiv67qkdd8"]
+
+[ext_resource type="Script" path="res://common/components/chase_component/chase_component.gd" id="1_72uef"]
+
+[node name="ChaseComponent" type="Area2D"]
+script = ExtResource("1_72uef")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

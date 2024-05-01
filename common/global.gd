@@ -7,4 +7,4 @@ func _ready():
 	Engine.time_scale = 1.0
 	health_bar.set_max_hearts(player.max_health)
 	health_bar.update_hearts(player.health)
-	player.connect("health_changed",Callable(health_bar,"update_hearts"))
+	player.connect("health_changed", Callable(health_bar,"update_hearts"))

@@ -5,7 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://rc0inre8e8i7" path="res://levels/lab_levels/labbackground.png" id="3_l2d3l"]
 [ext_resource type="PackedScene" uid="uid://br622gdceid5" path="res://camera/camera_2d.tscn" id="4_jgdof"]
 [ext_resource type="PackedScene" uid="uid://bc22fmtpjf4qe" path="res://player/scenes/player.tscn" id="5_h4lws"]
-[ext_resource type="AudioStream" uid="uid://njc5qgxpxew5" path="res://audio/step_cloth1.mp3" id="6_q4g5w"]
 [ext_resource type="PackedScene" uid="uid://cg555v7dexny3" path="res://enemies/boss/miniboss.tscn" id="7_x4s32"]
 [ext_resource type="PackedScene" uid="uid://butkdsxihsnu1" path="res://levels/lab_levels/pillar/pillar.tscn" id="8_1dwtm"]
 [ext_resource type="PackedScene" uid="uid://b2vvgu5nlc6km" path="res://levels/lab_levels/power-up/dash_sphere.tscn" id="9_r8ukg"]
@@ -16,7 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://mnm2bo3glb35" path="res://levels/lab_levels/lab-lamp.png" id="14_a8xkm"]
 [ext_resource type="Script" path="res://levels/lab_levels/unlock_system/script/puzzle.gd" id="15_kadas"]
 [ext_resource type="PackedScene" uid="uid://dn0ljinw8br5b" path="res://levels/lab_levels/btn_sphere/btn_sphere.tscn" id="16_wl4ox"]
-[ext_resource type="PackedScene" uid="uid://cs08mbykpxblk" path="res://enemies/enemy2/Enemy2.tscn" id="17_awjox"]
+[ext_resource type="PackedScene" uid="uid://cs08mbykpxblk" path="res://enemies/enemy2/enemy2.tscn" id="17_awjox"]
 [ext_resource type="PackedScene" uid="uid://c8j6wxlyre3h3" path="res://common/items/papers/paper_item.tscn" id="18_8yl6y"]
 [ext_resource type="PackedScene" uid="uid://pbe5uun1i21k" path="res://levels/lab_levels/gui_msg/dash_teach.tscn" id="19_lidoq"]
 [ext_resource type="PackedScene" uid="uid://domb877lpfff" path="res://levels/lab_levels/gui_msg/crouch_teach.tscn" id="20_3fwxg"]
@@ -48,6 +47,9 @@ glow_hdr_luminance_cap = 0.0
 glow_map_strength = 1.0
 adjustment_enabled = true
 adjustment_color_correction = SubResource("GradientTexture2D_qf5ys")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1y4um"]
+size = Vector2(80, 112)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lufiu"]
 size = Vector2(80, 112)
@@ -103,7 +105,7 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Checkpoints/Checkpoint"]
 position = Vector2(-10, -42)
-shape = SubResource("RectangleShape2D_lufiu")
+shape = SubResource("RectangleShape2D_1y4um")
 debug_color = Color(0, 0.643137, 0.329412, 0.0901961)
 
 [node name="Checkpoint2" type="Area2D" parent="World/Checkpoints"]
@@ -223,21 +225,19 @@ position = Vector2(400, 0)
 texture = ExtResource("3_l2d3l")
 
 [node name="Camera2D" parent="World" instance=ExtResource("4_jgdof")]
-position = Vector2(263.997, -353.725)
+position = Vector2(2008.94, 16.9663)
 
 [node name="Player" parent="World" node_paths=PackedStringArray("camera_2d") instance=ExtResource("5_h4lws")]
 modulate = Color(1.11373, 1, 1, 1)
-position = Vector2(263.997, -353.725)
+position = Vector2(2008.94, 16.9663)
 max_health = 10
 camera_2d = NodePath("../Camera2D")
 can_dash = true
+max_dash = 1
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="World/Player"]
 remote_path = NodePath("../../Camera2D")
 update_rotation = false
-
-[node name="FootStep" type="AudioStreamPlayer2D" parent="World/Player"]
-stream = ExtResource("6_q4g5w")
 
 [node name="Miniboss" parent="World" node_paths=PackedStringArray("player") instance=ExtResource("7_x4s32")]
 position = Vector2(265.671, -354.946)

@@ -4,7 +4,11 @@ signal Obstacle
 signal Checkpoint
 
 enum TerrainType {
-	OBSTACLE = 1
+	OBSTACLE = 1,
+}
+
+enum CollisionLayer {
+	CHECKPOINT = 16,
 }
 
 var current_tilemap
@@ -32,4 +36,5 @@ func _on_body_shape_entered(body_rid, body, body_shape_index, local_shape_index)
 		process_tilemap_collision(body, body_rid)
 
 func _on_area_entered(area):
-	Checkpoint.emit(area)
+	if area.collision_layer == CollisionLayer.CHECKPOINT:
+		Checkpoint.emit(area)

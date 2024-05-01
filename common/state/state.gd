@@ -3,6 +3,8 @@ class_name State
 
 signal Transitioned
 
+@export var not_if_states : Array[State]
+
 func enter(_msg := {}):
 	pass
 	
@@ -17,3 +19,4 @@ func update(_delta: float):
 	
 func physics_update(_delta: float):
 	pass
+	

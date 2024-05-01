@@ -1,5 +1,5 @@
-extends CharacterBody2D
 class_name Player
+extends CharacterBody2D
 
 @export var max_health = 7
 @export var bullet : PackedScene
@@ -257,3 +257,10 @@ func _on_interaction_area_body_exited(body):
 		can_interact_with = false
 		body.undo_highlight()
 		interactable_obj = null
+
+func _on_attack_area_area_entered(area):
+	if area is HurtBoxComponent:
+		$Hit.play()
+		handle_knockback()
+		screen_shake.start()
+		area.damage(1, facing)

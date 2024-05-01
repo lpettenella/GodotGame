@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://d2e4xw42wg36t"]
 
 [ext_resource type="Texture2D" uid="uid://b8n768w4xr13l" path="res://levels/lab_levels/door/lab-door_sprite-sheet.png" id="1_4y8hx"]
-[ext_resource type="Script" path="res://common/door/door.gd" id="1_wxkns"]
+[ext_resource type="Script" path="res://door.gd" id="1_tftgk"]
 [ext_resource type="AudioStream" uid="uid://d0kbu3kf3jyuc" path="res://audio/qubodup-DoorClose06.mp3" id="3_uvhx5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_emi5m"]
@@ -43,7 +43,7 @@ size = Vector2(6, 48)
 
 [node name="Door" type="StaticBody2D"]
 z_index = -1
-script = ExtResource("1_wxkns")
+script = ExtResource("1_tftgk")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_1utrb")

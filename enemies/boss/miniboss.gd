@@ -183,5 +183,4 @@ func _on_catch_area_body_entered(body):
 func _on_near_area_area_entered(area):
 	print(area.name)
 	if area.name == "NextLevel":
-		#var nextlevel = preload("res://scenes/levels/lablevel/level_lab.tscn")
-		get_tree().change_scene_to_file("res://scenes/levels/lablevel/level_lab.tscn")
+		get_tree().change_scene_to_file("res://levels/lab_levels/level_lab.tscn")

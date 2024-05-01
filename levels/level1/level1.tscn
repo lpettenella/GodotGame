@@ -10,9 +10,10 @@
 [ext_resource type="Script" path="res://levels/level1/ParallaxLayer.gd" id="10"]
 [ext_resource type="Script" path="res://common/global.gd" id="11"]
 [ext_resource type="PackedScene" uid="uid://ck1j77332pbc0" path="res://gui/healthbar/scenes/GUI.tscn" id="12"]
-[ext_resource type="PackedScene" uid="uid://cpitis63huqmf" path="res://enemies/enemy1/Enemy1.tscn" id="12_aikrl"]
+[ext_resource type="PackedScene" uid="uid://cpitis63huqmf" path="res://enemies/enemy1/enemy1.tscn" id="12_aikrl"]
 [ext_resource type="TileSet" uid="uid://8wwsca0pvx0w" path="res://levels/level1/level1.tres" id="12_rtbr3"]
 [ext_resource type="PackedScene" uid="uid://cfwrxc737j8iv" path="res://enemies/flyenemy/FlyEnemy.tscn" id="13_vta4u"]
+
 
 [sub_resource type="GDScript" id="GDScript_vn46k"]
 script/source = "extends Node

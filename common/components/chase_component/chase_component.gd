@@ -8,10 +8,10 @@ signal player_exited(body)
 
 func _on_body_entered(body):
 	if body.name == "Player":
-		$CollisionShape2D.shape.size.x *= 1.5
+		$CollisionShape2D.shape.size.x *= extend_ratio
 		player_entered.emit(body)
 
 func _on_body_exited(body):
 	if body.name == "Player":
-		$CollisionShape2D.shape.size.x /= 1.5
+		$CollisionShape2D.shape.size.x /= extend_ratio
 		player_exited.emit(body)

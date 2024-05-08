@@ -1,5 +1,4 @@
 res://common/components/hit_box
-res://enemies/enemytest/states
 res://common/state
 res://enemies/enemy1
 res://camera

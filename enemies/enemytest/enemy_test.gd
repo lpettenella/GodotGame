@@ -16,14 +16,6 @@ func _ready():
 	$ChaseComponent.player_exited.connect(on_player_exited_chase_range)
 	if $AttackComponent:
 		$AttackComponent.attack.connect(on_attack)
-
-func _physics_process(delta):
-	if GRAVITY >= FALL_LIMIT:
-		velocity.y = FALL_LIMIT
-	else:
-		velocity.y += GRAVITY
-		
-	move_and_slide()
 	
 func on_damage(facing):
 	change_state("Hit", {direction = facing, conditioned = true})

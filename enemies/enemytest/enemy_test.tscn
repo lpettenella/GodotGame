@@ -3,20 +3,20 @@
 [ext_resource type="Texture2D" uid="uid://bn60kllp6oywc" path="res://enemies/enemy1/enemy_sprite-sheet.png" id="1_4ddre"]
 [ext_resource type="Script" path="res://enemies/enemytest/enemy_test.gd" id="1_glflw"]
 [ext_resource type="PackedScene" uid="uid://bjdjocl150e78" path="res://common/components/hurt_box/hurt_box_component.tscn" id="2_3bj3q"]
-[ext_resource type="PackedScene" uid="uid://dugr7saoyoinh" path="res://enemies/common/components/enemy_movement.tscn" id="2_5v061"]
 [ext_resource type="PackedScene" uid="uid://dcbb8oj6nguc2" path="res://common/components/health_component/health_component.tscn" id="3_mk026"]
+[ext_resource type="PackedScene" uid="uid://dugr7saoyoinh" path="res://enemies/common/components/enemy_movement/enemy_movement.tscn" id="3_uiomb"]
 [ext_resource type="Script" path="res://common/state/state_machine.gd" id="5_g7yad"]
-[ext_resource type="Script" path="res://enemies/enemytest/states/enemy_idle.gd" id="6_hbr2w"]
-[ext_resource type="Script" path="res://enemies/enemytest/states/enemy_hit.gd" id="6_yatd8"]
-[ext_resource type="Script" path="res://enemies/enemytest/states/enemy_chase.gd" id="7_lh154"]
-[ext_resource type="Script" path="res://enemies/enemytest/states/enemy_death.gd" id="7_nrgoc"]
 [ext_resource type="PackedScene" uid="uid://bqc6hmfuscep0" path="res://common/components/hit_box/hit_box.tscn" id="8_a8wmd"]
-[ext_resource type="Script" path="res://enemies/enemytest/states/enemy_attack.gd" id="8_yl8x1"]
-[ext_resource type="Script" path="res://enemies/enemytest/states/enemy_wander.gd" id="11_byf7x"]
+[ext_resource type="Script" path="res://enemies/common/states/enemy_idle.gd" id="10_ly4hj"]
+[ext_resource type="Script" path="res://enemies/common/states/enemy_chase.gd" id="11_qq0xq"]
 [ext_resource type="PackedScene" uid="uid://dsyyiv67qkdd8" path="res://common/components/chase_component/chase_component.tscn" id="12_hh5eu"]
+[ext_resource type="Script" path="res://enemies/common/states/enemy_attack.gd" id="12_u0nut"]
+[ext_resource type="Script" path="res://enemies/common/states/enemy_hit.gd" id="13_ik1ij"]
 [ext_resource type="PackedScene" uid="uid://bf4ubatiredib" path="res://enemies/common/hit_particles.tscn" id="14_0ekae"]
 [ext_resource type="PackedScene" uid="uid://bfuadt3q4kyl" path="res://enemies/common/components/attack_component/attack_component.tscn" id="14_av87s"]
+[ext_resource type="Script" path="res://enemies/common/states/enemy_death.gd" id="15_gwcnl"]
 [ext_resource type="PackedScene" uid="uid://cdga3r26ndxlq" path="res://enemies/common/meat/meat.tscn" id="15_v3xo6"]
+[ext_resource type="Script" path="res://enemies/common/states/enemy_wander.gd" id="17_a6d76"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1sues"]
 atlas = ExtResource("1_4ddre")
@@ -256,7 +256,7 @@ size = Vector2(14, 14)
 size = Vector2(14, 14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jspbv"]
-size = Vector2(210, 67)
+size = Vector2(210, 119)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nrcxg"]
 size = Vector2(20, 19)
@@ -277,7 +277,8 @@ visible = false
 position = Vector2(0, 9)
 shape = SubResource("RectangleShape2D_wk3ce")
 
-[node name="EnemyMovement" parent="." instance=ExtResource("2_5v061")]
+[node name="EnemyMovement" parent="." instance=ExtResource("3_uiomb")]
+can_float = true
 SPEED = 50
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_mk026")]
@@ -298,7 +299,7 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChaseComponent"]
-position = Vector2(0, -17.5)
+position = Vector2(0, 8.5)
 shape = SubResource("RectangleShape2D_jspbv")
 debug_color = Color(0, 0, 0, 0.105882)
 
@@ -324,34 +325,38 @@ shape = SubResource("RectangleShape2D_p4aps")
 disabled = true
 debug_color = Color(0.972549, 0.329412, 0.482353, 0.109804)
 
+[node name="CheckTerrain" type="RayCast2D" parent="."]
+position = Vector2(7, 9)
+target_position = Vector2(0, 23)
+
 [node name="StateMachine" type="Node2D" parent="." node_paths=PackedStringArray("initial_state", "movement")]
 script = ExtResource("5_g7yad")
 initial_state = NodePath("Wander")
 movement = NodePath("../EnemyMovement")
 
 [node name="Idle" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("not_if_states")]
-script = ExtResource("6_hbr2w")
+script = ExtResource("10_ly4hj")
 not_if_states = [NodePath("../Attack"), NodePath("../Death")]
 
 [node name="Chase" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("not_if_states")]
-script = ExtResource("7_lh154")
+script = ExtResource("11_qq0xq")
 not_if_states = [NodePath("../Attack"), NodePath("../Death")]
 
 [node name="Attack" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("not_if_states")]
-script = ExtResource("8_yl8x1")
+script = ExtResource("12_u0nut")
 not_if_states = [NodePath("../Hit"), NodePath("../Death")]
 
 [node name="Hit" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("not_if_states")]
-script = ExtResource("6_yatd8")
+script = ExtResource("13_ik1ij")
 particles = ExtResource("14_0ekae")
 not_if_states = [NodePath("../Death")]
 
 [node name="Death" type="Node2D" parent="StateMachine"]
-script = ExtResource("7_nrgoc")
+script = ExtResource("15_gwcnl")
 drop = ExtResource("15_v3xo6")
 
 [node name="Wander" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("not_if_states")]
-script = ExtResource("11_byf7x")
+script = ExtResource("17_a6d76")
 not_if_states = [NodePath("../Attack"), NodePath("../Death")]
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="AttackComponent" method="_on_animated_sprite_2d_animation_finished"]

@@ -1,3 +1,7 @@
+res://enemies/common
+res://enemies/common/states
+res://enemies/flyenemy
+res://enemies/enemy2
 res://common/components/hit_box
 res://common/state
 res://enemies/enemy1

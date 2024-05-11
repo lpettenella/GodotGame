@@ -7,11 +7,14 @@ signal player_entered(body)
 signal player_exited(body)
 
 func _on_body_entered(body):
-	if body.name == "Player":
+	if $CollisionShape2D.shape is RectangleShape2D:
 		$CollisionShape2D.shape.size.x *= extend_ratio
-		player_entered.emit(body)
+	elif $CollisionShape2D.shape is CircleShape2D:
+		$CollisionShape2D.shape.radius *= extend_ratio
+	player_entered.emit(body)
 
 func _on_body_exited(body):
-	if body.name == "Player":
+	if $CollisionShape2D.shape is RectangleShape2D:
 		$CollisionShape2D.shape.size.x /= extend_ratio
-		player_exited.emit(body)
+	elif $CollisionShape2D.shape is CircleShape2D:
+		$CollisionShape2D.shape.radius /= extend_ratio

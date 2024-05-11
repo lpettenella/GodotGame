@@ -15,7 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://mnm2bo3glb35" path="res://levels/lab_levels/lab-lamp.png" id="14_a8xkm"]
 [ext_resource type="Script" path="res://levels/lab_levels/unlock_system/script/puzzle.gd" id="15_kadas"]
 [ext_resource type="PackedScene" uid="uid://dn0ljinw8br5b" path="res://levels/lab_levels/btn_sphere/btn_sphere.tscn" id="16_wl4ox"]
-[ext_resource type="PackedScene" uid="uid://cs08mbykpxblk" path="res://enemies/enemy2/enemy2.tscn" id="17_awjox"]
+[ext_resource type="PackedScene" uid="uid://cs08mbykpxblk" path="res://enemies/enemy2/Enemy2.tscn" id="17_awjox"]
 [ext_resource type="PackedScene" uid="uid://c8j6wxlyre3h3" path="res://common/items/papers/paper_item.tscn" id="18_8yl6y"]
 [ext_resource type="PackedScene" uid="uid://pbe5uun1i21k" path="res://levels/lab_levels/gui_msg/dash_teach.tscn" id="19_lidoq"]
 [ext_resource type="PackedScene" uid="uid://domb877lpfff" path="res://levels/lab_levels/gui_msg/crouch_teach.tscn" id="20_3fwxg"]

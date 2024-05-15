@@ -18,3 +18,4 @@ func _on_body_exited(body):
 		$CollisionShape2D.shape.size.x /= extend_ratio
 	elif $CollisionShape2D.shape is CircleShape2D:
 		$CollisionShape2D.shape.radius /= extend_ratio
+	player_exited.emit(body)

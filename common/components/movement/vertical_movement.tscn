@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c70uo16bnk1b4"]
+
+[ext_resource type="Script" path="res://enemies/common/vertical_movement.gd" id="1_7cq54"]
+
+[node name="VerticalMovement" type="Node2D"]
+script = ExtResource("1_7cq54")

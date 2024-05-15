@@ -13,6 +13,7 @@ func enter(_msg := {}):
 		direction = _msg.direction
 		
 	animated_sprite.play("hit")
+	enemy.get_node("Hit").play()
 	
 	if particles:
 		emit_particles()

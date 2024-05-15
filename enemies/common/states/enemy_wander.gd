@@ -10,6 +10,7 @@ var pause_timer = 0.0
 var moving = false
 
 func enter(_msg := {}):
+	print("wander")
 	moving_timer = 0.0
 	pause_timer = 0.0
 	

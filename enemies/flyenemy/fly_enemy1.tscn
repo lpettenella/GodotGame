@@ -1,10 +1,12 @@
-[gd_scene load_steps=54 format=3 uid="uid://clajb0uv2e0br"]
+[gd_scene load_steps=58 format=3 uid="uid://clajb0uv2e0br"]
 
 [ext_resource type="Script" path="res://enemies/common/enemy.gd" id="1_jedyv"]
 [ext_resource type="Texture2D" uid="uid://b4rs0qkyv8lcy" path="res://enemies/flyenemy/flyenemy_sprite-sheet.png" id="1_vj2gy"]
 [ext_resource type="Script" path="res://enemies/common/components/enemy_movement/enemy_movement.gd" id="2_um1p2"]
 [ext_resource type="Script" path="res://common/components/health_component/health_component.gd" id="3_7hcas"]
+[ext_resource type="PackedScene" uid="uid://cm7t8em0yge5f" path="res://common/components/movement/horizontal_movement.tscn" id="4_e41kn"]
 [ext_resource type="Script" path="res://common/components/hurt_box/hurt_box_component.gd" id="4_re2sr"]
+[ext_resource type="PackedScene" uid="uid://c70uo16bnk1b4" path="res://common/components/movement/vertical_movement.tscn" id="5_ftg4q"]
 [ext_resource type="PackedScene" uid="uid://dsyyiv67qkdd8" path="res://common/components/chase_component/chase_component.tscn" id="6_pmx6u"]
 [ext_resource type="Script" path="res://common/state/state_machine.gd" id="7_yb6j3"]
 [ext_resource type="Script" path="res://enemies/common/states/enemy_idle.gd" id="8_6fp75"]
@@ -12,6 +14,8 @@
 [ext_resource type="Script" path="res://enemies/common/states/enemy_hit.gd" id="10_qvy4x"]
 [ext_resource type="Script" path="res://enemies/common/states/enemy_death.gd" id="11_tdldk"]
 [ext_resource type="Script" path="res://enemies/common/states/enemy_chase.gd" id="12_e8qsg"]
+[ext_resource type="PackedScene" uid="uid://bf4ubatiredib" path="res://enemies/common/hit_particles.tscn" id="13_4h3cq"]
+[ext_resource type="PackedScene" uid="uid://cdga3r26ndxlq" path="res://enemies/common/meat/meat.tscn" id="15_tmia0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k43yt"]
 atlas = ExtResource("1_vj2gy")
@@ -316,22 +320,28 @@ script = ExtResource("1_jedyv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_o5x21")
-animation = &"idle"
+animation = &"hit"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2(-0.5, 8)
 shape = SubResource("RectangleShape2D_b12fl")
 
-[node name="EnemyMovement" type="Node2D" parent="."]
+[node name="EnemyMovement" type="Node2D" parent="." node_paths=PackedStringArray("horizontal_movement", "vertical_movement")]
 script = ExtResource("2_um1p2")
 can_float = true
+horizontal_movement = NodePath("../HorizontalMovement")
+vertical_movement = NodePath("../VerticalMovement")
+
+[node name="HorizontalMovement" parent="." instance=ExtResource("4_e41kn")]
+
+[node name="VerticalMovement" parent="." instance=ExtResource("5_ftg4q")]
 
 [node name="HealthComponent" type="Node2D" parent="."]
 script = ExtResource("3_7hcas")
+MAX_HEALTH = 3.0
 
 [node name="HurtBoxComponent" type="Area2D" parent="." node_paths=PackedStringArray("health_box_component")]
-visible = false
 collision_layer = 4
 collision_mask = 2
 script = ExtResource("4_re2sr")
@@ -342,6 +352,7 @@ position = Vector2(-0.5, 8)
 shape = SubResource("RectangleShape2D_51gsp")
 
 [node name="ChaseComponent" parent="." instance=ExtResource("6_pmx6u")]
+visible = false
 collision_layer = 4
 collision_mask = 2
 
@@ -367,10 +378,12 @@ not_if_states = [NodePath("../Death")]
 
 [node name="Hit" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("not_if_states")]
 script = ExtResource("10_qvy4x")
+particles = ExtResource("13_4h3cq")
 not_if_states = [NodePath("../Death")]
 
 [node name="Death" type="Node2D" parent="StateMachine"]
 script = ExtResource("11_tdldk")
+drop = ExtResource("15_tmia0")
 
 [node name="Chase" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("not_if_states")]
 script = ExtResource("12_e8qsg")

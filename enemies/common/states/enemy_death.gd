@@ -6,6 +6,7 @@ var drop_instance
 
 func enter(_msg := {}):
 	animated_sprite.play("death")
+	enemy.get_node("Hit").play()
 	if drop:
 		drop_instance = drop.instantiate()
 		drop_instance.global_position = enemy.global_position

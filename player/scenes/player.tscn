@@ -1,11 +1,10 @@
-[gd_scene load_steps=153 format=3 uid="uid://bc22fmtpjf4qe"]
+[gd_scene load_steps=152 format=3 uid="uid://bc22fmtpjf4qe"]
 
 [ext_resource type="Script" path="res://player/script/player.gd" id="1_07u3u"]
 [ext_resource type="PackedScene" uid="uid://pqp4p82f6ih2" path="res://player/scenes/ghost.tscn" id="2_8vumg"]
 [ext_resource type="PackedScene" uid="uid://gl0x6rhu2cfm" path="res://player/scenes/particles/jump_particles.tscn" id="3_ha37m"]
 [ext_resource type="PackedScene" uid="uid://qkv84bmvqo8q" path="res://player/scenes/particles/wall-climb_particles.tscn" id="4_em6px"]
 [ext_resource type="Script" path="res://common/state/state_machine.gd" id="5_5in8h"]
-[ext_resource type="AudioStream" uid="uid://d3jfm17dnmwpn" path="res://audio/61_Hit_03.wav" id="5_b1lva"]
 [ext_resource type="AudioStream" uid="uid://bmj1pr3qkxe1q" path="res://audio/Clic07.wav" id="6_ybcvj"]
 [ext_resource type="Texture2D" uid="uid://cot4tsdrr7ih4" path="res://player/assets/player_sprite-sheet.png" id="7_ors33"]
 [ext_resource type="Script" path="res://player/script/terrain_checkpoint_detector.gd" id="8_rixbq"]
@@ -1003,15 +1002,12 @@ ghost = ExtResource("2_8vumg")
 jump_fx = ExtResource("3_ha37m")
 wall_fx = ExtResource("4_em6px")
 
-[node name="Hit" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("5_b1lva")
-
 [node name="Click" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_ybcvj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("21")
-animation = &"idle"
+animation = &"attack2"
 
 [node name="CeilingCheckerLong" type="RayCast2D" parent="."]
 visible = false
@@ -1046,7 +1042,6 @@ shape = SubResource("RectangleShape2D_q4m1s")
 disabled = true
 
 [node name="AttackArea" type="Area2D" parent="." groups=["claw"]]
-visible = false
 position = Vector2(1, 0)
 collision_layer = 2
 collision_mask = 4

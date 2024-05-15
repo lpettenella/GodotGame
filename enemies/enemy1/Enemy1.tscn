@@ -1,13 +1,14 @@
-[gd_scene load_steps=55 format=3 uid="uid://bqv3m5wfkv1dx"]
+[gd_scene load_steps=56 format=3 uid="uid://bqv3m5wfkv1dx"]
 
 [ext_resource type="Texture2D" uid="uid://bn60kllp6oywc" path="res://enemies/enemy1/enemy_sprite-sheet.png" id="1_4ddre"]
 [ext_resource type="Script" path="res://enemies/common/enemy.gd" id="1_nuk00"]
 [ext_resource type="PackedScene" uid="uid://bjdjocl150e78" path="res://common/components/hurt_box/hurt_box_component.tscn" id="2_3bj3q"]
+[ext_resource type="AudioStream" uid="uid://d3jfm17dnmwpn" path="res://audio/61_Hit_03.wav" id="2_pqhyo"]
 [ext_resource type="PackedScene" uid="uid://dcbb8oj6nguc2" path="res://common/components/health_component/health_component.tscn" id="3_mk026"]
 [ext_resource type="PackedScene" uid="uid://dugr7saoyoinh" path="res://enemies/common/components/enemy_movement/enemy_movement.tscn" id="3_uiomb"]
-[ext_resource type="Script" path="res://enemies/common/horizontal_movement.gd" id="4_a44ji"]
+[ext_resource type="PackedScene" uid="uid://cm7t8em0yge5f" path="res://common/components/movement/horizontal_movement.tscn" id="4_eu7fv"]
+[ext_resource type="PackedScene" uid="uid://c70uo16bnk1b4" path="res://common/components/movement/vertical_movement.tscn" id="5_clhgn"]
 [ext_resource type="Script" path="res://common/state/state_machine.gd" id="5_g7yad"]
-[ext_resource type="Script" path="res://enemies/common/vertical_movement.gd" id="5_ipbi8"]
 [ext_resource type="PackedScene" uid="uid://bqc6hmfuscep0" path="res://common/components/hit_box/hit_box.tscn" id="8_a8wmd"]
 [ext_resource type="Script" path="res://enemies/common/states/enemy_idle.gd" id="10_ly4hj"]
 [ext_resource type="Script" path="res://enemies/common/states/enemy_chase.gd" id="11_qq0xq"]
@@ -270,6 +271,9 @@ size = Vector2(26, 24)
 collision_layer = 4
 script = ExtResource("1_nuk00")
 
+[node name="Hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_pqhyo")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_q640u")
 animation = &"idle"
@@ -279,19 +283,16 @@ visible = false
 position = Vector2(0, 9)
 shape = SubResource("RectangleShape2D_wk3ce")
 
-[node name="EnemyMovement" parent="." node_paths=PackedStringArray("check_terrain", "horizontal_movement", "vertical_movement") instance=ExtResource("3_uiomb")]
+[node name="EnemyMovement" parent="." node_paths=PackedStringArray("check_terrain", "horizontal_movement") instance=ExtResource("3_uiomb")]
 check_terrain = NodePath("../CheckTerrain")
 horizontal_movement = NodePath("../HorizontalMovement")
-vertical_movement = NodePath("../VerticalMovement")
 
-[node name="HorizontalMovement" type="Node2D" parent="."]
-script = ExtResource("4_a44ji")
+[node name="HorizontalMovement" parent="." instance=ExtResource("4_eu7fv")]
 
-[node name="VerticalMovement" type="Node2D" parent="."]
-script = ExtResource("5_ipbi8")
+[node name="VerticalMovement" parent="." instance=ExtResource("5_clhgn")]
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_mk026")]
-MAX_HEALTH = 3.0
+MAX_HEALTH = 100.0
 
 [node name="HurtBoxComponent" parent="." node_paths=PackedStringArray("health_box_component") instance=ExtResource("2_3bj3q")]
 visible = false
@@ -304,6 +305,7 @@ position = Vector2(0, 9)
 shape = SubResource("RectangleShape2D_eukfo")
 
 [node name="ChaseComponent" parent="." instance=ExtResource("12_hh5eu")]
+visible = false
 collision_layer = 4
 collision_mask = 2
 

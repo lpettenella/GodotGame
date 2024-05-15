@@ -3,5 +3,5 @@ class_name HorizontalMovement
 
 @onready var character : CharacterBody2D = get_parent()
 
-func move(_direction = facing):
-	character.velocity.x = SPEED * _direction
+func move(_speed = SPEED, _direction = facing):
+	character.velocity.x = _speed * _direction

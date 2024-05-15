@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cm7t8em0yge5f"]
+
+[ext_resource type="Script" path="res://enemies/common/horizontal_movement.gd" id="1_akvfq"]
+
+[node name="HorizontalMovement" type="Node2D"]
+script = ExtResource("1_akvfq")

@@ -5,6 +5,7 @@ var attack_component
 
 func enter(_msg := {}):
 	attack_component = enemy.get_node("AttackComponent")
+	attack_component.start_attack()
 	animated_sprite.play("attack")
 	
 func physics_update(_delta: float):

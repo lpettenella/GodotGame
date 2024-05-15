@@ -13,7 +13,7 @@ func enter(_msg := {}):
 	player = enemy.target
 	
 func physics_update(_delta: float):
-	if from_hit and not enemy.is_on_floor():
+	if from_hit and not enemy.is_on_floor() and not movement.can_float:
 		return
 		
 	var direction = player.global_position - enemy.global_position

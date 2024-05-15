@@ -3,5 +3,5 @@ class_name VerticalMovement
 
 @onready var character : CharacterBody2D = get_parent()
 
-func move(_direction = facing):
-	character.velocity.y = SPEED * facing
+func move(_speed = SPEED, _direction = facing):
+	character.velocity.y = _speed * _direction

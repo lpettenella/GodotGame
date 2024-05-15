@@ -20,17 +20,25 @@ func physics_update(_delta: float):
 		Transitioned.emit(self, "hit")
 		return
 		
-	if actual_combo == "attack1" and animated_sprite.frame == 3:
-		attack_area.disabled = false
+	#if actual_combo == "attack1" and animated_sprite.frame == 3:
+		#attack_area.disabled = false
+	#elif actual_combo != "attack1":
+		#attack_area.disabled = false
+	
+	if actual_combo == "attack1":
+		match animated_sprite.frame:
+			3: attack_area.disabled = false
+			4: attack_area.disabled = true
 	elif actual_combo != "attack1":
-		attack_area.disabled = false
+		match animated_sprite.frame:
+			1: attack_area.disabled = false
+			2: attack_area.disabled = true
 	
 	if not animated_sprite.is_playing():
 		player.get_node("AttackComboDelay").start()
 		if player.queued_attack:
 			player.combo_count = (player.combo_count + 1) % 3
 			Transitioned.emit(self, actual_combo)
-			air_attack_area.disabled = true
 		else:
 			Transitioned.emit(self, "idle")
 		return
@@ -43,6 +51,7 @@ func physics_update(_delta: float):
 	player.move_and_slide()
 
 func exit():
+	air_attack_area.disabled = true
 	attack_area.disabled = true
 	#player.combo_count = (player.combo_count + 1) % 3
 

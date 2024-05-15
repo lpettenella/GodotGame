@@ -21,13 +21,14 @@ func handle_gravity():
 	else:
 		enemy.velocity.y += enemy.GRAVITY
 
-func move(_direction = facing):
+func move(_speed = SPEED, _direction = facing):
+	#print(_speed)
 	if not can_move():
 		return
 	if horizontal_movement:
-		horizontal_movement.move(facing)
+		horizontal_movement.move(_speed, _direction)
 	if vertical_movement:
-		vertical_movement.move(facing)
+		vertical_movement.move(_speed, _direction)
 	#_speed = _speed if can_move() else 0
 #
 	#enemy.velocity.x = _speed * facing
@@ -44,11 +45,13 @@ func stop():
 	
 func chase(_direction, _target, _gap, _speed = SPEED):
 	_speed = _speed if can_move() else 0
-	
-	if abs(_target.global_position.x - enemy.global_position.x) > _gap:
-		enemy.velocity.x = _direction.normalized().x * _speed
-		if can_float:
-			enemy.velocity.y = _direction.normalized().y * _speed
+
+	if _target.global_position.distance_to(enemy.global_position) > _gap:
+		if horizontal_movement:
+			horizontal_movement.move(_speed, _direction.normalized().x)
+		if vertical_movement:
+			vertical_movement.move(_speed, _direction.normalized().y)
+
 		if can_move(): 
 			animated_sprite.play("run")
 		else: 

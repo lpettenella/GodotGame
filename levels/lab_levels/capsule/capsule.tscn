@@ -1,8 +1,11 @@
-[gd_scene load_steps=49 format=3 uid="uid://dl72jw1oa5x8"]
+[gd_scene load_steps=53 format=3 uid="uid://dl72jw1oa5x8"]
 
 [ext_resource type="Script" path="res://levels/lab_levels/capsule/capsule.gd" id="1_j5yah"]
-[ext_resource type="PackedScene" uid="uid://cs08mbykpxblk" path="res://enemies/enemy2/enemy2.tscn" id="2_wjfpn"]
+[ext_resource type="PackedScene" uid="uid://cs08mbykpxblk" path="res://enemies/enemy2/enemy2.tscn" id="2_t1jt2"]
 [ext_resource type="Texture2D" uid="uid://b5p5pbddf52ir" path="res://levels/lab_levels/capsule/capsule_sprite-sheet.png" id="3_i86k8"]
+[ext_resource type="AudioStream" uid="uid://2mbwt62svq20" path="res://audio/bfh1_glass_breaking_01.wav" id="3_vqgfd"]
+[ext_resource type="PackedScene" uid="uid://dcbb8oj6nguc2" path="res://common/components/health_component/health_component.tscn" id="5_grbg7"]
+[ext_resource type="PackedScene" uid="uid://bjdjocl150e78" path="res://common/components/hurt_box/hurt_box_component.tscn" id="5_r1ddm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mgo22"]
 atlas = ExtResource("3_i86k8")
@@ -202,7 +205,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_k058w")
 }],
 "loop": false,
-"name": &"brake",
+"name": &"breaks",
 "speed": 12.0
 }, {
 "frames": [{
@@ -333,17 +336,24 @@ height = 32
 fill = 2
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0u183"]
+size = Vector2(18, 32)
+
 [node name="Capsule" type="StaticBody2D"]
 z_index = -1
 collision_layer = 4
 script = ExtResource("1_j5yah")
-mob = ExtResource("2_wjfpn")
+mob = ExtResource("2_t1jt2")
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_vqgfd")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_2x4ts")
-animation = &"brake"
+animation = &"breaks"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_f7vr4")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
@@ -352,3 +362,14 @@ color = Color(1, 0.858824, 0.258824, 1)
 range_z_min = -10
 range_z_max = -1
 texture = SubResource("GradientTexture2D_d8nd4")
+
+[node name="HealthComponent" parent="." instance=ExtResource("5_grbg7")]
+MAX_HEALTH = 4.0
+
+[node name="HurtBoxComponent" parent="." node_paths=PackedStringArray("health_box_component") instance=ExtResource("5_r1ddm")]
+collision_layer = 5
+collision_mask = 0
+health_box_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
+shape = SubResource("RectangleShape2D_0u183")

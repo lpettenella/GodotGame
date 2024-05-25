@@ -28,11 +28,11 @@ func physics_update(_delta: float):
 	if actual_combo == "attack1":
 		match animated_sprite.frame:
 			3: attack_area.disabled = false
-			4: attack_area.disabled = true
+			5: attack_area.disabled = true
 	elif actual_combo != "attack1":
 		match animated_sprite.frame:
 			1: attack_area.disabled = false
-			2: attack_area.disabled = true
+			3: attack_area.disabled = true
 	
 	if not animated_sprite.is_playing():
 		player.get_node("AttackComboDelay").start()

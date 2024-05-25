@@ -279,10 +279,12 @@ sprite_frames = SubResource("SpriteFrames_gmrph")
 animation = &"phase1"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-3.5, -28.75)
 shape = SubResource("RectangleShape2D_jrw53")
 
 [node name="BottomCS" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-3.5, 31.4531)
 shape = SubResource("RectangleShape2D_8pml1")
 
@@ -290,6 +292,7 @@ shape = SubResource("RectangleShape2D_8pml1")
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enter"]
+visible = false
 position = Vector2(-100, -15)
 scale = Vector2(0.840001, 1)
 shape = SubResource("RectangleShape2D_nc2ra")
@@ -298,6 +301,7 @@ shape = SubResource("RectangleShape2D_nc2ra")
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exit"]
+visible = false
 position = Vector2(100, -15)
 shape = SubResource("RectangleShape2D_nc2ra")
 

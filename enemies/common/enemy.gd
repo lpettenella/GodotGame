@@ -1,12 +1,14 @@
 class_name EnemyTest
 extends CharacterBody2D
 
+@export var can_born = false
+@onready var sm : StateMachine = $StateMachine
+
 const SPEED = 50.0
 const GRAVITY = 30
 const FALL_LIMIT = 300
 const KNOCKBACK_SPEED = 20.0
 
-@onready var sm : StateMachine = $StateMachine
 var target = null
 
 func _ready():
@@ -16,7 +18,11 @@ func _ready():
 	$ChaseComponent.player_exited.connect(on_player_exited_chase_range)
 	if $AttackComponent:
 		$AttackComponent.attack.connect(on_attack)
+		$HitBox.stun.connect(on_stun)
 	
+func on_stun():
+	change_state("Stun", {conditioned = true})	
+
 func on_damage(facing):
 	change_state("Hit", {direction = facing, conditioned = true})
 

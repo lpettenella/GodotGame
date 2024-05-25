@@ -1,7 +1,7 @@
 class_name EnemyAttack
 extends EnemyState
 
-var attack_component
+var attack_component : AttackComponent
 
 func enter(_msg := {}):
 	attack_component = enemy.get_node("AttackComponent")

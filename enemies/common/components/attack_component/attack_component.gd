@@ -5,6 +5,7 @@ signal attack
 
 @export var attack_delay_time = 0.0
 @export var from_frame = 0
+@export var to_frame = 1
 @export var hit_box : CollisionShape2D
 @export var animated_sprite : AnimatedSprite2D
 
@@ -25,8 +26,11 @@ func _physics_process(delta):
 		attack.emit()
 		
 func handle_attack():
-	if animated_sprite.frame >= from_frame:
-		hit_box.disabled = false
+	match(animated_sprite.frame):
+		from_frame:
+			active_hit_box()
+		to_frame:
+			disable_hit_box()
 		
 func start_attack():
 	is_attacking = true
@@ -34,7 +38,13 @@ func start_attack():
 func stop_attack():
 	is_attacking = false
 	is_delay_time = true
+	disable_hit_box()
+
+func disable_hit_box():
 	hit_box.set_deferred("disabled", true)
+	
+func active_hit_box():
+	hit_box.disabled = false
 
 func _on_body_entered(body):
 	if body.name == "Player":

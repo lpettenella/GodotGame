@@ -1,0 +1,731 @@
+[gd_scene load_steps=54 format=3 uid="uid://7tu2vtuh61cl"]
+
+[ext_resource type="Script" path="res://common/global.gd" id="1_y58ff"]
+[ext_resource type="PackedScene" uid="uid://dkbichd2tcfod" path="res://levels/lab_levels/tiles/tile_map.tscn" id="2_eb05n"]
+[ext_resource type="Texture2D" uid="uid://rc0inre8e8i7" path="res://levels/lab_levels/labbackground.png" id="3_l2d3l"]
+[ext_resource type="PackedScene" uid="uid://br622gdceid5" path="res://camera/camera_2d.tscn" id="4_jgdof"]
+[ext_resource type="PackedScene" uid="uid://bc22fmtpjf4qe" path="res://player/scenes/player.tscn" id="5_h4lws"]
+[ext_resource type="PackedScene" uid="uid://cg555v7dexny3" path="res://enemies/boss/miniboss.tscn" id="7_x4s32"]
+[ext_resource type="PackedScene" uid="uid://butkdsxihsnu1" path="res://levels/lab_levels/pillar/pillar.tscn" id="8_1dwtm"]
+[ext_resource type="PackedScene" uid="uid://b2vvgu5nlc6km" path="res://levels/lab_levels/power-up/dash_sphere.tscn" id="9_r8ukg"]
+[ext_resource type="Script" path="res://levels/lab_levels/unlock_system/script/door_system.gd" id="10_7od7x"]
+[ext_resource type="PackedScene" uid="uid://d2e4xw42wg36t" path="res://levels/lab_levels/door/lab_door.tscn" id="11_srpta"]
+[ext_resource type="PackedScene" uid="uid://cwne23egawjwl" path="res://levels/lab_levels/unlock_system/scenes/panel_control.tscn" id="12_gu2iw"]
+[ext_resource type="PackedScene" uid="uid://dl72jw1oa5x8" path="res://levels/lab_levels/capsule/capsule.tscn" id="13_yn7n1"]
+[ext_resource type="Texture2D" uid="uid://mnm2bo3glb35" path="res://levels/lab_levels/lab-lamp.png" id="14_a8xkm"]
+[ext_resource type="Script" path="res://levels/lab_levels/unlock_system/script/puzzle.gd" id="15_kadas"]
+[ext_resource type="PackedScene" uid="uid://dn0ljinw8br5b" path="res://levels/lab_levels/btn_sphere/btn_sphere.tscn" id="16_wl4ox"]
+[ext_resource type="Script" path="res://common/interact_message.gd" id="17_5f21y"]
+[ext_resource type="PackedScene" uid="uid://cs08mbykpxblk" path="res://enemies/enemy2/enemy2.tscn" id="17_awjox"]
+[ext_resource type="Texture2D" uid="uid://bnaj6ivlyiy4k" path="res://common/items/papers/press_i.png" id="17_k03gb"]
+[ext_resource type="PackedScene" uid="uid://c8j6wxlyre3h3" path="res://common/items/papers/paper_item.tscn" id="18_8yl6y"]
+[ext_resource type="PackedScene" uid="uid://pbe5uun1i21k" path="res://levels/lab_levels/gui_msg/dash_teach.tscn" id="19_lidoq"]
+[ext_resource type="PackedScene" uid="uid://domb877lpfff" path="res://levels/lab_levels/gui_msg/crouch_teach.tscn" id="20_3fwxg"]
+[ext_resource type="PackedScene" uid="uid://bv8toguwt1uxy" path="res://levels/lab_levels/gui_msg/continue/continue.tscn" id="21_p65xn"]
+[ext_resource type="PackedScene" uid="uid://ck1j77332pbc0" path="res://gui/healthbar/scenes/GUI.tscn" id="22_t1oou"]
+[ext_resource type="Script" path="res://gui/script/Pause.gd" id="23_f38nb"]
+[ext_resource type="Script" path="res://gui/script/InventoryItem.gd" id="24_68wn6"]
+[ext_resource type="Texture2D" uid="uid://dud4t3v2rluvq" path="res://levels/lab_levels/items/paper.png" id="25_xpffk"]
+[ext_resource type="Texture2D" uid="uid://dqcpja7jb8f8" path="res://levels/lab_levels/items/paper2_pt1.png" id="26_taldw"]
+[ext_resource type="Texture2D" uid="uid://b8xdys7aj2feu" path="res://levels/lab_levels/items/paper2_pt2.png" id="27_eng83"]
+
+[sub_resource type="Gradient" id="Gradient_8m3ir"]
+offsets = PackedFloat32Array(0.029304, 0.776557, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.462745, 0.47451, 0.694118, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qf5ys"]
+gradient = SubResource("Gradient_8m3ir")
+
+[sub_resource type="Environment" id="Environment_07dye"]
+background_mode = 3
+background_canvas_max_layer = 1
+ambient_light_color = Color(0.407843, 0.101961, 0.121569, 1)
+glow_intensity = 1.0
+glow_strength = 0.1
+glow_bloom = 1.0
+glow_hdr_threshold = 0.0
+glow_hdr_scale = 1.0
+glow_hdr_luminance_cap = 0.0
+glow_map_strength = 1.0
+adjustment_enabled = true
+adjustment_color_correction = SubResource("GradientTexture2D_qf5ys")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1y4um"]
+size = Vector2(80, 112)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lufiu"]
+size = Vector2(80, 112)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bebe8"]
+size = Vector2(80, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gl5th"]
+size = Vector2(78, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hd15h"]
+size = Vector2(78, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0mvcw"]
+size = Vector2(64, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t6ba6"]
+size = Vector2(48, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pc44m"]
+size = Vector2(62, 112)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cojmj"]
+size = Vector2(47, 64)
+
+[sub_resource type="Gradient" id="Gradient_h7ch3"]
+offsets = PackedFloat32Array(0, 0.520661, 0.77686, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.384298, 0.384298, 0.384298, 1, 0.169245, 0.169245, 0.169245, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2ymaw"]
+gradient = SubResource("Gradient_h7ch3")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ykpef"]
+radius = 11.0454
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_48dxd"]
+atlas = ExtResource("17_k03gb")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2co1c"]
+atlas = ExtResource("17_k03gb")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m5xps"]
+atlas = ExtResource("17_k03gb")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8hmth"]
+atlas = ExtResource("17_k03gb")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3h2w3"]
+atlas = ExtResource("17_k03gb")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6mg63"]
+atlas = ExtResource("17_k03gb")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hdm66"]
+atlas = ExtResource("17_k03gb")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1iif7"]
+atlas = ExtResource("17_k03gb")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l36k4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_48dxd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2co1c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m5xps")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8hmth")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3h2w3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6mg63")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hdm66")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1iif7")
+}],
+"loop": true,
+"name": &"main",
+"speed": 11.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_atq46"]
+
+[node name="level_lab" type="Node2D"]
+script = ExtResource("1_y58ff")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
+environment = SubResource("Environment_07dye")
+
+[node name="TileMap" parent="World" instance=ExtResource("2_eb05n")]
+
+[node name="Checkpoints" type="Node2D" parent="World"]
+
+[node name="Checkpoint" type="Area2D" parent="World/Checkpoints"]
+position = Vector2(2090, -158)
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Checkpoints/Checkpoint"]
+position = Vector2(-10, -42)
+shape = SubResource("RectangleShape2D_1y4um")
+debug_color = Color(0, 0.643137, 0.329412, 0.0901961)
+
+[node name="Checkpoint2" type="Area2D" parent="World/Checkpoints"]
+position = Vector2(2473, -159)
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Checkpoints/Checkpoint2"]
+position = Vector2(8, -41)
+shape = SubResource("RectangleShape2D_lufiu")
+debug_color = Color(0, 0.643137, 0.329412, 0.0901961)
+
+[node name="Checkpoint3" type="Area2D" parent="World/Checkpoints"]
+position = Vector2(2425, 482)
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Checkpoints/Checkpoint3"]
+position = Vector2(24, -50)
+shape = SubResource("RectangleShape2D_bebe8")
+debug_color = Color(0, 0.643137, 0.329412, 0.0901961)
+
+[node name="Checkpoint4" type="Area2D" parent="World/Checkpoints"]
+position = Vector2(1625, 464)
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Checkpoints/Checkpoint4"]
+position = Vector2(-10, -40)
+shape = SubResource("RectangleShape2D_lufiu")
+debug_color = Color(0, 0.643137, 0.329412, 0.0901961)
+
+[node name="Checkpoint5" type="Area2D" parent="World/Checkpoints"]
+position = Vector2(248, 465)
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Checkpoints/Checkpoint5"]
+position = Vector2(25, -33)
+shape = SubResource("RectangleShape2D_gl5th")
+debug_color = Color(0, 0.643137, 0.329412, 0.0901961)
+
+[node name="Checkpoint9" type="Area2D" parent="World/Checkpoints"]
+position = Vector2(204.251, 720.988)
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Checkpoints/Checkpoint9"]
+position = Vector2(2.74907, -8.98779)
+shape = SubResource("RectangleShape2D_hd15h")
+debug_color = Color(0, 0.643137, 0.329412, 0.0901961)
+
+[node name="Checkpoint6" type="Area2D" parent="World/Checkpoints"]
+position = Vector2(216, 848)
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Checkpoints/Checkpoint6"]
+position = Vector2(-16, -24)
+shape = SubResource("RectangleShape2D_0mvcw")
+debug_color = Color(0, 0.643137, 0.329412, 0.0901961)
+
+[node name="Checkpoint7" type="Area2D" parent="World/Checkpoints"]
+position = Vector2(648, 848)
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Checkpoints/Checkpoint7"]
+position = Vector2(8, -24)
+shape = SubResource("RectangleShape2D_t6ba6")
+debug_color = Color(0, 0.643137, 0.329412, 0.0901961)
+
+[node name="Checkpoint8" type="Area2D" parent="World/Checkpoints"]
+position = Vector2(1209, 801)
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Checkpoints/Checkpoint8"]
+position = Vector2(0, -41)
+shape = SubResource("RectangleShape2D_pc44m")
+debug_color = Color(0, 0.643137, 0.329412, 0.0901961)
+
+[node name="Checkpoint10" type="Area2D" parent="World/Checkpoints"]
+position = Vector2(1870, 724)
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Checkpoints/Checkpoint10"]
+position = Vector2(1.68359, -20.5067)
+shape = SubResource("RectangleShape2D_cojmj")
+debug_color = Color(0, 0.643137, 0.329412, 0.0901961)
+
+[node name="Checkpoint11" type="Area2D" parent="World/Checkpoints"]
+position = Vector2(2375, 727)
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Checkpoints/Checkpoint11"]
+position = Vector2(9, -23)
+shape = SubResource("RectangleShape2D_cojmj")
+debug_color = Color(0, 0.643137, 0.329412, 0.0901961)
+
+[node name="Labbackground" type="Sprite2D" parent="World"]
+z_index = -100
+position = Vector2(604, -10)
+scale = Vector2(1.4, 1.4)
+texture = ExtResource("3_l2d3l")
+
+[node name="Labbackground2" type="Sprite2D" parent="World/Labbackground"]
+z_index = -100
+position = Vector2(200, 0)
+texture = ExtResource("3_l2d3l")
+
+[node name="Labbackground3" type="Sprite2D" parent="World/Labbackground"]
+z_index = -100
+position = Vector2(400, 0)
+texture = ExtResource("3_l2d3l")
+
+[node name="Camera2D" parent="World" instance=ExtResource("4_jgdof")]
+position = Vector2(265, -344)
+
+[node name="Player" parent="World" node_paths=PackedStringArray("camera_2d") instance=ExtResource("5_h4lws")]
+modulate = Color(1.11373, 1, 1, 1)
+position = Vector2(265, -344)
+max_health = 10
+camera_2d = NodePath("../Camera2D")
+can_dash = true
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="World/Player"]
+remote_path = NodePath("../../Camera2D")
+update_rotation = false
+
+[node name="Miniboss" parent="World" node_paths=PackedStringArray("player") instance=ExtResource("7_x4s32")]
+position = Vector2(265.671, -354.946)
+player = NodePath("../Player")
+health = 1000
+state = "fall"
+
+[node name="Pillar" parent="World" instance=ExtResource("8_1dwtm")]
+modulate = Color(0.792157, 1, 1, 0.894118)
+z_index = -9
+position = Vector2(487, 11)
+
+[node name="DashSphere" parent="World" node_paths=PackedStringArray("player") instance=ExtResource("9_r8ukg")]
+position = Vector2(1488, 48)
+player = NodePath("../Player")
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="World"]
+editor_only = true
+energy = 0.15
+blend_mode = 1
+
+[node name="DoorSystems" type="Node2D" parent="World"]
+
+[node name="DS1" type="Node2D" parent="World/DoorSystems"]
+script = ExtResource("10_7od7x")
+
+[node name="Door" parent="World/DoorSystems/DS1" instance=ExtResource("11_srpta")]
+position = Vector2(1320, 40)
+
+[node name="PanelControl" parent="World/DoorSystems/DS1" instance=ExtResource("12_gu2iw")]
+position = Vector2(1219, 48)
+password = [2, 3, 1, 1]
+
+[node name="Items" type="Node2D" parent="World/DoorSystems/DS1"]
+position = Vector2(861, 36)
+
+[node name="Capsule" parent="World/DoorSystems/DS1/Items" instance=ExtResource("13_yn7n1")]
+position = Vector2(-109, 12)
+
+[node name="Capsule2" parent="World/DoorSystems/DS1/Items" instance=ExtResource("13_yn7n1")]
+position = Vector2(78, 12)
+
+[node name="Capsule3" parent="World/DoorSystems/DS1/Items" instance=ExtResource("13_yn7n1")]
+position = Vector2(259, 12)
+
+[node name="DS2" type="Node2D" parent="World/DoorSystems"]
+position = Vector2(526, 584)
+script = ExtResource("10_7od7x")
+
+[node name="Door" parent="World/DoorSystems/DS2" instance=ExtResource("11_srpta")]
+position = Vector2(90, 0)
+
+[node name="Items" type="Node2D" parent="World/DoorSystems/DS2"]
+position = Vector2(-197, -7)
+
+[node name="Capsule" parent="World/DoorSystems/DS2/Items" instance=ExtResource("13_yn7n1")]
+position = Vector2(-17, 15)
+
+[node name="DS3" type="Node2D" parent="World/DoorSystems"]
+position = Vector2(1262, 811)
+script = ExtResource("10_7od7x")
+
+[node name="Door" parent="World/DoorSystems/DS3" instance=ExtResource("11_srpta")]
+position = Vector2(-14, -19)
+
+[node name="Items" type="Node2D" parent="World/DoorSystems/DS3"]
+position = Vector2(1890, -262)
+
+[node name="Capsule" parent="World/DoorSystems/DS3/Items" instance=ExtResource("13_yn7n1")]
+position = Vector2(-2368, 299)
+
+[node name="Capsule2" parent="World/DoorSystems/DS3/Items" instance=ExtResource("13_yn7n1")]
+position = Vector2(-2448, 299)
+
+[node name="DS4" type="Node2D" parent="World/DoorSystems"]
+position = Vector2(11012.5, 3583.34)
+script = ExtResource("10_7od7x")
+
+[node name="Door" parent="World/DoorSystems/DS4" instance=ExtResource("11_srpta")]
+position = Vector2(-8196.01, -2903.34)
+
+[node name="Items" type="Node2D" parent="World/DoorSystems/DS4"]
+position = Vector2(-8609.5, -2880.34)
+
+[node name="Capsule" parent="World/DoorSystems/DS4/Items" instance=ExtResource("13_yn7n1")]
+position = Vector2(-10, 17)
+
+[node name="DS5" type="Node2D" parent="World/DoorSystems"]
+position = Vector2(3002, 444)
+script = ExtResource("10_7od7x")
+
+[node name="Door" parent="World/DoorSystems/DS5" instance=ExtResource("11_srpta")]
+position = Vector2(215, 28)
+
+[node name="PanelControl" parent="World/DoorSystems/DS5" instance=ExtResource("12_gu2iw")]
+position = Vector2(149, 36)
+password = [3, 3, 2, 3, 3]
+active_btn = [1, 2, 3]
+
+[node name="Doors" type="Node2D" parent="World"]
+
+[node name="Door" parent="World/Doors" instance=ExtResource("11_srpta")]
+position = Vector2(696, 456)
+scale = Vector2(-1, -1)
+is_open = true
+
+[node name="Door2" parent="World/Doors" instance=ExtResource("11_srpta")]
+position = Vector2(248, 712)
+is_open = true
+
+[node name="Lights" type="Node2D" parent="World"]
+
+[node name="Light" type="Node2D" parent="World/Lights"]
+z_index = -1
+position = Vector2(480, 456)
+
+[node name="PointLight2D" type="PointLight2D" parent="World/Lights/Light"]
+z_index = -1
+position = Vector2(0, -7.62939e-06)
+range_z_min = -10
+range_z_max = -1
+texture = SubResource("GradientTexture2D_2ymaw")
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Lights/Light"]
+z_index = -1
+texture = ExtResource("14_a8xkm")
+
+[node name="Light2" type="Node2D" parent="World/Lights"]
+z_index = -1
+position = Vector2(320, 456)
+
+[node name="PointLight2D" type="PointLight2D" parent="World/Lights/Light2"]
+position = Vector2(-2.99999, 1.99999)
+range_z_min = -10
+range_z_max = -1
+texture = SubResource("GradientTexture2D_2ymaw")
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Lights/Light2"]
+texture = ExtResource("14_a8xkm")
+
+[node name="Light3" type="Node2D" parent="World/Lights"]
+z_index = -1
+position = Vector2(320, 712)
+
+[node name="PointLight2D" type="PointLight2D" parent="World/Lights/Light3"]
+position = Vector2(1.00001, -6.00001)
+range_z_min = -10
+range_z_max = -1
+texture = SubResource("GradientTexture2D_2ymaw")
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Lights/Light3"]
+texture = ExtResource("14_a8xkm")
+
+[node name="Light4" type="Node2D" parent="World/Lights"]
+z_index = -1
+position = Vector2(448, 712)
+
+[node name="PointLight2D" type="PointLight2D" parent="World/Lights/Light4"]
+position = Vector2(-3.99997, 0.999969)
+range_z_min = -10
+range_z_max = -1
+texture = SubResource("GradientTexture2D_2ymaw")
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Lights/Light4"]
+texture = ExtResource("14_a8xkm")
+
+[node name="Light5" type="Node2D" parent="World/Lights"]
+z_index = -1
+position = Vector2(448, 584)
+
+[node name="PointLight2D" type="PointLight2D" parent="World/Lights/Light5"]
+position = Vector2(-9.53674e-06, -1.90735e-05)
+range_z_min = -10
+range_z_max = -1
+texture = SubResource("GradientTexture2D_2ymaw")
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Lights/Light5"]
+texture = ExtResource("14_a8xkm")
+
+[node name="Light6" type="Node2D" parent="World/Lights"]
+z_index = -1
+position = Vector2(832, 584)
+
+[node name="PointLight2D" type="PointLight2D" parent="World/Lights/Light6"]
+position = Vector2(5.34058e-05, -4.99995)
+range_z_min = -10
+range_z_max = -1
+texture = SubResource("GradientTexture2D_2ymaw")
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Lights/Light6"]
+texture = ExtResource("14_a8xkm")
+
+[node name="Light7" type="Node2D" parent="World/Lights"]
+z_index = -1
+position = Vector2(832, 712)
+
+[node name="PointLight2D" type="PointLight2D" parent="World/Lights/Light7"]
+position = Vector2(1.99998, -2.00002)
+range_z_min = -10
+range_z_max = -1
+texture = SubResource("GradientTexture2D_2ymaw")
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Lights/Light7"]
+texture = ExtResource("14_a8xkm")
+
+[node name="Puzzles" type="Node2D" parent="World"]
+
+[node name="Puzzle" type="Node2D" parent="World/Puzzles"]
+position = Vector2(3139, 620)
+script = ExtResource("15_kadas")
+
+[node name="Door" parent="World/Puzzles/Puzzle" instance=ExtResource("11_srpta")]
+position = Vector2(-323, 236)
+
+[node name="LeverSphere" parent="World/Puzzles/Puzzle" instance=ExtResource("16_wl4ox")]
+position = Vector2(-195, 60)
+active = true
+
+[node name="LeverSphere2" parent="World/Puzzles/Puzzle" instance=ExtResource("16_wl4ox")]
+position = Vector2(-147, 60)
+
+[node name="LeverSphere3" parent="World/Puzzles/Puzzle" instance=ExtResource("16_wl4ox")]
+position = Vector2(-99, 60)
+
+[node name="LeverSphere4" parent="World/Puzzles/Puzzle" instance=ExtResource("16_wl4ox")]
+position = Vector2(-51, 60)
+
+[node name="Puzzle2" type="Node2D" parent="World/Puzzles"]
+position = Vector2(14081.1, 4149.58)
+script = ExtResource("15_kadas")
+max_tries = 3
+
+[node name="Door" parent="World/Puzzles/Puzzle2" instance=ExtResource("11_srpta")]
+position = Vector2(-11009.1, -3677.58)
+
+[node name="LeverSphere" parent="World/Puzzles/Puzzle2" instance=ExtResource("16_wl4ox")]
+position = Vector2(-11137.1, -3294.58)
+active = true
+
+[node name="LeverSphere2" parent="World/Puzzles/Puzzle2" instance=ExtResource("16_wl4ox")]
+position = Vector2(-11089.1, -3293.58)
+
+[node name="LeverSphere3" parent="World/Puzzles/Puzzle2" instance=ExtResource("16_wl4ox")]
+position = Vector2(-11041.1, -3293.58)
+active = true
+
+[node name="LeverSphere4" parent="World/Puzzles/Puzzle2" instance=ExtResource("16_wl4ox")]
+position = Vector2(-10993.1, -3293.58)
+
+[node name="Enemies" type="Node2D" parent="World"]
+
+[node name="Enemy2" parent="World/Enemies" instance=ExtResource("17_awjox")]
+position = Vector2(1221, 463)
+can_born = false
+
+[node name="Enemy3" parent="World/Enemies" instance=ExtResource("17_awjox")]
+position = Vector2(1371, 463)
+can_born = false
+
+[node name="Papers" type="Node2D" parent="World"]
+
+[node name="Area2D" type="Area2D" parent="World/Papers"]
+position = Vector2(1030.65, 45.4271)
+collision_mask = 2
+script = ExtResource("17_5f21y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Papers/Area2D"]
+position = Vector2(1.34705, 10.5729)
+shape = SubResource("CircleShape2D_ykpef")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="World/Papers/Area2D"]
+visible = false
+position = Vector2(1.34705, -7.42712)
+sprite_frames = SubResource("SpriteFrames_l36k4")
+animation = &"main"
+frame_progress = 0.165661
+
+[node name="PaperItem1" parent="World/Papers" node_paths=PackedStringArray("canvas_item") instance=ExtResource("18_8yl6y")]
+position = Vector2(1032, 61)
+canvas_item = NodePath("../../../CanvasLayer/Pause/Paper")
+
+[node name="PaperItem2-1" parent="World/Papers" node_paths=PackedStringArray("canvas_item") instance=ExtResource("18_8yl6y")]
+position = Vector2(799, 735)
+canvas_item = NodePath("../../../CanvasLayer/Pause/Paper2-1")
+
+[node name="PaperItem2-2" parent="World/Papers" node_paths=PackedStringArray("canvas_item") instance=ExtResource("18_8yl6y")]
+position = Vector2(3177, 879)
+canvas_item = NodePath("../../../CanvasLayer/Pause/Paper2-2")
+
+[node name="DisplayMsg" type="Node2D" parent="World"]
+
+[node name="DashTeach" parent="World/DisplayMsg" instance=ExtResource("19_lidoq")]
+position = Vector2(2942, -116)
+
+[node name="CrouchTeach" parent="World/DisplayMsg" instance=ExtResource("20_3fwxg")]
+position = Vector2(756, 697)
+
+[node name="Continue" parent="World/DisplayMsg" instance=ExtResource("21_p65xn")]
+position = Vector2(3342, 473)
+
+[node name="GUI" parent="." instance=ExtResource("22_t1oou")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 100
+
+[node name="Pause" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("23_f38nb")
+
+[node name="Paper" type="Control" parent="CanvasLayer/Pause"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("24_68wn6")
+
+[node name="BlackOverlay" type="ColorRect" parent="CanvasLayer/Pause/Paper"]
+material = SubResource("ShaderMaterial_atq46")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.352941)
+
+[node name="CanvasTexture" type="TextureRect" parent="CanvasLayer/Pause/Paper"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -136.0
+offset_right = -6.99998
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+texture = ExtResource("25_xpffk")
+
+[node name="Paper2-1" type="Control" parent="CanvasLayer/Pause"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("24_68wn6")
+
+[node name="BlackOverlay" type="ColorRect" parent="CanvasLayer/Pause/Paper2-1"]
+material = SubResource("ShaderMaterial_atq46")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.529412)
+
+[node name="CanvasTexture" type="TextureRect" parent="CanvasLayer/Pause/Paper2-1"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -156.0
+offset_top = -134.0
+offset_right = 156.0
+offset_bottom = 134.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("26_taldw")
+
+[node name="Paper2-2" type="Control" parent="CanvasLayer/Pause"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("24_68wn6")
+
+[node name="BlackOverlay" type="ColorRect" parent="CanvasLayer/Pause/Paper2-2"]
+material = SubResource("ShaderMaterial_atq46")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.352941)
+
+[node name="CanvasTexture" type="TextureRect" parent="CanvasLayer/Pause/Paper2-2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -158.5
+offset_top = -135.5
+offset_right = 158.5
+offset_bottom = 135.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("27_eng83")
+
+[connection signal="body_entered" from="World/Papers/Area2D" to="World/Papers/Area2D" method="_on_body_entered"]
+[connection signal="body_exited" from="World/Papers/Area2D" to="World/Papers/Area2D" method="_on_body_exited"]

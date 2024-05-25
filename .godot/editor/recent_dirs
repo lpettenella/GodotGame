@@ -1,10 +1,12 @@
+res://common
+res://common/items/papers
+res://enemies/common/states
+res://common/state
 res://common/components/movement
 res://enemies/common
-res://enemies/common/states
 res://enemies/flyenemy
 res://enemies/enemy2
 res://common/components/hit_box
-res://common/state
 res://enemies/enemy1
 res://camera
 res://levels/lab_levels/tiles

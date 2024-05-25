@@ -1,7 +1,9 @@
-[gd_scene load_steps=57 format=3 uid="uid://cg555v7dexny3"]
+[gd_scene load_steps=60 format=3 uid="uid://cg555v7dexny3"]
 
 [ext_resource type="Script" path="res://enemies/boss/miniboss.gd" id="1_ivjp8"]
 [ext_resource type="Texture2D" uid="uid://kc7ttnv705f5" path="res://enemies/boss/miniboss_sprite-sheet.png" id="2_s3mqa"]
+[ext_resource type="PackedScene" uid="uid://dcbb8oj6nguc2" path="res://common/components/health_component/health_component.tscn" id="3_gnrwn"]
+[ext_resource type="PackedScene" uid="uid://bjdjocl150e78" path="res://common/components/hurt_box/hurt_box_component.tscn" id="4_51cbu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sodaf"]
 size = Vector2(66, 53)
@@ -388,6 +390,9 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a8yl4"]
+size = Vector2(66, 53)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3isj0"]
 size = Vector2(98, 54)
 
@@ -414,7 +419,20 @@ shape = SubResource("RectangleShape2D_sodaf")
 sprite_frames = SubResource("SpriteFrames_57drj")
 animation = &"catch"
 
+[node name="HealthComponent" parent="." instance=ExtResource("3_gnrwn")]
+MAX_HEALTH = 1000.0
+
+[node name="HurtBoxComponent" parent="." node_paths=PackedStringArray("health_box_component") instance=ExtResource("4_51cbu")]
+collision_layer = 4
+collision_mask = 2
+health_box_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
+position = Vector2(2, 14.5)
+shape = SubResource("RectangleShape2D_a8yl4")
+
 [node name="CatchArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 4
 collision_mask = 2
 

@@ -78,7 +78,8 @@ func on_checkpoint(_checkpoint: Area2D):
 	last_checkpoint = _checkpoint
 	
 func get_input_direction(): 
-	var direction = Input.get_action_strength("right") - Input.get_action_strength("left")
+	var direction = sign(Input.get_axis("left", "right"))
+	#var direction = Input.get_action_strength("right") - Input.get_action_strength("left")
 		
 	if direction != 0:	
 		flip_player(direction)
@@ -90,8 +91,8 @@ func get_input_direction():
 	
 func get_input_vector():
 	var direction = Vector2.ZERO
-	direction.x = Input.get_action_strength("right") - Input.get_action_strength("left")
-	direction.y = Input.get_action_strength("down") - Input.get_action_strength("up")
+	direction.x = sign(Input.get_action_strength("right") - Input.get_action_strength("left"))
+	direction.y = sign(Input.get_action_strength("down") - Input.get_action_strength("up"))
 	
 	if direction.x != 0:
 		flip_player(direction.x)
@@ -220,18 +221,18 @@ func _on_dash_delay_timeout():
 		dash_count -= 1
 
 # areas
-func _on_AttackArea_body_entered(body):
-	if body.has_method("handle_hit") and !$AttackArea/CollisionShape2D.disabled:
-		$Hit.play()
-		handle_knockback()
-		body.handle_hit(facing)
-		screen_shake.start()
-		
-func _on_AirAttackArea_body_entered(body):
-	if body.has_method("handle_hit") and !$AirAttackArea/CollisionShape2D.disabled:
-		handle_knockback()
-		body.handle_hit(facing)
-		screen_shake.start()
+#func _on_AttackArea_body_entered(body):
+	#if body.has_method("handle_hit") and !$AttackArea/CollisionShape2D.disabled:
+		#$Hit.play()
+		#handle_knockback()
+		#body.handle_hit(facing)
+		#screen_shake.start()
+		#
+#func _on_AirAttackArea_body_entered(body):
+	#if body.has_method("handle_hit") and !$AirAttackArea/CollisionShape2D.disabled:
+		#handle_knockback()
+		#body.handle_hit(facing)
+		#screen_shake.start()
 		
 func _on_FeetArea_body_entered(body):
 	is_on_floor()
@@ -259,6 +260,13 @@ func _on_interaction_area_body_exited(body):
 		interactable_obj = null
 
 func _on_attack_area_area_entered(area):
+	if area is HurtBoxComponent:	
+		print(area.name)
+		handle_knockback()
+		screen_shake.start()
+		area.damage(1, facing)
+
+func _on_air_attack_area_area_entered(area):
 	if area is HurtBoxComponent:
 		handle_knockback()
 		screen_shake.start()

@@ -22,19 +22,13 @@ func handle_gravity():
 		enemy.velocity.y += enemy.GRAVITY
 
 func move(_speed = SPEED, _direction = facing):
-	#print(_speed)
 	if not can_move():
 		return
 	if horizontal_movement:
 		horizontal_movement.move(_speed, _direction)
 	if vertical_movement:
 		vertical_movement.move(_speed, _direction)
-	#_speed = _speed if can_move() else 0
-#
-	#enemy.velocity.x = _speed * facing
-	#if can_float:
-		#enemy.velocity.y = 0
-		
+
 	animated_sprite.play("run")
 	
 func stop():

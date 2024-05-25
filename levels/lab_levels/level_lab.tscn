@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://7tu2vtuh61cl"]
+[gd_scene load_steps=54 format=3 uid="uid://7tu2vtuh61cl"]
 
 [ext_resource type="Script" path="res://common/global.gd" id="1_y58ff"]
 [ext_resource type="PackedScene" uid="uid://dkbichd2tcfod" path="res://levels/lab_levels/tiles/tile_map.tscn" id="2_eb05n"]
@@ -15,7 +15,9 @@
 [ext_resource type="Texture2D" uid="uid://mnm2bo3glb35" path="res://levels/lab_levels/lab-lamp.png" id="14_a8xkm"]
 [ext_resource type="Script" path="res://levels/lab_levels/unlock_system/script/puzzle.gd" id="15_kadas"]
 [ext_resource type="PackedScene" uid="uid://dn0ljinw8br5b" path="res://levels/lab_levels/btn_sphere/btn_sphere.tscn" id="16_wl4ox"]
+[ext_resource type="Script" path="res://common/interact_message.gd" id="17_5f21y"]
 [ext_resource type="PackedScene" uid="uid://cs08mbykpxblk" path="res://enemies/enemy2/enemy2.tscn" id="17_awjox"]
+[ext_resource type="Texture2D" uid="uid://bnaj6ivlyiy4k" path="res://common/items/papers/press_i.png" id="17_k03gb"]
 [ext_resource type="PackedScene" uid="uid://c8j6wxlyre3h3" path="res://common/items/papers/paper_item.tscn" id="18_8yl6y"]
 [ext_resource type="PackedScene" uid="uid://pbe5uun1i21k" path="res://levels/lab_levels/gui_msg/dash_teach.tscn" id="19_lidoq"]
 [ext_resource type="PackedScene" uid="uid://domb877lpfff" path="res://levels/lab_levels/gui_msg/crouch_teach.tscn" id="20_3fwxg"]
@@ -83,6 +85,73 @@ colors = PackedColorArray(1, 1, 1, 1, 0.384298, 0.384298, 0.384298, 1, 0.169245,
 gradient = SubResource("Gradient_h7ch3")
 fill = 2
 fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ykpef"]
+radius = 11.0454
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_48dxd"]
+atlas = ExtResource("17_k03gb")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2co1c"]
+atlas = ExtResource("17_k03gb")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m5xps"]
+atlas = ExtResource("17_k03gb")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8hmth"]
+atlas = ExtResource("17_k03gb")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3h2w3"]
+atlas = ExtResource("17_k03gb")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6mg63"]
+atlas = ExtResource("17_k03gb")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hdm66"]
+atlas = ExtResource("17_k03gb")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1iif7"]
+atlas = ExtResource("17_k03gb")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l36k4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_48dxd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2co1c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m5xps")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8hmth")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3h2w3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6mg63")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hdm66")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1iif7")
+}],
+"loop": true,
+"name": &"main",
+"speed": 11.0
+}]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_atq46"]
 
@@ -225,15 +294,14 @@ position = Vector2(400, 0)
 texture = ExtResource("3_l2d3l")
 
 [node name="Camera2D" parent="World" instance=ExtResource("4_jgdof")]
-position = Vector2(2008.94, 16.9663)
+position = Vector2(265, -344)
 
 [node name="Player" parent="World" node_paths=PackedStringArray("camera_2d") instance=ExtResource("5_h4lws")]
 modulate = Color(1.11373, 1, 1, 1)
-position = Vector2(2008.94, 16.9663)
+position = Vector2(265, -344)
 max_health = 10
 camera_2d = NodePath("../Camera2D")
 can_dash = true
-max_dash = 1
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="World/Player"]
 remote_path = NodePath("../../Camera2D")
@@ -244,10 +312,8 @@ position = Vector2(265.671, -354.946)
 player = NodePath("../Player")
 health = 1000
 state = "fall"
-can_die = false
 
 [node name="Pillar" parent="World" instance=ExtResource("8_1dwtm")]
-modulate = Color(0.792157, 1, 1, 0.894118)
 z_index = -9
 position = Vector2(487, 11)
 
@@ -492,11 +558,29 @@ position = Vector2(-10993.1, -3293.58)
 
 [node name="Enemy2" parent="World/Enemies" instance=ExtResource("17_awjox")]
 position = Vector2(1221, 463)
+can_born = false
 
 [node name="Enemy3" parent="World/Enemies" instance=ExtResource("17_awjox")]
 position = Vector2(1371, 463)
+can_born = false
 
 [node name="Papers" type="Node2D" parent="World"]
+
+[node name="Area2D" type="Area2D" parent="World/Papers"]
+position = Vector2(1030.65, 45.4271)
+collision_mask = 2
+script = ExtResource("17_5f21y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Papers/Area2D"]
+position = Vector2(1.34705, 10.5729)
+shape = SubResource("CircleShape2D_ykpef")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="World/Papers/Area2D"]
+visible = false
+position = Vector2(1.34705, -7.42712)
+sprite_frames = SubResource("SpriteFrames_l36k4")
+animation = &"main"
+frame_progress = 0.165661
 
 [node name="PaperItem1" parent="World/Papers" node_paths=PackedStringArray("canvas_item") instance=ExtResource("18_8yl6y")]
 position = Vector2(1032, 61)
@@ -641,3 +725,6 @@ offset_bottom = 135.5
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("27_eng83")
+
+[connection signal="body_entered" from="World/Papers/Area2D" to="World/Papers/Area2D" method="_on_body_entered"]
+[connection signal="body_exited" from="World/Papers/Area2D" to="World/Papers/Area2D" method="_on_body_exited"]

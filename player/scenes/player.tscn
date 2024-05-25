@@ -1,4 +1,4 @@
-[gd_scene load_steps=152 format=3 uid="uid://bc22fmtpjf4qe"]
+[gd_scene load_steps=153 format=3 uid="uid://bc22fmtpjf4qe"]
 
 [ext_resource type="Script" path="res://player/script/player.gd" id="1_07u3u"]
 [ext_resource type="PackedScene" uid="uid://pqp4p82f6ih2" path="res://player/scenes/ghost.tscn" id="2_8vumg"]
@@ -977,7 +977,7 @@ size = Vector2(14, 25)
 size = Vector2(14, 15)
 
 [sub_resource type="RectangleShape2D" id="23"]
-size = Vector2(26, 17)
+size = Vector2(33, 17)
 
 [sub_resource type="RectangleShape2D" id="65"]
 size = Vector2(35, 32)
@@ -994,6 +994,9 @@ size = Vector2(18, 24)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8eea4"]
 size = Vector2(16, 27)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wpqyq"]
+size = Vector2(8, 22)
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_07u3u")
@@ -1007,7 +1010,7 @@ stream = ExtResource("6_ybcvj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("21")
-animation = &"attack2"
+animation = &"idle"
 
 [node name="CeilingCheckerLong" type="RayCast2D" parent="."]
 visible = false
@@ -1031,6 +1034,7 @@ rotation = -1.5708
 target_position = Vector2(-4.673e-05, 13)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 3.5)
 shape = SubResource("22")
 one_way_collision_margin = 106.6
@@ -1042,12 +1046,11 @@ shape = SubResource("RectangleShape2D_q4m1s")
 disabled = true
 
 [node name="AttackArea" type="Area2D" parent="." groups=["claw"]]
-position = Vector2(1, 0)
 collision_layer = 2
-collision_mask = 4
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2(19, 3.5)
+position = Vector2(16.5, 3.5)
 shape = SubResource("23")
 disabled = true
 
@@ -1104,6 +1107,14 @@ script = ExtResource("8_rixbq")
 position = Vector2(0, 3.5)
 shape = SubResource("RectangleShape2D_8eea4")
 debug_color = Color(0.615686, 0.509804, 0.482353, 0.419608)
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_wpqyq")
 
 [node name="DashDelay" type="Timer" parent="."]
 wait_time = 0.7
@@ -1223,6 +1234,7 @@ script = ExtResource("28_2c1tl")
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_AttackArea_body_entered"]
+[connection signal="area_entered" from="AirAttackArea" to="." method="_on_air_attack_area_area_entered"]
 [connection signal="body_entered" from="AirAttackArea" to="." method="_on_AirAttackArea_body_entered"]
 [connection signal="body_entered" from="FeetArea" to="." method="_on_FeetArea_body_entered"]
 [connection signal="body_exited" from="FeetArea" to="." method="_on_FeetArea_body_exited"]

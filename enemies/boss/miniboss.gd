@@ -3,6 +3,8 @@ extends CharacterBody2D
 @export var player: CharacterBody2D
 @export var health: int = 10
 @export var point_for_dive : Node2D
+@export var state = "idle"
+@export var can_die = true
 
 const GRAVITY = 20
 const SPEED = 120
@@ -10,8 +12,6 @@ const FOLLOW_TIME = 3.0
 const FOLLOW_DELAY_NEAR = 5.0
 const FOLLOW_DELAY = 1.5
 
-@export var state = "idle"
-@export var can_die = true
 
 var player_in_range = false
 var player_in_range_up = false
@@ -21,6 +21,10 @@ var follow_timer = 0.0
 var follow_delay_timer = 0.0
 var is_follow_time = true
 var direction = 1
+
+func _ready():
+	$HealthComponent.dead.connect(on_dead)
+	$HealthComponent.damaged.connect(on_damaged)
 
 func _physics_process(delta):
 	#if velocity.y >= SPEED:
@@ -46,10 +50,10 @@ func _physics_process(delta):
 		$AnimatedSprite2D.play(state)
 	
 	handle_states(delta)
-	
 	move_and_slide()
 	
 func handle_states(delta):
+	print(state)
 	if state == "fall":
 		player.visible = false
 		if velocity.y >= 300:
@@ -114,7 +118,6 @@ func handle_states(delta):
 		return
 	if player_in_range:
 		start_attack()
-		return
 		
 func handle_attack():
 	if $AnimatedSprite2D.frame >= 4 and player_in_range:
@@ -125,26 +128,16 @@ func start_attack():
 	$AttackDelay.start()
 	state = "attack"
 
-func handle_hit(from):
+func on_damaged(from):
+	if state != "wait_for_player" and not can_die and $HealthComponent.health == $HealthComponent.MAX_HEALTH - 10:
+		state = "wait_for_player"
 	if state != "idle" and state != "hit": return
-	health -= 1
 	state = "hit"
 	$HitRed.start()
-	
-	print("hitted")
-#	if state == "death": return
-#	if state == "attack" and $AnimatedSprite2D.frame < 6 and melee: return
-#	health -= 1
-#	my_random_number = randi() % 4 + 1
-	if health <= 0:
-		state = "death" if can_die else "wait_for_player"
-		return
-#	state = "hit"
-#	hitted_from = from
-#	$KnockbackTime.start()
-#	$StunTime.start()
-#	emit_particle()
-	
+		
+func on_dead():
+	state = "death" if can_die else "wait_for_player"
+
 func _on_animated_sprite_2d_animation_finished():
 	match($AnimatedSprite2D.animation):
 		"attack", "up":
@@ -181,6 +174,5 @@ func _on_catch_area_body_entered(body):
 		can_catch_player = true
 
 func _on_near_area_area_entered(area):
-	print(area.name)
 	if area.name == "NextLevel":
 		get_tree().change_scene_to_file("res://levels/lab_levels/level_lab.tscn")

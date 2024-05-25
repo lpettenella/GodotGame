@@ -21,14 +21,17 @@ func physics_update(_delta: float):
 	
 	if not player.is_on_floor():
 		Transitioned.emit(self, "air")
+		return
 		if player.is_on_wall_check():
 			Transitioned.emit(self, "wall")
+			return
 		
 	if Input.is_action_pressed("right") or Input.is_action_pressed("left"):
 		Transitioned.emit(self, "run")
 	elif Input.is_action_just_pressed("down"):
 		Transitioned.emit(self, "crouchidle")
-	elif InputBuffer.is_action_press_buffered("jump"):
+	elif Input.is_action_pressed("jump"):
+	#elif InputBuffer.is_action_press_buffered("jump"):
 		Transitioned.emit(self, "air", {do_jump = true})
 	elif Input.is_action_just_pressed("attack"):
 		player.combo_count = (player.combo_count + 1) % 3

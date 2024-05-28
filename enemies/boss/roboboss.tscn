@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cvonpxqhig8af"]
+
+[node name="Roboboss" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+animation = &"run"
